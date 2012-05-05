@@ -3,6 +3,7 @@
 import sys
 import os
 import shutil
+import subprocess
 
 import mergejs
 
@@ -39,7 +40,7 @@ def main():
     sys.exit("ERROR: %s" % E)
 
   print "Writing merged proSoar javascript to " + os.path.join(web_dir, 'js', proSoar_javascript)
-  file(os.path.join(web_dir, 'js', proSoar_javascript), 'w').write(proSoar_merged)
+  file(os.path.join(web_dir, 'js', proSoar_javascript), 'w').write(minify(proSoar_merged))
 
 # merge mooTools javascript files
   print "Merging mooTools javascript files"
@@ -50,7 +51,7 @@ def main():
     sys.exit("ERROR: %s" % E)
 
   print "Writing merged mooTools javascript to " + os.path.join(web_dir, 'js', mooTools_javascript)
-  file(os.path.join(web_dir, 'js', mooTools_javascript), 'w').write(mooTools_merged)
+  file(os.path.join(web_dir, 'js', mooTools_javascript), 'w').write(minify(mooTools_merged))
 
 # merge OpenLayers javascript files
   print "Merging OpenLayers javascript files"
@@ -61,7 +62,7 @@ def main():
     sys.exit("ERROR: %s" % E)
 
   print "Writing merged OpenLayers javascript to " + os.path.join(web_dir, 'js', 'OpenLayers', OpenLayers_javascript)
-  file(os.path.join(web_dir, 'js', 'OpenLayers', OpenLayers_javascript), 'w').write(OpenLayers_merged)
+  file(os.path.join(web_dir, 'js', 'OpenLayers', OpenLayers_javascript), 'w').write(minify(OpenLayers_merged))
 
 
 # copy all other files to their destination
@@ -76,6 +77,22 @@ def main():
 
 
   print "Done."
+
+
+def minify(source):
+  try:
+    print "minifying..."
+    process = subprocess.Popen(['yui-compressor', '--type', 'js'], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+    stdout,stderr = process.communicate(input=source)
+
+    if stderr == None:
+      return stdout
+    else:
+      raise stderr
+
+  except:
+    return source
+
 
 if __name__ == '__main__':
   main()
