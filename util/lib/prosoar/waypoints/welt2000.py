@@ -15,7 +15,7 @@ def __get_database_file(dir_data):
     # Download the current file
     # (only if server file is newer than local file)
     url = 'http://www.segelflug.de/vereine/welt2000/download/WELT2000.TXT'
-#    subprocess.check_call(['wget', '-N', '-P', os.path.dirname(path), url])
+    subprocess.check_call(['wget', '-N', '-P', os.path.dirname(path), url])
 
     # Check if download succeeded
     if not os.path.exists(path):        
