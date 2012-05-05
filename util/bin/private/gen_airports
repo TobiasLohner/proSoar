@@ -1,0 +1,77 @@
+#!/usr/bin/python
+
+import os, sys, re, math
+import shutil
+import json
+
+app_dir = os.path.abspath(__file__ + '/../../..')
+sys.path.append(os.path.join(app_dir, 'lib'))
+
+from prosoar.geopoint import GeoPoint
+from prosoar.waypoints.list import WaypointList
+from prosoar.waypoints import welt2000
+from prosoar.downloader import Downloader
+
+def main():
+  storage_dir = os.path.join(app_dir, 'storage')
+
+  print("Reading Welt2000 waypoint file...")
+  waypoints = welt2000.get_database(storage_dir)
+
+  print("Building database...")
+  database = {}
+
+  for waypoint in waypoints:
+    if (not waypoint.type == 'airport') \
+       and (not waypoint.type == 'glider_site'):
+      continue
+
+    db_index_lon = math.floor(waypoint.lon/5)*5
+    db_index_lat = math.floor(waypoint.lat/5)*5
+
+    if db_index_lon not in database:
+      database[db_index_lon] = {}
+
+    if db_index_lat not in database[db_index_lon]:
+      database[db_index_lon][db_index_lat] = {'chunk': {'lon_left': db_index_lon,
+                                                        'lat_lower': db_index_lat}}
+
+    position = len(database[db_index_lon][db_index_lat]) - 1
+
+    database[db_index_lon][db_index_lat][position] = {'lon': waypoint.lon,
+                                                      'lat': waypoint.lat,
+                                                      'name': waypoint.name,
+                                                      'type': 'ALT',
+                                                      'runwayDirection': waypoint.runway_dir,
+                                                      'altitude': waypoint.altitude,
+                                                      'comment': waypoint.icao + ' ' + str(waypoint.freq) }
+
+
+  for lon in range(-180, 180, 5):
+
+    if lon not in database:
+      continue
+
+    lon_dir = os.path.join(storage_dir, 'airports', 'lon' + str(lon))
+
+    print(lon_dir)
+
+    if not os.path.exists(lon_dir):
+      os.makedirs(lon_dir)
+
+    for lat in range(-90, 90, 5):
+
+      if lat not in database[lon]:
+        continue
+
+      lat_file = os.path.join(lon_dir, 'lat' + str(lat))
+
+      with open(lat_file, 'w') as f:
+        json.dump(database[lon][lat], f, indent=1)
+
+
+  print("Done!")
+
+if __name__ == '__main__':
+  main()
+

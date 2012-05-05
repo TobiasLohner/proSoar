@@ -1,0 +1,37 @@
+<IfModule mod_rewrite.c>
+
+RewriteEngine On
+
+# Tasks
+RewriteRule ^tasks/([0-9a-z]*)/temp/(\d*)/(\w*)$ /bin/download_task.py?uid=$1&task=$2&filetype=$3&temp=1
+RewriteRule ^tasks/([0-9a-z]*)/temp/(\d*)/(\w*)/qr$ /bin/download_task_qr.py?uid=$1&task=$2&filetype=$3&temp=1
+
+RewriteRule ^tasks/([0-9a-z]*)/([^&+/;<>]*)/(\w*)$ /bin/download_task.py?uid=$1&task=$2&filetype=$3
+RewriteRule ^tasks/([0-9a-z]*)/([^&+/;<>]*)/(\w*)/qr$ /bin/download_task_qr.py?uid=$1&task=$2&filetype=$3
+
+RewriteRule ^tasks/save_temp$ /bin/save_temp_task.py
+RewriteRule ^tasks/save/([^&+/;<>]*)$ /bin/save_task.py?task_name=$1
+
+RewriteRule ^tasks/load/([^&+/;<>]*)$ /bin/get_task.py?task_name=$1
+RewriteRule ^tasks/delete/([^&+/;<>]*)$ /bin/remove_task.py?task_name=$1
+
+# Waypoints
+RewriteRule ^waypoints/(\d*)/lon([-]?\d*)/lat([-]?\d*)$ /bin/get_waypoints.py?id=$1&lon=$2&lat=$3
+RewriteRule ^waypoints/(\d*)/remove$ /bin/remove_waypoint_file.py?fileId=$1
+RewriteRule ^waypoints/upload$ /bin/upload_waypoint_file.py
+
+# Config
+RewriteRule ^settings/load$ /bin/get_userconfig.py?as=json
+RewriteRule ^settings/initial.js$ /bin/get_userconfig.py?as=js
+
+# Airspace
+RewriteRule ^airspace/(\d*)/(\d*)/(\d*).png$ http://www.prosoar.de/bin/tilecache.cgi/1.0.0/basic/$1/$2/$3.png
+
+# Terrain
+RewriteRule ^terrain/(\d*)/(\d*)/(\d*).png$ http://www.prosoar.de/bin/tilecache.cgi/1.0.0/terrain/$1/$2/$3.png
+
+RewriteRule ^terrain/height/lon([-]?\d*\.?\d*?)/lat([-]?\d*\.?\d*?)$ https://afsserv.akaflieg.uni-stuttgart.de/cgi-bin/get_height.py?lon=$1&lat=$2
+
+
+</IfModule>
+

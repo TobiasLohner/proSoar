@@ -1,0 +1,13 @@
+*.pyc
+storage
+web
+util/bin/public/mapserv.cgi
+util/bin/public/tilecache.cgi
+util/lib/TileCache
+web_dev/js/OpenLayers
+web_dev/js/MooTools/mootools-*
+web_dev/images/OpenLayers
+!storage/map/airspace/airspace.map
+
+*.swp
+*.swo

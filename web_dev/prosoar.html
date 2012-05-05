@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="icon" href="images/favicon.png" type="image/png">
+
+  <title>proSoar - online soaring tool</title> 
+
+  <script type="text/javascript" src="js/MooTools/mootools-core.js"></script>
+  <script type="text/javascript" src="js/MooTools/mootools-more.js"></script>
+
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>  
+
+  <script type="text/javascript" src="js/mooTools.js"></script>
+  <script type="text/javascript" src="js/OpenLayers/OpenLayers.js"></script>
+  <script type="text/javascript" src="js/proSoar.js"></script>
+
+  <script type="text/javascript" src="settings/initial.js"></script>
+
+  <link rel="stylesheet" href="css/OpenLayers.css" type="text/css" />
+  <link rel="stylesheet" href="css/MUX.Dialog.css" type="text/css" />
+  <link rel="stylesheet" href="css/proSoar.css" type="text/css" />
+
+</head>
+
+<body style="height: 100%">
+  <div id="infoscreen">
+    <div id="title">
+      <img src="images/prosoar_title.png" width="170" height="52" alt="proSoar - online soaring tool" />
+    </div>
+
+    <ul id="menu">
+
+<!-- task -->
+      <li id="task">
+        <h3 id="task-header" class="collapse">Task</h3> 
+        <div id="task-container" class="collapse">
+          <div id="task-options">
+            <button class="button" onclick="javascript:proSoar.newTask();">New &amp; Load</button>
+            <button class="button" onclick="javascript:proSoar.saveTask('open');">Save &amp; Export</button>
+          </div>
+          <div id="task-turnpoints-container">
+            <div id="task-turnpoints"></div>
+          </div>
+          <div id="task-total">
+            Total task distance: <span id="task-total-distance">0 km</span>
+            <br />
+            <span id="task-is-fai"></span>
+          </div>
+<!--
+          <div id="task-options-link">
+            <a onclick="javascript:proSoar.taskGeneralOptions();">General task options</a>
+          </div>
+-->
+        </div>
+      </li>
+
+<!-- waypoints and airspace -->
+      <li id="waypoints">
+        <h3 id="waypoints-header" class="collapse">Waypoints</h3>
+        <div id="waypoints-container" class="collapse">
+          <div id="waypoint-files">
+            Current Waypoint Files:
+            <ul id="waypoint-files-list"></ul>
+            <button class="button" onclick="javascript:proSoar.addWaypointFile();">Add Waypoint File</button>
+          </div>
+        </div>
+      </li>
+
+<!-- about -->
+      <li id="about">
+        <h3 id="about-header" onclick="javascript:proSoar.aboutDialog();">About</h3>
+<!--        <div id="about-container" class="collapse">
+          proSoar is free software released under the GNU/GPL licence.
+          <br>
+          &copy; 2012
+        </div> -->
+      </li>
+
+    </ul>
+  </div>
+
+  <div id="map">
+    <div id="buttonbar">
+      <img src="images/button_normal.png" id="buttonbar-normal" alt="">
+      <img src="images/button_add.png" id="buttonbar-add" alt="">
+      <img src="images/button_remove.png" id="buttonbar-remove" alt="">
+      <img src="images/button_new.png" id="buttonbar-new" alt="">
+      <img src="images/button_save.png" id="buttonbar-save" alt="">
+    </div>
+  </div>
+
+  <div id="dialog-container" style="visibility: hidden;">
+    <div id="about-dialog" style="text-align: center">
+      <p>
+        <span style="font-weight: bold">proSoar</span> is free software released under the
+        <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt">GNU/GPL licence</a>.<br>
+        &copy; 2012, Tobias Lohner &lt;info&#64;prosoar.de&gt;
+      </p>
+      <p>
+        Map data CC-By-SA, <a href="http://openstreetmap.org/">OpenStreetMap</a><br>
+        Airport data by <a href="http://www.segelflug.de/vereine/welt2000/">WELT 2000</a> project,
+        <a href="http://opendatacommons.org/licenses/odbl/1.0/">ODbL 1.0</a><br>
+<!--        Airspace data courtesy of <a href="http://www.soaringweb.org">Worldwide Soaring Turnpoint Exchange</a> -->
+      </p>
+      <p style="font-weight: bold">
+        All data and information provided without guarantee.<br>
+        Use for information only. Do not use for real navigation!
+      </p>
+    </div>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,495 @@
+body {
+  height: 100%;
+/*  font-family: 'Lucida Grande', Verdna, Helvetica, Arial, 'sans-serif'; */
+  font-family: Verdna, Helvetica, Arial, 'sans-serif';
+  font-size: 0.9em;
+}
+
+#infoscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  width: 230px;
+  height: 100%;
+}
+
+#title {
+  width: 100%;
+  height: 60px;
+}
+
+#title img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4px;
+}
+
+#menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  width: 100%;
+}
+
+#menu li {
+  margin: 0;
+  padding: 0;
+}
+
+#menu li h3 {
+  background-color: #e1e1e1;
+  color: #515151;
+  font-weight: bold;
+  padding-left: 0.5em;
+  margin: 4px 0 0 0;
+  cursor: pointer;
+}
+
+#task-container {
+  position: relative;
+  height: 100%;
+  display: block;
+}
+
+#task-options {
+  height: 2em;
+  text-align: center;
+}
+
+
+#task-turnpoints-container {
+  width: 100%;
+  position: absolute;
+  top: 2em;
+  bottom: 2.5em;
+  margin-bottom: 2px;
+  overflow: auto;
+/*  padding: 0 5px; */
+}
+
+#task-turnpoints {
+  display: block;
+/*  width: 220px; */
+/*  width: 100%; */
+/*  padding: 0 5px; */
+/*  margin: 0 5px; */
+  margin-left: 5px;
+  margin-right: 5px;
+  max-height: 100%;
+/*  overflow: auto; */
+}
+
+#task-total {
+  position: absolute;
+  bottom: 0;
+  height: 2.5em;
+  width: 100%;
+  background-color: #d5d5d5;
+}
+
+#task-options-link a:hover {
+  cursor: pointer;
+}
+
+#task-turnpoints .turnpoint {
+  border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px;
+  border: 1px solid #999;
+  clear: both;
+  height: 46px;
+  border: 1px solid #bbb;
+  background-color: white;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding: 1px 1px;
+  cursor: pointer;
+}
+
+/*#task-turnpoints .turnpoint:hover, */#task-turnpoints .hover {
+  border: 2px solid #d5d5d5;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  background-color: whiteSmoke;
+  padding: 0;
+}
+
+#task-turnpoints .turnpoint img {
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin-top: 3px;
+  margin-left: 2px;
+  margin-right: 4px;
+}
+
+#task-turnpoints .turnpoint .title {
+  font-weight: bold;
+  font-size: 1em;
+/*  width: 100px; */
+  height: 1.2em;
+/*  border: 1px solid red;
+  white-space: nowrap; */
+  overflow: hidden;
+  display: block;
+}
+
+#task-turnpoints .turnpoint .coordinates {
+  color: #959595;
+  text-align: right; 
+  font-size: 0.7em;
+  line-height: 1em;
+  padding-right: 0.5em;
+  padding-top: 0.1em;
+  display: block;
+}
+
+#task-turnpoints .turnpoint .type {
+  font-size: 0.9em;
+}
+
+#map {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 230px;
+  right: 0;
+  height: 100%;
+}
+
+#map .olControlAttribution {
+  bottom: 3px;
+  text-align: right;
+}
+
+
+.olPopupHover {
+  border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px;
+  border: 1px solid #999;
+  outline: 0; /*to prevent Mozilla outline focused element */
+}
+
+.olPopup div.header_airport, .olPopup div.header_turnpoint {
+  /*height: 30px;*/
+  font-weight: bold;
+}
+
+.olPopup div.header_airport img {
+  vertical-align: middle;
+  padding-right: 4px;
+}
+
+.olPopup div.header_turnpoint img {
+  vertical-align: middle;
+  padding-right: 4px;
+}
+
+.olPopup div.name {
+  margin-left: 30px;
+}
+/*
+#map .olPopup .olPopupCloseBox {
+  position: absolute;
+  background: url("../images/closebox.png") no-repeat scroll 0 0 transparent;
+  height: 16px;
+  width: 16px;
+  top: 5px;
+  right: 0;
+  margin-right: 0.4em;
+  float: right;
+}
+*/
+
+.dialog-tabs ul {
+  margin-top: 6px;
+  margin-bottom: 3px;
+  padding: 0 0 2px 0;
+}
+
+.dialog-tabs li {
+  display: inline;
+  padding: 2px 0.4em 2px 0.4em;
+  margin-left: 1px;
+  margin-right: 1px;
+  list-style: none;
+  background-color: whiteSmoke;
+  border: 1px #999 solid;
+  -moz-border-radius: 4px 4px 0 0;
+  -webkit-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
+  color: #959595;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.dialog-tabs li.active {
+  background-color: #d5d5d5;
+  border-bottom-color: #111;
+  border-width: 2px 2px 1px 2px;
+  color: black;
+}
+
+.dialog-tabs ul hr {
+  height: 1px;
+  border: 0;
+  background-color: #999;
+  color: #999;
+  margin: 2px 1px 0px 1px;
+}
+
+.dialog-tabs p {
+  padding: 0;
+  margin: 0 3px;
+}
+
+.dialog-tabs .title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.tp-edit .coordinates {
+  margin-left: 1em;
+  font-size: 0.8em;
+  color: #959595;
+  position: relative;
+  top: -0.2em;
+}
+
+.tp-edit fieldset.fields {
+  border: 0;
+  padding: 0;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.tp-edit fieldset.fields div {
+  margin: 4px 0;
+}
+
+.tp-edit fieldset.fields label {
+  display: block;
+  width: 7em;
+  float: left;
+}
+
+.tp-edit fieldset.fields .radius {
+  width: 3em;
+}
+
+#task-table {
+  border: 0px solid #999;
+}
+
+#task-table th,td {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+#task-table .table-tr-odd {
+  background-color: whiteSmoke;
+}
+
+#task-table tbody tr:hover {
+  background-color: #cccccc;
+}
+
+#task-table .table-tr-selected,
+#task-table .table-tr-selected:hover {
+  background-color: #ffffbb;
+}
+
+#task-export-tab-div {
+  position: relative;
+  min-height: 150px;
+}
+
+#task-export-tab-qrcode {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#task-export-tab-qrcode img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#task-export-tab-qrcode-text {
+  text-align: center;
+  clear: both;
+}
+
+#task-save-tab #task-save-name {
+  margin-left: 1em;
+}
+
+#task-save-tab .invalid {
+  background-color: #ff7f7f;
+}
+
+#task-table-container {
+/*  position: absolute; */
+  overflow: auto;
+  max-height: 20em;
+  min-width: 35em;
+/*  padding: 0 5px; */
+}
+
+#task-table {
+  width: 100%;
+}
+
+.dialog-tabs p div.buttons {
+  margin-top: 1.5em;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.button {
+  padding: 2px 0.2em;
+  margin: 2px 2px;
+  font-family: 'Lucida Grande',Verdna,Helvetica,Arial,'sans-serif';
+  font-size: 0.95em;
+  cursor: pointer;
+  border: 1px solid #999;
+  border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px;
+  background: whiteSmoke;
+}
+
+.button:hover {
+  background-color: #d5d5d5;
+  border-width: 2px;
+  margin: 1px;
+}
+
+.button:active {
+  border-color: #959595;
+  background: whiteSmoke;
+  color: #959595;
+}
+
+
+/*
+.buttons button,
+.buttons a,
+.dialog-tabs p div.buttons a {
+  background-color: whiteSmoke;
+  border: 1px #999 solid;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  cursor: pointer; 
+  margin: 0 3px;
+  padding: 2px 1em;
+}
+
+.buttons button:hover,
+.buttons a:hover,
+.task-edit-form p div.buttons a:hover {
+  background-color: #d5d5d5;
+  border-width: 2px;
+  margin: 0 2px;
+}*/
+
+#task-options-general {
+/*  visibility: hidden; */
+}
+
+#waypoint-files {
+  padding: 4px;
+}
+
+#waypoint-files-list {
+  list-style: none outside none;
+  padding: 0;
+}
+
+#waypoint-files-list li {
+  font-size: 0.9em;
+}
+
+#waypoint-files-list li:hover {
+  background-color: whiteSmoke;
+}
+
+#waypoint-files-list img {
+  float: right;
+  cursor: pointer;
+}
+
+#buttonbar {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  padding: 2px;
+  width: 23px;
+  background-color: #ffffff;
+ /* opacity: 0.8; */
+  opacity: 0.5;
+  z-index: 999;
+
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+
+  line-height: 0;
+}
+
+#buttonbar:hover {
+  opacity: 0.8;
+}
+
+#buttonbar img {
+  width: 25px;
+  height: 25px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding: 0;
+}
+
+#upload-waypoints-dialog fieldset {
+	border: 0;
+}
+
+#upload-waypoints-dialog form {
+	border-top: 1px #545a74 solid;
+	border-bottom: 1px #545a74 solid;
+	background: #e2e5f3;
+	margin: 20px 0;
+	padding: 10px;
+}
+
+#upload-waypoints-dialog fieldset legend {
+	color: #666;
+	margin: 0;
+	font-size: 1.5em;
+	font-weight: normal;
+	padding-bottom: 20px;
+}
+
+#upload-waypoints-dialog .formRow {
+	overflow: auto;
+	border-bottom: 1px #bcbcbc solid;
+	padding: 5px 0;
+	max-width: 100%;
+}
+
+#upload-waypoints-dialog .formRow label {
+	padding: 4px;
+	margin: 0 3px 0 0;
+	border-right: 1px #bcbcbc solid;
+}
+
+#upload-waypoints-dialog .progress {
+	margin: 5px 0;
+	height: 15px;
+	border-radius: 3px;
+	background: #545A74;
+}
+

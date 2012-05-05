@@ -1,0 +1,305 @@
+/*
+---
+description: Stylish and functional dialogs.
+license: MIT
+copyright: Copyright (c) 2011 by Max Lavrov (lavmax).
+authors: Max Lavrov (lavmax)
+...
+*/
+
+/* WINDOW STYLES */
+.mux-modal-overlay {
+	display: block;
+	background: black;
+	opacity: 0.5; filter: alpha(opacity = 50);
+	left: 0px;
+	top: 0px;
+	position: fixed;
+	width: 10000px; /* mobile safari hack */
+	height: 10000px; /* mobile safari hack */
+	z-index: 10000;
+}
+
+.mux-dialog-box {
+	display: inline-block;
+	border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px;
+	border: 1px solid #999;
+	font-size: 14px;	
+	font-family: 'Lucida Grande', Verdna, Helvetica, Arial, 'sans-serif';
+	overflow: hidden;
+	position: fixed;
+	top: 50px;
+	left: 100px;
+	z-index: 10000;
+	background-color: white;
+	min-height: 12.5em;
+	min-width: 23em;
+	outline: 0; /* to prevent Mozilla outline focused element */
+}
+
+.mux-dialog-box.mux-dialog-moving {
+	opacity: 0.9;
+	filter: alpha(opacity = 90);
+}
+
+.mux-dialog-dummy-header {
+	position: relative;
+	width: 1px;
+	height: 0px;
+}
+
+.mux-dialog-header {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	border-top-left-radius: inherit;
+	border-top-right-radius: inherit;
+	-moz-border-radius-topleft: inherit;
+	-moz-border-radius-topright: inherit;
+	-webkit-border-top-left-radius: inherit;
+	-webkit-border-top-right-radius: inherit;
+	padding: 0.5em 0px;
+	overflow: hidden;
+	cursor: default;
+	background: whiteSmoke; /* for unfocused window */
+	font-size: inherit;	
+	font-family: inherit;
+}
+
+.mux-dialog-header-dummy-title {
+	font-size: inherit;	
+	font-family: inherit;
+}
+
+.mux-dialog-header-title {
+	font-size: inherit;	
+	font-family: inherit;
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	left: 0px;
+	margin: 0.5em 1.5em 0.5em 1em;
+	color: #959595; /* for unfocused window */
+}
+
+/* ACTIVE WINDOW STYLE */
+.mux-dialog-box.mux-dialog-focused {
+	box-shadow: black 0px 0px 10px; -moz-box-shadow: black 0px 0px 10px; -webkit-box-shadow: black 0px 0px 10px;
+}
+
+.mux-dialog-box.mux-dialog-focused .mux-dialog-header {
+ 	background: #D5D5D5 -webkit-gradient(linear, 50% 0%, 50% 100%, from(whiteSmoke), to(#e5e5e5));
+}
+
+.mux-dialog-box.mux-dialog-focused .mux-dialog-header-title {
+	color: black;
+}
+/* end ACTIVE WINDOW STYLE */
+
+/* INVISIBLE HEADER */
+.mux-dialog-box .mux-dialog-header.mux-dialog-header-invisible {
+	background: transparent;
+}
+
+.mux-dialog-header.mux-dialog-header-invisible .mux-dialog-header-title {
+	display: none;
+}
+/* end INVISIBLE HEADER */
+
+.mux-dialog-header-close {
+	width: 16px;
+	height: 16px;
+	margin-right: 0.4em;
+	cursor: pointer;
+	position: absolute;
+	right: 0px;
+}
+
+.mux-dialog-header-close {
+	background-image: url(../images/MUX/MUX.Dialog.png);
+	background-position: 0px 0px;
+}
+
+.mux-dialog-header-close:hover {
+	background-position: -16px 0px;
+}
+
+.mux-dialog-header-close:active {
+	background-position: -32px 0px;
+}
+
+.mux-dialog-content {
+	border-radius: inherit; -moz-border-radius: inherit; -webkit-border-radius: inherit;
+	font-size: 1em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	padding-top: 0;
+/*	padding: 1em 1.5em 1.5em; */
+	position: relative;
+	overflow: hidden;
+	min-height: 4em;
+	min-width: 20em;
+}
+
+.mux-dialog-content.mux-dialog-header-invisible {
+	padding-top: 0px;
+}
+
+.mux-dialog-footer {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	border-bottom-left-radius: inherit;
+	border-bottom-right-radius: inherit;
+	-moz-border-radius-bottomleft: inherit;
+	-moz-border-radius-bottomright: inherit;
+	-webkit-border-bottom-left-radius: inherit;
+	-webkit-border-bottom-right-radius: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	overflow: hidden;
+	padding: 1em;
+}
+/*
+.mux-dialog-footer-border {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	margin: 0px 1em;
+	border-top: 1px solid #999;
+}
+*/
+
+.mux-dialog-footer-border {
+	visibility: hidden;
+}
+
+.mux-dialog-footer-buttons {
+	float: right;
+	font-size: inherit;
+}
+
+.mux-dialog-loader {
+	vertical-align: top;
+	margin-top: 0.4em;
+	display: inline-block;
+	zoom: 1;
+	*display:inline;
+}
+
+.mux-dialog-resize-icon {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	width: 12px;
+	height: 12px;
+	background-image: url(../images/MUX/MUX.Dialog.png);
+	background-position: -48px 0px;
+	border-bottom-right-radius: inherit; -moz-border-radius-bottomright: inherit; -webkit-border-bottom-right-radius: inherit;
+}
+
+/* BUTTON STYLES */
+.mux-button {
+	padding: 2px 0.2em;
+	margin: 2px 2px;
+	font-family: 'Lucida Grande',Verdna,Helvetica,Arial,'sans-serif';
+	font-size: 0.95em;
+	cursor: pointer;
+}
+
+.mux-button-title {
+	font-size: inherit;
+	font-weight: inherit;
+	text-decoration: inherit;
+}
+
+/* Button style ELLIPSE */
+.mux-button.mux-button-ellipse {
+	border: 1px solid #454545;
+	border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px;
+	background: #e5e5e5 -webkit-gradient(linear, 50% 0%, 50% 100%, from(whiteSmoke), to(#e5e5e5));
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.mux-button.mux-button-ellipse:focus,
+.mux-button.mux-button-ellipse:hover {
+	box-shadow: #959595 0px 0px 10px; -moz-box-shadow: #959595 0px 0px 10px; -webkit-box-shadow: #959595 0px 0px 10px;
+}
+
+.mux-button.mux-button-ellipse:active {
+	border-color: #959595;
+	background: whiteSmoke;
+	color: #959595;
+}
+
+/* Button style RECTANGLE */
+.mux-button.mux-button-rectangle {
+	border: 1px solid #999;
+	border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px;
+	background: whiteSmoke;
+}
+
+/*.mux-button.mux-button-rectangle:focus, */
+.mux-button.mux-button-rectangle:hover {
+/*	box-shadow: #959595 0px 0px 10px; -moz-box-shadow: #959595 0px 0px 10px; -webkit-box-shadow: #959595 0px 0px 10px;*/
+	background-color: #d5d5d5;
+	border-width: 2px;
+	margin: 0 1px;
+}
+
+.mux-button.mux-button-rectangle:active {
+	border-color: #959595;
+	background: whiteSmoke;
+	color: #959595;
+}
+
+/* Button style LINK */
+.mux-button.mux-button-link {
+	border: 1px solid transparent;
+	background: transparent;
+}
+
+.mux-button.mux-button-link:focus,
+.mux-button.mux-button-link:hover {
+	text-decoration: underline;
+}
+
+.mux-button.mux-button-link:active {
+	color: #959595;
+}
+
+/* Button additional style RED */
+/*
+.mux-button.mux-button-ellipse.mux-button-red,
+.mux-button.mux-button-rectangle.mux-button-red {
+	background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0.5, #AA0B17), color-stop(0.5, #B6252F), color-stop(0.89, #E67279));
+	background-image: -moz-linear-gradient(center bottom, #AA0B17 50%, #B6252F 50%, #E67279 89%);
+	border-color: #454545 #999 #999 #454545;
+	color: white;
+	font-weight: normal;
+	text-shadow: #505B66 0px -1px 0px;
+}
+
+.mux-button.mux-button-ellipse.mux-button-red:active,
+.mux-button.mux-button-rectangle.mux-button-red:active {
+	border-color: #999;
+	background: #E67279;
+	color: white;
+}
+*/
+
+/* GENERAL STYLES */
+.mux-hidden {
+	display: none !important;
+}
+
+.mux-invisible {
+	visibility: hidden !important;
+}

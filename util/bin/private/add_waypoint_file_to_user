@@ -1,0 +1,85 @@
+#!/usr/bin/python2.6
+
+import argparse
+import os, sys
+
+app_dir = os.path.abspath(__file__ + '/../../..')
+sys.path.append(os.path.join(app_dir, 'lib'))
+
+from prosoar.waypoints.seeyou_reader import parse_seeyou_waypoints
+from prosoar.waypoints.winpilot_reader import parse_winpilot_waypoints
+from prosoar.waypoints.seeyou_writer import write_seeyou_waypoints
+from prosoar.waypoints.list import WaypointList
+from prosoar.userconfig import read_user_config, write_user_config
+
+# main
+def main():
+  commandline = parse_cmd()
+
+  if not commandline.uid \
+     or not commandline.key \
+     or not commandline.file \
+     or not commandline.name:
+    raise RuntimeError('Not enough command line args given')
+
+  uid = {'uid': commandline.uid, 'key': commandline.key}
+
+  uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])
+  userconfig = read_user_config(uid)
+
+  if len(userconfig['tp_files']) >= 5:
+    raise RuntimeError('Too much waypoint files')
+
+  if not os.path.exists(uid_dir):
+    os.makedirs(uid_dir)
+
+  nextfile = len(userconfig['tp_files']) + 1
+
+  waypoint_file = 'turnpoints_' + str(nextfile) + '.cup'
+
+  waypoints = parse_waypoint_file(commandline.file, commandline.name)
+  write_seeyou_waypoints(waypoints, os.path.join(uid_dir, waypoint_file))
+
+  if os.path.getsize(os.path.join(uid_dir, waypoint_file)) == 0:
+    os.remove(os.path.join(uid_dir, waypoint_file))
+    raise RuntimeError('Could not convert given file')
+
+  userconfig['tp_files'].append( {'name': commandline.name,
+                                  'display': 1} )
+  write_user_config(uid, userconfig)
+
+
+# parse waypoint file
+def parse_waypoint_file(file, name):
+  f = open(file, 'r')
+
+  try:
+    if name.lower().endswith('.xcw') or name.lower().endswith('.dat'):
+      return parse_winpilot_waypoints(f)
+    elif name.lower().endswith('.cup'):
+      return parse_seeyou_waypoints(f)
+    else:
+      raise RuntimeError('Waypoint file {} has an unsupported format.'.format(file))
+
+  finally:
+    f.close()
+
+
+
+# parse command line args
+def parse_cmd():
+  parser = argparse.ArgumentParser(description = 'Add a waypoint file to a users waypoint files')
+
+  parser.add_argument('-u', action="store", dest="uid")
+  parser.add_argument('-k', action="store", dest="key")
+  parser.add_argument('-f', action="store", dest="file")
+  parser.add_argument('-n', action="store", dest="name")
+
+  commandline = parser.parse_args()
+
+  return commandline
+
+
+if __name__ == '__main__':
+  main()
+
