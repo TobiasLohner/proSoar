@@ -73,7 +73,6 @@ def main():
   shutil.copytree(os.path.join(web_dev_dir, 'css'), os.path.join(web_dir, 'css'))
   shutil.copy2(os.path.join(web_dev_dir, '.htaccess'), os.path.join(web_dir, '.htaccess'))
   shutil.copy2(os.path.join(web_dev_dir, 'index.html'), os.path.join(web_dir, 'index.html'))
-  shutil.copy2(os.path.join(web_dev_dir, 'prosoar.html'), os.path.join(web_dir, 'prosoar.html'))
 
 
   print "Done."
