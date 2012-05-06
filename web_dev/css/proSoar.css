@@ -306,6 +306,10 @@ body {
   min-height: 150px;
 }
 
+#task-export-tab-div a img {
+  border: 0;
+}
+
 #task-export-tab-qrcode {
   position: absolute;
   right: 0;
