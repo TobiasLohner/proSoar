@@ -87,10 +87,10 @@ var ProSoar = new Class({
     var width = bounds[2] - bounds[0];
     var height = bounds[3] - bounds[1];
 
-    var boundsExtended = [ (bounds[0]-width/2),
-                           (bounds[1]-height/2),
-                           (bounds[2]+width/2),
-                           (bounds[3]+height/2) ];
+    var boundsExtended = [ (bounds[0]-width/3),
+                           (bounds[1]-height/3),
+                           (bounds[2]+width/3),
+                           (bounds[3]+height/3) ];
 
     if (resolution <= 1222) {
       if (cause == 'moved') {
