@@ -167,14 +167,12 @@ var WaypointContainer = new Class({
   },
 
   addWaypointsFromJSON: function(fileId, data) {
-    if (!this.chunks['lon' + data.chunk.lon_left + 'lat' + data.chunk.lat_lower])
-      this.chunks['lon' + data.chunk.lon_left + 'lat' + data.chunk.lat_lower] = new Object();
-    if (this.chunks['lon' + data.chunk.lon_left + 'lat' + data.chunk.lat_lower][fileId]) return;
+    if (!this.chunks['lon' + data[0].chunk.lon_left + 'lat' + data[0].chunk.lat_lower])
+      this.chunks['lon' + data[0].chunk.lon_left + 'lat' + data[0].chunk.lat_lower] = new Object();
+    if (this.chunks['lon' + data[0].chunk.lon_left + 'lat' + data[0].chunk.lat_lower][fileId]) return;
 
-    this.chunks['lon' + data.chunk.lon_left + 'lat' + data.chunk.lat_lower][fileId] = true;
+    this.chunks['lon' + data[0].chunk.lon_left + 'lat' + data[0].chunk.lat_lower][fileId] = true;
     
-    delete data.chunk;
-
     var display = true;
 
     if (fileId != 0) {
@@ -184,13 +182,17 @@ var WaypointContainer = new Class({
       }
     }
 
-    Object.each(data, function(item, key, object) {
-      item.fileId = fileId;
-      item.display = display;
-      this.rt.insert({x: item.lon, y: item.lat,
-                      w: 0.0000001, h: 0.0000001}, // make items very small
-                     new Waypoint(item));
-    }, this);
+    var waypoints_len = data.length;
+
+    for (var i = 1; i != waypoints_len; i++) {
+      data[i].fileId = fileId;
+      data[i].display = display;
+      data[i].lon = Math.round(data[i].lon*10000000)/10000000;
+      data[i].lat = Math.round(data[i].lat*10000000)/10000000;
+      this.rt.insert({x: data[i].lon, y: data[i].lat,
+                      w: 0, h: 0}, // make items very small
+                     new Waypoint(data[i]));
+    }
 
 //    console.log("fire event: NewWaypointsAdded");
     this.fireEvent('NewWaypointsAdded');
@@ -221,15 +223,16 @@ var WaypointContainer = new Class({
   getByLonLat: function(lon, lat) {
     if (lon == null || lat == null) return this.dummyWaypoint;
 
-    var result = this.rt.search({x: lon, y: lat, w: 0.0000001, h: 0.0000001});
+    var result = this.rt.search({x: lon, y: lat, w: 0, h: 0});
 
     if (result.length == 0) return this.dummyWaypoint;
     else return result[0];
   },
 
   getInsideBounds: function(lon_left, lat_lower, lon_right, lat_upper) {
-    return this.rt.search({x: lon_left, y: lat_lower,
-                           w: (lon_right-lon_left), h: (lat_upper-lat_lower)});
+    var result = this.rt.search({x: lon_left, y: lat_lower,
+                                 w: (lon_right-lon_left), h: (lat_upper-lat_lower)});
+    return result;
   },
 
   getArray: function() {

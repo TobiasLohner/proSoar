@@ -33,18 +33,17 @@ def main():
       database[db_index_lon] = {}
 
     if db_index_lat not in database[db_index_lon]:
-      database[db_index_lon][db_index_lat] = {'chunk': {'lon_left': db_index_lon,
-                                                        'lat_lower': db_index_lat}}
+      database[db_index_lon][db_index_lat] = []
 
     position = len(database[db_index_lon][db_index_lat]) - 1
 
-    database[db_index_lon][db_index_lat][position] = {'lon': waypoint.lon,
+    database[db_index_lon][db_index_lat].append( {'lon': waypoint.lon,
                                                       'lat': waypoint.lat,
                                                       'name': waypoint.name,
                                                       'type': 'ALT',
                                                       'runwayDirection': waypoint.runway_dir,
                                                       'altitude': waypoint.altitude,
-                                                      'comment': waypoint.icao + ' ' + str(waypoint.freq) }
+                                                      'comment': waypoint.icao + ' ' + str(waypoint.freq) } )
 
 
   for lon in range(-180, 180, 5):
@@ -64,10 +63,15 @@ def main():
       if lat not in database[lon]:
         continue
 
+      sorted_database = sorted(database[lon][lat], key=lambda waypoint:(waypoint['lon'], waypoint['lat']))
+
+      sorted_database.insert(0, {'chunk':  {'lon_left': lon,
+                                            'lat_lower': lat}} )
+
       lat_file = os.path.join(lon_dir, 'lat' + str(lat))
 
       with open(lat_file, 'w') as f:
-        json.dump(database[lon][lat], f, indent=1)
+        json.dump(sorted_database, f, indent=1)
 
 
   print("Done!")

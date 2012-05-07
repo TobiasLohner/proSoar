@@ -37,8 +37,7 @@ def main():
   waypoints = parse_seeyou_waypoints(f)
   f.close()
 
-  database = {}
-  position = 1
+  database = []
 
   for waypoint in waypoints:
     if waypoint.lon >= tpfile_lon \
@@ -46,20 +45,22 @@ def main():
        and waypoint.lat >= tpfile_lat \
        and waypoint.lat < tpfile_lat + 5:
 
-      position = position + 1
-      database[position] = {'lon': waypoint.lon,
-                            'lat': waypoint.lat,
-                            'type': 'T',
-                            'altitude': waypoint.altitude,
-                            'name': unicode(waypoint.name, "ISO-8859-1"),
-                            'comment': ''}
+      database.append( {'lon': waypoint.lon,
+                        'lat': waypoint.lat,
+                        'type': 'T',
+                        'altitude': waypoint.altitude,
+                        'name': unicode(waypoint.name, "ISO-8859-1"),
+                        'comment': ''} )
 
-  database['chunk'] = {'lon_left': tpfile_lon,
-                       'lat_lower': tpfile_lat}
+  sorted_database = sorted(database, key=lambda waypoint:(waypoint['lon'], waypoint['lat']))
+
+  sorted_database.insert(0, {'chunk': {'lon_left': tpfile_lon,
+                                       'lat_lower': tpfile_lat} } )
+
   
   print "Content-type: text/html"
   print
-  print json.dumps(database, indent = 1)
+  print json.dumps(sorted_database, indent = 1)
 
 
 if __name__ == '__main__':
