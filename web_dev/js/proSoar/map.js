@@ -603,6 +603,8 @@ var MapWindow = new Class({
       mapId: point.id,
       position: point.parent.components.length,
       taskLength: point.parent.components.length,
+      lon: snapWaypoint?snapWaypoint.lon:null,
+      lat: snapWaypoint?snapWaypoint.lat:null,
       waypointId: snapWaypoint?snapWaypoint.waypointId:null
     });
 
@@ -710,6 +712,8 @@ var MapWindow = new Class({
             position: key+1,
             mapId: item.id,
             taskLength: evt.feature.geometry.components.length,
+            lon: snapWaypoint?snapWaypoint.lon:null,
+            lat: snapWaypoint?snapWaypoint.lat:null,
             waypointId: snapWaypoint?snapWaypoint.waypointId:null
           });
         }
@@ -767,6 +771,8 @@ var MapWindow = new Class({
       position: point.vertex.parent.components.length,
       mapId: point.vertex.id,
       taskLength: point.vertex.parent.components.length,
+      lon: snapWaypoint?snapWaypoint.lon:null,
+      lat: snapWaypoint?snapWaypoint.lat:null,
       waypointId: snapWaypoint?snapWaypoint.waypointId:null
     }); 
   },
