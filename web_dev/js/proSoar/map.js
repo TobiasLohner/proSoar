@@ -274,7 +274,7 @@ var MapWindow = new Class({
     this.turnpointArray = Array();
   },
 
-  addAirport: function(lon, lat, name, runwayDirection, waypointId) {
+  addAirport: function(lon, lat, name, runwayDirection) {
     var feature = new OpenLayers.Feature.Vector(
       new OpenLayers.Geometry.Point(lon, lat).transform(
         new OpenLayers.Projection("EPSG:4326"),
@@ -287,7 +287,6 @@ var MapWindow = new Class({
     feature.data.popupContentShortHTML =
       "<div class='header_airport'><img src='images/marker_airport.png' />"+name+"</div>";
 
-    feature.waypointId = waypointId;
     feature.lon = lon;
     feature.lat = lat;
 
@@ -309,7 +308,7 @@ var MapWindow = new Class({
     return this.airportArray;
   },
 
-  addTurnpoint: function(lon, lat, name, waypointId) {
+  addTurnpoint: function(lon, lat, name) {
 
     var feature = new OpenLayers.Feature.Vector(
       new OpenLayers.Geometry.Point(lon, lat).transform(
@@ -322,7 +321,6 @@ var MapWindow = new Class({
     feature.data.popupContentShortHTML =
       "<div class='header_turnpoint'><img src='images/marker_turnpoint.png' />"+name+"</div>";
 
-    feature.waypointId = waypointId;
     feature.lon = lon;
     feature.lat = lat;
 
@@ -604,8 +602,7 @@ var MapWindow = new Class({
       position: point.parent.components.length,
       taskLength: point.parent.components.length,
       lon: snapWaypoint?snapWaypoint.lon:null,
-      lat: snapWaypoint?snapWaypoint.lat:null,
-      waypointId: snapWaypoint?snapWaypoint.waypointId:null
+      lat: snapWaypoint?snapWaypoint.lat:null
     });
 
   },
@@ -713,8 +710,7 @@ var MapWindow = new Class({
             mapId: item.id,
             taskLength: evt.feature.geometry.components.length,
             lon: snapWaypoint?snapWaypoint.lon:null,
-            lat: snapWaypoint?snapWaypoint.lat:null,
-            waypointId: snapWaypoint?snapWaypoint.waypointId:null
+            lat: snapWaypoint?snapWaypoint.lat:null
           });
         }
       }.bind(this));
@@ -772,8 +768,7 @@ var MapWindow = new Class({
       mapId: point.vertex.id,
       taskLength: point.vertex.parent.components.length,
       lon: snapWaypoint?snapWaypoint.lon:null,
-      lat: snapWaypoint?snapWaypoint.lat:null,
-      waypointId: snapWaypoint?snapWaypoint.waypointId:null
+      lat: snapWaypoint?snapWaypoint.lat:null
     }); 
   },
 

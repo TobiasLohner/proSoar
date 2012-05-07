@@ -105,12 +105,12 @@ var ProSoar = new Class({
       if (item.isViewable()) {
         if (!item.isOnMap() && item.isAirport() && resolution <= 1222) {
           item.setMapId(this.map.addAirport(item.getLon(), item.getLat(),
-            item.getName(), item.getRunwayDirection(), key));
+            item.getName(), item.getRunwayDirection()));
           item.setOnMap(true);
         }
 
         if (!item.isOnMap() && item.isTurnpointOnly() && resolution <= 610) {
-          item.setMapId(this.map.addTurnpoint(item.getLon(), item.getLat(), item.getName(), key));
+          item.setMapId(this.map.addTurnpoint(item.getLon(), item.getLat(), item.getName()));
           item.setOnMap(true);
         }
       }
@@ -190,7 +190,6 @@ var ProSoar = new Class({
       this.task.gotoTurnpoint(position);
       this.task.setCurrentLonLat(e.point.lon, e.point.lat);
       
-      this.task.getCurrentTurnpoint().setWaypointId(e.waypointId); 
       this.task.getCurrentTurnpoint().setWaypointName(this.waypoints.getByLonLat(e.lon, e.lat).getName());
       this.task.getCurrentTurnpoint().setWaypointAltitude(this.waypoints.getByLonLat(e.lon, e.lat).getAltitude());
       this.task.getCurrentTurnpoint().setWaypointComment(this.waypoints.getByLonLat(e.lon, e.lat).getComment());
@@ -220,8 +219,7 @@ var ProSoar = new Class({
         sectorType = Task.prototype.types[this.task.getType()].defaults.sector;
 
       this.task.addAfterCurrent(e.point, sectorType, -1,
-        {id: e.waypointId,
-         name: this.waypoints.getByLonLat(e.lon, e.lat).getName(),
+        {name: this.waypoints.getByLonLat(e.lon, e.lat).getName(),
          altitude: this.waypoints.getByLonLat(e.lon, e.lat).getAltitude(),
          comment: this.waypoints.getByLonLat(e.lon, e.lat).getComment()
       });

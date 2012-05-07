@@ -13,9 +13,6 @@ var Turnpoint = new Class({
     // position in task
     this.position = a.options.position;
 
-    // id of waypoint this turnpoint resides on. null if no underlying waypoint
-    this.wpId = a.options.waypoint.id?a.options.waypoint.id:null;
-
     // name of waypoint this turnpoint resides on. "Free turnpoint" if no underlying waypoint
     this.wpName = a.options.waypoint.name?a.options.waypoint.name:"Free turnpoint";
     this.wpComment = a.options.waypoint.comment?a.options.waypoint.comment:"";
@@ -63,11 +60,6 @@ var Turnpoint = new Class({
 
   getSector: function() {
     return this.sector;
-  },
-
-  // return id of underlying waypoint
-  getWaypointId: function() {
-    return this.wpId;
   },
 
   // set next turnpoint
@@ -126,11 +118,6 @@ var Turnpoint = new Class({
       this.previousBearing = calculateBearing(this.getLonLat(), this.previous.getLonLat());
     else
       this.previousBearing = -1;
-  },
-
-  // set the id of the underlying waypoint
-  setWaypointId: function(wpId) {
-    this.wpId = wpId;
   },
 
   // set the name of the underlying waypoint
