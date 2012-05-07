@@ -301,7 +301,7 @@ var MapWindow = new Class({
     if (this.airportArray[id].popup)
       this.onWaypointUnselect(this.airportArray[id]);
 
-    this.airportArray[id] = null;
+    this.airportArray.splice(id, 1);
   },
 
   getAirportArray: function() {
@@ -335,7 +335,7 @@ var MapWindow = new Class({
     if (this.turnpointArray[id].popup)
       this.onWaypointUnselect(this.turnpointArray[id]);
 
-    this.turnpointArray[id] = null;
+    this.turnpointArray.splice(id, 1);
   },
 
   getTurnpointArray: function() {

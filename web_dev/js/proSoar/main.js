@@ -117,34 +117,32 @@ var ProSoar = new Class({
     }, this);
 
     // remove unused airports
-    Array.each(this.map.getAirportArray(), function(item, key, object) {
-      if (item == null) return;
-
-      if (item.lon < boundsExtended[0]
-          || item.lon > boundsExtended[2]
-          || item.lat < boundsExtended[1]
-          || item.lat > boundsExtended[3]) {
+    var airportArray = this.map.getAirportArray();
+    for (var i = airportArray.length-1; i >= 0; i--) {
+      if (airportArray[i].lon < boundsExtended[0]
+          || airportArray[i].lon > boundsExtended[2]
+          || airportArray[i].lat < boundsExtended[1]
+          || airportArray[i].lat > boundsExtended[3]) {
 
         //console.log("remove airport: " + this.waypoints.getById(item.waypointId).getName());
-        this.map.removeAirport(key);
-        this.waypoints.getByLonLat(item.lon, item.lat).setOnMap(false);
+        this.waypoints.getByLonLat(airportArray[i].lon, airportArray[i].lat).setOnMap(false);
+        this.map.removeAirport(i);
       }
-    }, this);
+    }
 
-   // remove unused turnpoints
-    Array.each(this.map.getTurnpointArray(), function(item, key, object) {
-      if (item == null) return;
-
-      if (item.lon < boundsExtended[0]
-          || item.lon > boundsExtended[2]
-          || item.lat < boundsExtended[1]
-          || item.lat > boundsExtended[3]) {
+    // remove unused turnpoints
+    var turnpointArray = this.map.getTurnpointArray();
+    for (var i = turnpointArray.length-1; i >= 0; i--) {
+      if (turnpointArray[i].lon < boundsExtended[0]
+          || turnpointArray[i].lon > boundsExtended[2]
+          || turnpointArray[i].lat < boundsExtended[1]
+          || turnpointArray[i].lat > boundsExtended[3]) {
 
         //console.log("remove turnpoint: " + this.waypoints.getById(item.waypointId).getName());
-        this.map.removeTurnpoint(key);
-        this.waypoints.getByLonLat(item.lon, item.lat).setOnMap(false);
+        this.waypoints.getByLonLat(turnpointArray[i].lon, turnpointArray[i].lat).setOnMap(false);
+        this.map.removeTurnpoint(i);
       }
-    }, this);
+    }
 
   },
   
