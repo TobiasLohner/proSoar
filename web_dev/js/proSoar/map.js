@@ -291,14 +291,14 @@ var MapWindow = new Class({
 
     this.airportLayer.addFeatures([feature]);
     
-    this.airportArray.push([feature, true]);
+    this.airportArray.push(feature);
     return this.airportArray.length - 1;
   },
  
   removeAirport: function(id) {
-    this.airportLayer.destroyFeatures(this.airportArray[id][0]);
-    if (this.airportArray[id][0].popup)
-      this.onWaypointUnselect(this.airportArray[id][0]);
+    this.airportLayer.destroyFeatures(this.airportArray[id]);
+    if (this.airportArray[id].popup)
+      this.onWaypointUnselect(this.airportArray[id]);
 
     this.airportArray[id] = null;
   },
@@ -320,14 +320,14 @@ var MapWindow = new Class({
     
     this.turnpointLayer.addFeatures([feature]);
     
-    this.turnpointArray.push([feature, true]);
+    this.turnpointArray.push(feature);
     return this.turnpointArray.length - 1;    
   },
   
   removeTurnpoint: function(id) {
-    this.turnpointLayer.destroyFeatures(this.turnpointArray[id][0]);
-    if (this.turnpointArray[id][0].popup)
-      this.onWaypointUnselect(this.turnpointArray[id][0]);
+    this.turnpointLayer.destroyFeatures(this.turnpointArray[id]);
+    if (this.turnpointArray[id].popup)
+      this.onWaypointUnselect(this.turnpointArray[id]);
 
     this.turnpointArray[id] = null;
   },
