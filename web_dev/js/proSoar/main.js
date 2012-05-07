@@ -116,19 +116,39 @@ var ProSoar = new Class({
           item.setMapId(this.map.addTurnpoint(item.getLon(), item.getLat(), item.getName(), key));
           item.setOnMap(true);
         }
-
-      // remove unused items
-      } else if (item.isOnMap()) {
-        
-        if (item.isTurnpointOnly()) {
-          this.map.removeTurnpoint(item.getMapId());
-         }
-        if (item.isAirport()) {
-          this.map.removeAirport(item.getMapId());
-        }
-        item.setOnMap(false);
       }
     }, this);
+
+    // remove unused airports
+    Array.each(this.map.getAirportArray(), function(item, key, object) {
+      if (item == null) return;
+
+      if (item.lon < boundsExtended[0]
+          || item.lon > boundsExtended[2]
+          || item.lat < boundsExtended[1]
+          || item.lat > boundsExtended[3]) {
+
+        //console.log("remove airport: " + this.waypoints.getById(item.waypointId).getName());
+        this.map.removeAirport(key);
+        this.waypoints.getById(item.waypointId).setOnMap(false);
+      }
+    }, this);
+
+   // remove unused turnpoints
+    Array.each(this.map.getTurnpointArray(), function(item, key, object) {
+      if (item == null) return;
+
+      if (item.lon < boundsExtended[0]
+          || item.lon > boundsExtended[2]
+          || item.lat < boundsExtended[1]
+          || item.lat > boundsExtended[3]) {
+
+        //console.log("remove turnpoint: " + this.waypoints.getById(item.waypointId).getName());
+        this.map.removeTurnpoint(key);
+        this.waypoints.getById(item.waypointId).setOnMap(false);
+      }
+    }, this);
+
   },
   
   // finish the task creation

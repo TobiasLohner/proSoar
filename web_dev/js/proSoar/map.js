@@ -288,6 +288,8 @@ var MapWindow = new Class({
       "<div class='header_airport'><img src='images/marker_airport.png' />"+name+"</div>";
 
     feature.waypointId = waypointId;
+    feature.lon = lon;
+    feature.lat = lat;
 
     this.airportLayer.addFeatures([feature]);
     
@@ -302,7 +304,11 @@ var MapWindow = new Class({
 
     this.airportArray[id] = null;
   },
-  
+
+  getAirportArray: function() {
+    return this.airportArray;
+  },
+
   addTurnpoint: function(lon, lat, name, waypointId) {
 
     var feature = new OpenLayers.Feature.Vector(
@@ -315,9 +321,11 @@ var MapWindow = new Class({
       "<div class='header_turnpoint'><img src='images/marker_turnpoint.png' />Turnpoint:</div><div class='name'>"+name+"</div>";
     feature.data.popupContentShortHTML =
       "<div class='header_turnpoint'><img src='images/marker_turnpoint.png' />"+name+"</div>";
-    
+
     feature.waypointId = waypointId;
-    
+    feature.lon = lon;
+    feature.lat = lat;
+
     this.turnpointLayer.addFeatures([feature]);
     
     this.turnpointArray.push(feature);
@@ -330,6 +338,10 @@ var MapWindow = new Class({
       this.onWaypointUnselect(this.turnpointArray[id]);
 
     this.turnpointArray[id] = null;
+  },
+
+  getTurnpointArray: function() {
+    return this.turnpointArray;
   },
 
   onWaypointSelect: function(feature) {
