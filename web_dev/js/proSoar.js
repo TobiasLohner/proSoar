@@ -7,6 +7,7 @@ function loadjsfile(filename){
   document.getElementsByTagName("head")[0].appendChild(fileref)
 }
 
+loadjsfile("js/proSoar/rtree.js");
 loadjsfile("js/proSoar/main.js");
 loadjsfile("js/proSoar/settings.js");
 loadjsfile("js/proSoar/map.js");

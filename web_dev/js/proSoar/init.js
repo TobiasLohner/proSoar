@@ -1,6 +1,7 @@
 window.addEvent('domready', function() {
   var classes = ['ProSoar', 'Task', 'FAI', 'MapWindow', 'Sector', 'Settings', 
-                 'TaskStore', 'Turnpoint', 'Waypoint', 'WaypointContainer'];
+                 'TaskStore', 'Turnpoint', 'Waypoint', 'WaypointContainer',
+                 'RTree'];
 
   this.timer = null;
 

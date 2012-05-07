@@ -9,6 +9,7 @@
 **/
 
 /**
+* @requires proSoar/rtree.js
 * @requires proSoar/dialogs.js
 * @requires proSoar/fai.js
 * @requires proSoar/map.js
@@ -130,7 +131,7 @@ var ProSoar = new Class({
 
         //console.log("remove airport: " + this.waypoints.getById(item.waypointId).getName());
         this.map.removeAirport(key);
-        this.waypoints.getById(item.waypointId).setOnMap(false);
+        this.waypoints.getByLonLat(item.lon, item.lat).setOnMap(false);
       }
     }, this);
 
@@ -145,7 +146,7 @@ var ProSoar = new Class({
 
         //console.log("remove turnpoint: " + this.waypoints.getById(item.waypointId).getName());
         this.map.removeTurnpoint(key);
-        this.waypoints.getById(item.waypointId).setOnMap(false);
+        this.waypoints.getByLonLat(item.lon, item.lat).setOnMap(false);
       }
     }, this);
 
@@ -194,9 +195,9 @@ var ProSoar = new Class({
       this.task.setCurrentLonLat(e.point.lon, e.point.lat);
       
       this.task.getCurrentTurnpoint().setWaypointId(e.waypointId); 
-      this.task.getCurrentTurnpoint().setWaypointName(this.waypoints.getById(e.waypointId).getName()); 
-      this.task.getCurrentTurnpoint().setWaypointAltitude(this.waypoints.getById(e.waypointId).getAltitude()); 
-      this.task.getCurrentTurnpoint().setWaypointComment(this.waypoints.getById(e.waypointId).getComment()); 
+      this.task.getCurrentTurnpoint().setWaypointName(this.waypoints.getByLonLat(e.lon, e.lat).getName());
+      this.task.getCurrentTurnpoint().setWaypointAltitude(this.waypoints.getByLonLat(e.lon, e.lat).getAltitude());
+      this.task.getCurrentTurnpoint().setWaypointComment(this.waypoints.getByLonLat(e.lon, e.lat).getComment());
       this.map.moveTurnpointSector(e.point, this.task.getCurrentTurnpoint().getSector().getId());
       this.updateTaskListDisplay('move', position);
       this.adjustTaskTPSectorOrientation(position);
@@ -224,9 +225,9 @@ var ProSoar = new Class({
 
       this.task.addAfterCurrent(e.point, sectorType, -1,
         {id: e.waypointId,
-         name: this.waypoints.getById(e.waypointId).getName(),
-         altitude: this.waypoints.getById(e.waypointId).getAltitude(),
-         comment: this.waypoints.getById(e.waypointId).getComment()
+         name: this.waypoints.getByLonLat(e.lon, e.lat).getName(),
+         altitude: this.waypoints.getByLonLat(e.lon, e.lat).getAltitude(),
+         comment: this.waypoints.getByLonLat(e.lon, e.lat).getComment()
       });
 //      this.task.getCurrentTurnpoint().setWaypointId(e.waypointId); 
 //      this.task.getCurrentTurnpoint().setWaypointName(this.waypoints.getById(e.waypointId).getName()); 
