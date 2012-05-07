@@ -1,7 +1,7 @@
 body {
   height: 100%;
 /*  font-family: 'Lucida Grande', Verdna, Helvetica, Arial, 'sans-serif'; */
-  font-family: Verdna, Helvetica, Arial, 'sans-serif';
+  font-family: Arial, 'sans-serif';
   font-size: 0.9em;
 }
 
@@ -355,7 +355,7 @@ body {
 .button {
   padding: 2px 0.2em;
   margin: 2px 2px;
-  font-family: 'Lucida Grande',Verdna,Helvetica,Arial,'sans-serif';
+/*  font-family: 'Lucida Grande',Verdna,Helvetica,Arial,'sans-serif'; */
   font-size: 0.95em;
   cursor: pointer;
   border: 1px solid #999;
