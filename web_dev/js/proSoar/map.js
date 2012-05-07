@@ -348,7 +348,12 @@ var MapWindow = new Class({
     if (feature.popup_hover) this.onWaypointHoverOut(feature);
     if (this.map.popup) this.onWaypointUnselect(this.map.popup); 
 
-    var popup = new OpenLayers.Popup.FramedCloud(
+    var FramedCloud = OpenLayers.Class(OpenLayers.Popup.FramedCloud, {
+      'autoSize': false,
+      'minSize': new OpenLayers.Size(150,40)
+    });
+
+    var popup = new FramedCloud(
       feature.id + "_popup",
       feature.geometry.getBounds().getCenterLonLat(),
       null,
@@ -364,9 +369,17 @@ var MapWindow = new Class({
       null,
       {displayClass: 'olPopup'} );
 
-    popup.autoSize = false;
+//    console.log(popup);
+//    console.log(popup_content_size);
+//    console.log(popup.getSafeContentSize(popup_content_size));
+
     //popup.contentSize = popup.getSafeContentSize(new OpenLayers.Size(180, 80));
-    popup.contentSize = popup.getSafeContentSize(popup_content_size);
+    //popup_content_size = popup.getSafeContentSize(popup_content_size);
+
+//    popup.autoSize = false;
+    popup_content_size.h += 35+9;
+    popup_content_size.w += 17;
+    popup.setSize(popup_content_size);
 
     feature.popup = popup;
     this.map.addPopup(popup);
@@ -405,8 +418,10 @@ var MapWindow = new Class({
 
     popup.keepInMap = false;
     popup.autoSize = false;
- //   popup_content_size.w += 0;
-    popup.contentSize = popup.getSafeContentSize(popup_content_size);
+//    popup_content_size.h += 5;
+//    popup_content_size.w += 5;
+    //popup.contentSize = popup.getSafeContentSize(popup_content_size);
+    popup.setSize(popup_content_size);
 
     popup.calculateRelativePosition = function() { return "br" };
     
