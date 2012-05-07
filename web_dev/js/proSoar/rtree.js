@@ -67,7 +67,9 @@ var RTree = function(width){
 	// every other (simple) method I found produced crap trees
 	// this skews insertions to prefering squarer and emptier nodes
 	RTree.Rectangle.squarified_ratio = function(l, w, fill) {
-	  // Area of new enlarged rectangle
+          if ((l+w) < 0.0001) return fill;
+
+          // Area of new enlarged rectangle
 	  var lperi = (l + w) / 2.0; // Average size of a side of the new rectangle
 	  var larea = l * w; // Area of new rectangle
 	  // return the ratio of the perimeter to the area - the closer to 1 we are, 
@@ -665,7 +667,8 @@ RTree.Rectangle = function(ix, iy, iw, ih) { // new Rectangle(bounds) or new Rec
  * @static function
  */
 RTree.Rectangle.overlap_rectangle = function(a, b) {
-	return(a.x < (b.x+b.w) && (a.x+a.w) > b.x && a.y < (b.y+b.h) && (a.y+a.h) > b.y);
+//	return(a.x < (b.x+b.w) && (a.x+a.w) > b.x && a.y < (b.y+b.h) && (a.y+a.h) > b.y);
+	return(a.x <= (b.x+b.w) && (a.x+a.w) >= b.x && a.y <= (b.y+b.h) && (a.y+a.h) >= b.y);
 };
 
 /* returns true if rectangle a is contained in rectangle b
