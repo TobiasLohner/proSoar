@@ -99,14 +99,10 @@ var ProSoar = new Class({
       }
     }    
 
-    Array.each(this.waypoints.getArray(), function(item, key, object) {
+    Array.each(this.waypoints.getInsideBounds(boundsExtended[0], boundsExtended[2],
+          boundsExtended[1], boundsExtended[3]), function(item, key, object) {
       // add items when within 2 times the viewport
-      if ((item.getLon() > boundsExtended[0]
-           && item.getLon() < boundsExtended[2]
-           && item.getLat() > boundsExtended[1]
-           && item.getLat() < boundsExtended[3])
-          && item.isViewable() ) {
-
+      if (item.isViewable()) {
         if (!item.isOnMap() && item.isAirport() && resolution <= 1222) {
           item.setMapId(this.map.addAirport(item.getLon(), item.getLat(),
             item.getName(), item.getRunwayDirection(), key));
