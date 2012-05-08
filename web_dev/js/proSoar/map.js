@@ -945,6 +945,22 @@ var MapWindow = new Class({
   removeFaiTriangle: function() {
     if (this.faiTriangle)
       this.taskFAILayer.removeFeatures([this.faiTriangle]);
+  },
+
+  calculateTriangleDirection: function(point1, point2, point3) {
+    var p1_p2 = calculateBearing(point1, point2);
+    var p2_p3 = calculateBearing(point2, point3);
+    var p3_p1 = calculateBearing(point3, point1);
+
+    var p1_p2_p3_angle = p2_p3 - (p1_p2+180);
+    var p2_p3_p1_angle = p3_p1 - (p2_p3+180);
+    var p3_p1_p2_angle = p1_p2 - (p3_p1+180);
+
+    p1_p2_p3_angle = p1_p2_p3_angle%360;
+    p2_p3_p1_angle = p2_p3_p1_angle%360;
+    p3_p1_p2_angle = p3_p1_p2_angle%360;
+
+    return (p1_p2_p3_angle + p2_p3_p1_angle + p3_p1_p2_angle + 360 > 0)?1:-1;
   }
 
 });
