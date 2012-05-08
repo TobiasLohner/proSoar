@@ -209,14 +209,14 @@ var MapWindow = new Class({
       maxResolution: 1222,
       styleMap: new OpenLayers.StyleMap({
         // Set the external graphic and background graphic images.
-        externalGraphic: "images/marker_airport_ws.png",
+        externalGraphic: "images/marker_airport.png",
 //        backgroundGraphic: "images/marker_middle_airport_shadow.png",
         // Makes sure the background graphic is placed correctly relative
         // to the external graphic.
-        graphicXOffset: -(32/2),
-        graphicYOffset: -(40/2),
-        graphicWidth: 32,
-        graphicHeight: 40,
+        graphicXOffset: -(23/2),
+        graphicYOffset: -(30/2),
+        graphicWidth: 23,
+        graphicHeight: 30,
 //        backgroundXOffset: -(31/2),
 //        backgroundYOffset: -(39/2),
 //        backgroundWidth: 31,
@@ -247,14 +247,14 @@ var MapWindow = new Class({
       maxResolution: 610,
       styleMap: new OpenLayers.StyleMap({
         // Set the external graphic and background graphic images.
-        externalGraphic: "images/marker_turnpoint_ws.png",
+        externalGraphic: "images/marker_turnpoint.png",
 //        backgroundGraphic: "images/marker_small_turnpoint_shadow.png",
         // Makes sure the background graphic is placed correctly relative
         // to the external graphic.
-        graphicXOffset: -(23/2),
-        graphicYOffset: -(23/2),
-        graphicWidth: 23,
-        graphicHeight: 23,
+        graphicXOffset: -(20/2),
+        graphicYOffset: -(20/2),
+        graphicWidth: 20,
+        graphicHeight: 20,
 //        backgroundXOffset: -(23/2),
 //        backgroundYOffset: -(23/2),
 //        backgroundWidth: 23,
