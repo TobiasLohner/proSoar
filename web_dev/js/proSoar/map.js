@@ -504,6 +504,13 @@ var MapWindow = new Class({
           strokeColor: "#3cff00",
           strokeOpacity: 0.7,
           strokeWidth: 9
+        }),
+        'faisector': new OpenLayers.Style({
+          fillColor: "${color}",
+          fillOpacity: 0.15,
+          strokeColor: "${color}",
+          strokeOpacity: 0.7,
+          strokeWidth: 2
         })
       }),
       'displayInLayerSwitcher': false
@@ -941,17 +948,20 @@ var MapWindow = new Class({
       this.faiTriangle.sector1 = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.LinearRing(
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2,
-          side, this.map.getProjectionObject()) ));
+          side, this.map.getProjectionObject()) ), { color: '#22ff00' } );
+      this.faiTriangle.sector1.renderIntent = 'faisector';
 
       this.faiTriangle.sector2 = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.LinearRing(
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point2, fai.point3,
-          side, this.map.getProjectionObject()) ));
+          side, this.map.getProjectionObject()) ), { color: '#ff4600' } );
+      this.faiTriangle.sector2.renderIntent = 'faisector';
 
       this.faiTriangle.sector3 = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.LinearRing(
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point3, fai.point1,
-          side, this.map.getProjectionObject()) ));
+          side, this.map.getProjectionObject()) ), { color: '#0064ff' } );
+      this.faiTriangle.sector3.renderIntent = 'faisector';
 
       this.taskFAILayer.addFeatures([this.faiTriangle.geometry, this.faiTriangle.sector1,
         this.faiTriangle.sector2, this.faiTriangle.sector3]);
