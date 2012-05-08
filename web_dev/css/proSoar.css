@@ -432,7 +432,7 @@ body {
   width: 23px;
   background-color: #ffffff;
  /* opacity: 0.8; */
-  opacity: 0.5;
+  opacity: 0.8;
   z-index: 999;
 
   -webkit-border-top-left-radius: 10px;
@@ -443,10 +443,6 @@ body {
   border-bottom-left-radius: 10px;
 
   line-height: 0;
-}
-
-#buttonbar:hover {
-  opacity: 0.8;
 }
 
 #buttonbar img {
