@@ -1105,6 +1105,62 @@ OpenLayers.Geometry.Polygon.createLine = function(origin, radius, projection)
   return ring;
 };
 
+OpenLayers.Geometry.Polygon.createFAITriangleSector = function(point1, point2, side, projection) {
+  var points = new Array();
+
+  if (side > 0) side = 1;
+  if (side <= 0) side = -1;
+
+  var gamma_min = (Math.acos(11/14)) * 180/Math.PI; // 38.2132 deg
+  var gamma_max = (Math.asin(23/98) + Math.PI/2) * 180/Math.PI; // 103.574 deg
+  var gamma_2_min = (Math.asin(11/14) - Math.asin(23/98)) * 180/Math.PI; // 38.2132 deg = Math.acos(11/14)
+  var steps = 20;
+
+  var p1_p2_angle = calculateBearing(point1, point2);
+  var p1_p2_dist = Util_distVincenty(point1, point2);
+
+  // first circle around point1
+  for (var i = 1; i <= steps; i++) {
+    var gamma = gamma_max - (gamma_max - gamma_min)/steps * i;
+    var angle = p1_p2_angle + side * gamma;
+    var distance = -14 * p1_p2_dist * (7 * Math.cos(gamma * Math.PI/180) - 18) / 275;
+
+    new_lonlat = OpenLayers.Util.destinationVincenty(point1, angle, distance);
+    new_lonlat.transform(new OpenLayers.Projection("EPSG:4326"), projection);
+    var geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
+
+    points.push(geom_point);
+  }
+
+  // second circle around point2
+  for (var i = 1; i <= steps; i++) {
+    var gamma = gamma_min + (gamma_max - gamma_min) / steps * i;
+    var angle = (p1_p2_angle+180) - side * gamma;
+    var distance = -14 * p1_p2_dist * (7 * Math.cos(gamma * Math.PI/180) - 18) / 275;
+
+    new_lonlat = OpenLayers.Util.destinationVincenty(point2, angle, distance);
+    new_lonlat.transform(new OpenLayers.Projection("EPSG:4326"), projection);
+    var geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
+
+    points.push(geom_point);
+  }
+
+  // third circle around point2
+  for (var i = 1; i <= steps*2; i++) {
+    var gamma = gamma_max - (gamma_max - gamma_2_min) / (steps*2) * i;
+    var angle = (p1_p2_angle+180) - side * gamma;
+    var distance = -275 * p1_p2_dist / (14 * (7 * Math.cos(gamma * Math.PI/180) - 18));
+
+    new_lonlat = OpenLayers.Util.destinationVincenty(point2, angle, distance);
+    new_lonlat.transform(new OpenLayers.Projection("EPSG:4326"), projection);
+    var geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
+
+    points.push(geom_point);
+  }
+
+  return points;
+};
+
 
 
 /*
