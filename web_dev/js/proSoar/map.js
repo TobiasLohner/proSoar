@@ -1176,9 +1176,9 @@ OpenLayers.Geometry.Polygon.createFAITriangleSector = function(point1, point2, s
   if (side > 0) side = 1;
   if (side <= 0) side = -1;
 
-  var gamma_min = (Math.acos(11/14)) * 180/Math.PI; // 38.2132 deg
-  var gamma_max = (Math.asin(23/98) + Math.PI/2) * 180/Math.PI; // 103.574 deg
-  var gamma_2_min = (Math.asin(11/14) - Math.asin(23/98)) * 180/Math.PI; // 38.2132 deg = Math.acos(11/14)
+  var gamma_min = 38.2132; // (Math.acos(11/14)) * 180/Math.PI; // 38.2132 deg
+  var gamma_max = 103.574; // (Math.asin(23/98) + Math.PI/2) * 180/Math.PI; // 103.574 deg
+  var gamma_2_min = 38.2132; //(Math.asin(11/14) - Math.asin(23/98)) * 180/Math.PI; // 38.2132 deg = Math.acos(11/14)
   var steps = 20;
 
   var p1_p2_angle = calculateBearing(point1, point2);
