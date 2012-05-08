@@ -930,21 +930,60 @@ var MapWindow = new Class({
     points.push(new OpenLayers.Geometry.Point(point3.lon, point3.lat));
     points.push(new OpenLayers.Geometry.Point(point1.lon, point1.lat));
 
-   if (!this.faiTriangle) {
-      this.faiTriangle = new OpenLayers.Feature.Vector(
-        new OpenLayers.Geometry.LineString(points));
-      this.taskFAILayer.addFeatures([this.faiTriangle]);
-    } else {
+    var side = this.calculateTriangleDirection(fai.point1, fai.point2, fai.point3);
 
-      this.faiTriangle.geometry.components = points;
-      this.taskFAILayer.drawFeature(this.faiTriangle);
+    if (!this.faiTriangle) {
+      this.faiTriangle = new Object();
+
+      this.faiTriangle.geometry = new OpenLayers.Feature.Vector(
+        new OpenLayers.Geometry.LineString(points));
+
+      this.faiTriangle.sector1 = new OpenLayers.Feature.Vector(
+        new OpenLayers.Geometry.LinearRing(
+        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2,
+          side, this.map.getProjectionObject()) ));
+
+      this.faiTriangle.sector2 = new OpenLayers.Feature.Vector(
+        new OpenLayers.Geometry.LinearRing(
+        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point2, fai.point3,
+          side, this.map.getProjectionObject()) ));
+
+      this.faiTriangle.sector3 = new OpenLayers.Feature.Vector(
+        new OpenLayers.Geometry.LinearRing(
+        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point3, fai.point1,
+          side, this.map.getProjectionObject()) ));
+
+      this.taskFAILayer.addFeatures([this.faiTriangle.geometry, this.faiTriangle.sector1,
+        this.faiTriangle.sector2, this.faiTriangle.sector3]);
+
+    } else {
+      this.faiTriangle.geometry.geometry.components = points;
+
+      this.faiTriangle.sector1.geometry.components =
+        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2,
+          side, this.map.getProjectionObject());
+
+      this.faiTriangle.sector2.geometry.components =
+        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point2, fai.point3,
+          side, this.map.getProjectionObject());
+
+      this.faiTriangle.sector3.geometry.components =
+        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point3, fai.point1,
+          side, this.map.getProjectionObject());
+
+      this.taskFAILayer.drawFeature(this.faiTriangle.geometry);
+      this.taskFAILayer.drawFeature(this.faiTriangle.sector1);
+      this.taskFAILayer.drawFeature(this.faiTriangle.sector2);
+      this.taskFAILayer.drawFeature(this.faiTriangle.sector3);
     } 
     
   },
 
   removeFaiTriangle: function() {
-    if (this.faiTriangle)
-      this.taskFAILayer.removeFeatures([this.faiTriangle]);
+    if (this.faiTriangle) {
+      this.taskFAILayer.removeFeatures([this.faiTriangle.geometry, this.faiTriangle.sector1,
+        this.faiTriangle.sector2, this.faiTriangle.sector3]);
+    }
   },
 
   calculateTriangleDirection: function(point1, point2, point3) {
