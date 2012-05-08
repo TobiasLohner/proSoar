@@ -1182,13 +1182,14 @@ OpenLayers.Geometry.Polygon.createFAITriangleSector = function(point1, point2, s
   var steps = 20;
 
   var p1_p2_angle = calculateBearing(point1, point2);
+  var p2_p1_angle = calculateBearing(point2, point1);
   var p1_p2_dist = Util_distVincenty(point1, point2);
 
   // first circle around point1
   for (var i = 1; i <= steps; i++) {
     var gamma = gamma_max - (gamma_max - gamma_min)/steps * i;
     var angle = p1_p2_angle + side * gamma;
-    var distance = -14 * p1_p2_dist * (7 * Math.cos(gamma * Math.PI/180) - 18) / 275;
+    var distance = solveSphericalFAISector_1(p1_p2_dist, gamma);
 
     new_lonlat = OpenLayers.Util.destinationVincenty(point1, angle, distance);
     new_lonlat.transform(new OpenLayers.Projection("EPSG:4326"), projection);
@@ -1200,8 +1201,8 @@ OpenLayers.Geometry.Polygon.createFAITriangleSector = function(point1, point2, s
   // second circle around point2
   for (var i = 1; i <= steps; i++) {
     var gamma = gamma_min + (gamma_max - gamma_min) / steps * i;
-    var angle = (p1_p2_angle+180) - side * gamma;
-    var distance = -14 * p1_p2_dist * (7 * Math.cos(gamma * Math.PI/180) - 18) / 275;
+    var angle = p2_p1_angle - side * gamma;
+    var distance = solveSphericalFAISector_1(p1_p2_dist, gamma);
 
     new_lonlat = OpenLayers.Util.destinationVincenty(point2, angle, distance);
     new_lonlat.transform(new OpenLayers.Projection("EPSG:4326"), projection);
@@ -1213,8 +1214,8 @@ OpenLayers.Geometry.Polygon.createFAITriangleSector = function(point1, point2, s
   // third circle around point2
   for (var i = 1; i <= steps*2; i++) {
     var gamma = gamma_max - (gamma_max - gamma_2_min) / (steps*2) * i;
-    var angle = (p1_p2_angle+180) - side * gamma;
-    var distance = -275 * p1_p2_dist / (14 * (7 * Math.cos(gamma * Math.PI/180) - 18));
+    var angle = p2_p1_angle - side * gamma;
+    var distance = solveSphericalFAISector_2(p1_p2_dist, gamma);
 
     new_lonlat = OpenLayers.Util.destinationVincenty(point2, angle, distance);
     new_lonlat.transform(new OpenLayers.Projection("EPSG:4326"), projection);
@@ -1226,7 +1227,42 @@ OpenLayers.Geometry.Polygon.createFAITriangleSector = function(point1, point2, s
   return points;
 };
 
+solveSphericalFAISector_1 = function(a, gamma) {
+  gamma = gamma * Math.PI/180;
+  var max_iter = 3;
+  var R_EARTH = 6378137;
 
+  // initial solution
+  var b = -14 * a * (7 * Math.cos(gamma) - 18) / 275;
+
+  b = b / R_EARTH;
+  a = a / R_EARTH;
+
+  for (var i = 0; i < max_iter; i++) {
+    b = 7/18 * (a + Math.acos(Math.cos(a)*Math.cos(b) + Math.sin(a)*Math.sin(b)*Math.cos(gamma)));
+  }
+
+  return b * R_EARTH;
+};
+
+
+solveSphericalFAISector_2 = function(a, gamma) {
+  gamma = gamma * Math.PI/180;
+  var max_iter = 3;
+  var R_EARTH = 6378137;
+
+  // initial solution
+  var b = -275 * a / (14 * (7 * Math.cos(gamma) - 18));
+
+  b = b / R_EARTH;
+  a = a / R_EARTH;
+
+  for (var i = 0; i < max_iter; i++) {
+    b = 18/7 * a - Math.acos(Math.cos(a)*Math.cos(b) + Math.sin(a)*Math.sin(b)*Math.cos(gamma));
+  }
+
+  return b * R_EARTH;
+};
 
 /*
 
