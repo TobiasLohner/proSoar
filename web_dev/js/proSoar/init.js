@@ -24,12 +24,6 @@ window.addEvent('domready', function() {
 
 var proSoar;
 
-// initialize gettext if not done already (as it would be in our dev environment)
-if (typeof(gt) == 'undefined') {
-  gt = new Gettext({ 'domain': initialLanguage });
-  function _ (msgid) { return gt.gettext(msgid); }
-}
-
 function init() {
 
   collabsible();
