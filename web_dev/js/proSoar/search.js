@@ -86,33 +86,40 @@ var SearchBox = new Class({
     var searchString = this.searchDiv.getElementById('search-box-input').value;
     var bbox = this.proSoar.map.getExtent();
 
-    var jsonRequest = new Request.JSON({
-      url: 'search/' + bbox + '/' + encodeURIComponent(searchString),
-      async: false,
-      secure: true,
-      method: 'get'
-    });
-
     this.searchDiv.empty();
     this.searchDiv.grab(new Element('p', {
       id: 'search-box-searching',
       html: '<b>Searching...</b>'
     }));
 
-    var result = jsonRequest.send();
+    var jsonRequest = new Request.JSON({
+      url: 'search/' + bbox + '/' + encodeURIComponent(searchString),
+      async: true,
+      secure: true,
+      method: 'get',
+      onSuccess: function(data) {
+        if (data[0]) {
+          this.proSoar.map.panTo(data[0].lon, data[0].lat, data[0].boundingbox);
+          this.close();
+        } else {
+          this.displayError();
+        }
+      }.bind(this),
+      onError: function(data) {
+        this.displayError();
+      }.bind(this),
+    });
 
-    if (result.status == 200 && result.response.json[0]) {
-      var res = result.response.json[0];
-      this.proSoar.map.panTo(res.lon, res.lat, res.boundingbox);
-      this.close();
-    } else {
-      this.searchDiv.empty();
-      this.searchDiv.grab(new Element('p', {
-        id: 'search-box-error',
-        html: '<b>Nothing found</b>'
-      }));
-      this.close.delay(3000, this);
-    }
+    var result = jsonRequest.send();
+  },
+
+  displayError: function() {
+    this.searchDiv.empty();
+    this.searchDiv.grab(new Element('p', {
+      id: 'search-box-error',
+      html: '<b>Nothing found</b>'
+    }));
+    this.close.delay(3000, this);
   }
 
 });
