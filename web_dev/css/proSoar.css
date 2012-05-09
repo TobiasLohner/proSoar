@@ -504,6 +504,10 @@ body {
   border-radius: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
+
+  position: absolute;
+  top: 140px;
+  right: 44px;
 }
 
 #search-box input {

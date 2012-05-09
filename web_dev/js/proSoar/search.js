@@ -66,14 +66,14 @@ var SearchBox = new Class({
 
     this.searchDiv.grab(searchBox);
     this.searchDiv.inject(document.body);
-    
+/*
     this.searchDiv.position({
         relativeTo: 'buttonbar-search',
         position: 'centerLeft',
         edge: 'centerRight',
         offset: { x: -20, y: 0 }
     });
-
+*/
     searchBox.focus();
   },
 
