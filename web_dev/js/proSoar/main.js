@@ -646,10 +646,16 @@ var ProSoar = new Class({
       return this.saveTask();
     }.bind(this));
 
-    $('buttonbar-search').addEvent('mouseover', function() {
-      var search = new SearchBox(this);
-      return true;
-    }.bind(this));
+    $('buttonbar-search').addEvents({
+      'mouseover': function() {
+        var search = new SearchBox(this);
+        return true;
+      }.bind(this),
+      'click': function() {
+        var search = new SearchBox(this);
+        return true;
+      }.bind(this)
+    });
 
   }
 
