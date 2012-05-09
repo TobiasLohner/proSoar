@@ -24,9 +24,11 @@ window.addEvent('domready', function() {
 
 var proSoar;
 
-// initialize gettext
-var gt = new Gettext({ 'domain': 'de' });
-function _ (msgid) { return gt.gettext(msgid); }
+// initialize gettext if not done already (as it would be in our dev environment)
+if (typeof(gt) == 'undefined') {
+  var gt = new Gettext({ 'domain': 'de' });
+  function _ (msgid) { return gt.gettext(msgid); }
+}
 
 function init() {
 

@@ -7,6 +7,10 @@ function loadjsfile(filename){
   document.getElementsByTagName("head")[0].appendChild(fileref)
 }
 
+// we need to initialize gettext here already for the dev environment
+var gt = new Gettext({ 'domain': 'de' });
+function _ (msgid) { return gt.gettext(msgid); }
+
 loadjsfile("js/proSoar/rtree.js");
 loadjsfile("js/proSoar/main.js");
 loadjsfile("js/proSoar/settings.js");
