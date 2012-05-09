@@ -65,11 +65,20 @@ def main():
   print "Writing merged OpenLayers javascript to " + os.path.join(web_dir, 'js', 'OpenLayers', OpenLayers_javascript)
   file(os.path.join(web_dir, 'js', 'OpenLayers', OpenLayers_javascript), 'w').write(minify(OpenLayers_merged))
 
+# compressing other javascript libs
+  print "Compressing misc. javascript libs"
+  js_files = [os.path.join('js', 'MooTools', 'mootools-core.js'), \
+              os.path.join('js', 'MooTools', 'mootools-more.js'), \
+              os.path.join('js', 'Gettext.js') ]
+
+  for f in js_files:
+    print f
+    temp = file(os.path.join(web_dev_dir, f), 'r').read()
+    file(os.path.join(web_dir, f), 'w').write(minify(temp))
+
 
 # copy all other files to their destination
   print "Copying the other files to " + web_dir
-  shutil.copy2(os.path.join(web_dev_dir, 'js', 'MooTools', 'mootools-core.js'), os.path.join(web_dir, 'js', 'MooTools', 'mootools-core.js'))
-  shutil.copy2(os.path.join(web_dev_dir, 'js', 'MooTools', 'mootools-more.js'), os.path.join(web_dir, 'js', 'MooTools', 'mootools-more.js'))
   shutil.copytree(os.path.join(web_dev_dir, 'images'), os.path.join(web_dir, 'images'))
   shutil.copytree(os.path.join(web_dev_dir, 'css'), os.path.join(web_dir, 'css'))
   shutil.copy2(os.path.join(web_dev_dir, '.htaccess'), os.path.join(web_dir, '.htaccess'))
