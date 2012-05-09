@@ -22,8 +22,10 @@ var SearchBox = new Class({
       events: {
         'mouseover': function(e) {
           clearTimeout(this.timer);
+          this.timer = this.close.delay(5000, this);
         }.bind(this),
         'mouseout': function(e) {
+          clearTimeout(this.timer);
           this.timer = this.close.delay(5000, this);
         }.bind(this),
         'keydown': function(e) {
@@ -52,7 +54,7 @@ var SearchBox = new Class({
           this.proSoar.map.deactivateKeyboardControls();
         }.bind(this),
         'blur': function(e) {
-          this.proSoar.map.activateKeyboardControls();
+//          this.proSoar.map.activateKeyboardControls();
         }.bind(this)
       }
     });
