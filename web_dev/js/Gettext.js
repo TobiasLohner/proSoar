@@ -1263,3 +1263,7 @@ Copyright (C) 2008, Joshua I. Miller E<lt>unrtst@cpan.orgE<gt>, all rights reser
 
 */
 
+// we need to initialize gettext already here...
+var gt = new Gettext({ 'domain': initialLanguage });
+function _ (msgid) { return gt.gettext(msgid); }
+

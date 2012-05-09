@@ -22,10 +22,6 @@
 * @requires proSoar/search.js
 **/
 
-// initialize gettext (again, needed by our dev environment)
-var gt = new Gettext({ 'domain': initialLanguage });
-function _ (msgid) { return gt.gettext(msgid); }
-
 var ProSoar = new Class({
 
   Implements: Events,
