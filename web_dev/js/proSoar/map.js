@@ -139,6 +139,13 @@ var MapWindow = new Class({
     ));
   },
 
+  panTo: function(lon, lat) {
+    var lonlat = new OpenLayers.LonLat(lon, lat).transform(
+      new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
+
+    this.map.panTo(lonlat);
+  },
+
   deactivateKeyboardControls: function() {
     this.keyboardControl.deactivate();
   },
