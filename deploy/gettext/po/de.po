@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-05-09 22:57+0200\n"
-"PO-Revision-Date: 2012-05-09 23:22+0200\n"
+"POT-Creation-Date: 2012-05-10 00:07+0200\n"
+"PO-Revision-Date: 2012-05-10 00:12+0200\n"
 "Last-Translator: Tobias Lohner <info@prosoar.de>\n"
 "Language-Team: Deutsch <>\n"
 "MIME-Version: 1.0\n"
@@ -18,26 +18,34 @@ msgstr ""
 "Generated-By: Babel 0.9.6\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
+#: ../../web_dev/js/proSoar/dialogs.js:50
+msgid "General"
+msgstr "Allgemein"
+
 #: ../../web_dev/js/proSoar/dialogs.js:56
 msgid "General Task Options"
 msgstr "Allgemeine Aufgabenoptionen"
 
-#: ../../web_dev/js/proSoar/dialogs.js:67 ../../web_dev/js/proSoar/main.js:431
+#: ../../web_dev/js/proSoar/dialogs.js:67 ../../web_dev/js/proSoar/main.js:435
 msgid "Start"
 msgstr "Start"
 
-#: ../../web_dev/js/proSoar/dialogs.js:69 ../../web_dev/js/proSoar/main.js:433
+#: ../../web_dev/js/proSoar/dialogs.js:69 ../../web_dev/js/proSoar/main.js:437
 msgid "Finish"
 msgstr "Ziel"
 
-#: ../../web_dev/js/proSoar/dialogs.js:71
-msgid "TP&nbsp;"
-msgstr "WP&nbsp;"
+#: ../../web_dev/js/proSoar/dialogs.js:71 ../../web_dev/js/proSoar/main.js:439
+msgid "TP"
+msgstr "WP"
 
 #: ../../web_dev/js/proSoar/dialogs.js:117
 #: ../../web_dev/js/proSoar/dialogs.js:679
 msgid "Task type"
 msgstr "Auftabentyp"
+
+#: ../../web_dev/js/proSoar/dialogs.js:164
+msgid "Sector type"
+msgstr "Sektoren-Typ"
 
 #: ../../web_dev/js/proSoar/dialogs.js:225
 msgid "Radius"
@@ -82,7 +90,7 @@ msgstr "Abbrechen"
 
 #: ../../web_dev/js/proSoar/dialogs.js:470
 msgid "New & Load Task"
-msgstr "Neue Aufrabe & Aufgabe laden"
+msgstr "Neue Aufgabe & Aufgabe laden"
 
 #: ../../web_dev/js/proSoar/dialogs.js:524
 msgid "New"
@@ -215,11 +223,7 @@ msgstr "Wegpunktedatei löschen..."
 msgid "Are you sure you want to delete waypoint file"
 msgstr "Bist du sicher, dass du diese Wegpunktedatei löschen willst:"
 
-#: ../../web_dev/js/proSoar/main.js:435
-msgid "TP"
-msgstr "WP"
-
-#: ../../web_dev/js/proSoar/main.js:516
+#: ../../web_dev/js/proSoar/main.js:520
 msgid "FAI triangle"
 msgstr "FAI Dreieck"
 
