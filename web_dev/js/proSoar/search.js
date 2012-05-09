@@ -92,7 +92,13 @@ var SearchBox = new Class({
       secure: true,
       method: 'get'
     });
-    
+
+    this.searchDiv.empty();
+    this.searchDiv.grab(new Element('p', {
+      id: 'search-box-searching',
+      html: '<b>Searching...</b>'
+    }));
+
     var result = jsonRequest.send();
 
     if (result.status == 200 && result.response.json[0]) {
@@ -100,7 +106,7 @@ var SearchBox = new Class({
       this.proSoar.map.panTo(res.lon, res.lat, res.boundingbox);
       this.close();
     } else {
-      this.searchDiv.getElementById('search-box-input').dispose();
+      this.searchDiv.empty();
       this.searchDiv.grab(new Element('p', {
         id: 'search-box-error',
         html: '<b>Nothing found</b>'
