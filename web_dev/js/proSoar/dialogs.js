@@ -47,7 +47,7 @@ var dlgEditTurnpoints = new Class({
     var tpTabContainer = new Element('ul');
 
     tpTabContainer.appendChild(new Element('li', {
-      html: 'General'
+      html: _('General')
     }) );
 
     var tpForm = new Element('div');
@@ -68,7 +68,7 @@ var dlgEditTurnpoints = new Class({
           case this.proSoar.task.getLength():
             tpName = _("Finish"); break;
           default:
-            tpName = _("TP&nbsp;") + (turnpoint.getPosition()-1);
+            tpName = _("TP") + "&nbsp;" + (turnpoint.getPosition()-1);
         }
 
         tpTabContainer.appendChild(new Element('li', {
@@ -161,7 +161,7 @@ var dlgEditTurnpoints = new Class({
     });
 
     var tpSectorFieldsLine = new Element('div', {
-      html: "<label for='task-turnpoint-edit-" + turnpoint.getPosition()+ "-sector'>Sector type:</label>"
+      html: "<label for='task-turnpoint-edit-" + turnpoint.getPosition()+ "-sector'>" + _("Sector type") + ":</label>"
     });
 
     var tempTaskType = $('task-options-tab-fields-type')?$('task-options-tab-fields-type').value:this.proSoar.task.getType();
