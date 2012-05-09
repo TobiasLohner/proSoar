@@ -23,6 +23,11 @@ window.addEvent('domready', function() {
 });
 
 var proSoar;
+
+// initialize gettext
+var gt = new Gettext({ 'domain': 'de' });
+function _ (msgid) { return gt.gettext(msgid); }
+
 function init() {
 
   collabsible();

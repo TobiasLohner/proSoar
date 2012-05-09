@@ -22,6 +22,13 @@ Developing
 Deploy proSoar as described below. Just change the webroot from web/ to web_dev/.
 
 
+Translating
+-----------
+
+Run deploy/gettext/prepare_pot.sh to generate the pot file in that directory. Copy
+the translated .po files to deploy/gettext/po/. They are automatically copied to
+the webroot when depolying.
+
 Deploying
 ---------
 

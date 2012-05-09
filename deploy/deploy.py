@@ -27,6 +27,7 @@ def main():
     shutil.rmtree(web_dir)
 
   os.mkdir(web_dir)
+  os.mkdir(os.path.join(web_dir, 'LC_MESSAGES'))
   os.mkdir(os.path.join(web_dir, 'js'))
   os.mkdir(os.path.join(web_dir, 'js', 'OpenLayers'))
   os.mkdir(os.path.join(web_dir, 'js', 'MooTools'))
@@ -73,6 +74,15 @@ def main():
   shutil.copytree(os.path.join(web_dev_dir, 'css'), os.path.join(web_dir, 'css'))
   shutil.copy2(os.path.join(web_dev_dir, '.htaccess'), os.path.join(web_dir, '.htaccess'))
   shutil.copy2(os.path.join(web_dev_dir, 'index.html'), os.path.join(web_dir, 'index.html'))
+
+# prepare translations
+  print "Converting .po to .json and copying them to " + web_dir
+  po_files = os.listdir(os.path.join('gettext', 'po'))
+  for po in po_files:
+    po = po[:-3]
+    process = subprocess.Popen(['./po2json', os.path.join('gettext', 'po', po + '.po')], stdout=subprocess.PIPE)
+    stdout,stderr = process.communicate()
+    file(os.path.join(web_dir, 'LC_MESSAGES', po + '.json'), 'w').write(stdout)
 
 
   print "Done."
