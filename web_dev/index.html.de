@@ -36,11 +36,11 @@
 
 <!-- task -->
       <li id="task">
-        <h3 id="task-header" class="collapse">Task</h3> 
+        <h3 id="task-header" class="collapse">Aufgabe</h3> 
         <div id="task-container" class="collapse">
           <div id="task-options">
-            <button class="button" onclick="javascript:proSoar.newTask();">Neu &amp; Laden</button>
-            <button class="button" onclick="javascript:proSoar.saveTask('open');">Speichern &amp; Export</button>
+            <button class="button" onclick="javascript:proSoar.newTask();">Neu/Laden</button>
+            <button class="button" onclick="javascript:proSoar.saveTask('open');">Speichern/Export</button>
           </div>
           <div id="task-turnpoints-container">
             <div id="task-turnpoints"></div>
@@ -60,7 +60,7 @@
 
 <!-- waypoints and airspace -->
       <li id="waypoints">
-        <h3 id="waypoints-header" class="collapse">Waypoints</h3>
+        <h3 id="waypoints-header" class="collapse">Wegpunkte</h3>
         <div id="waypoints-container" class="collapse">
           <div id="waypoint-files">
             Momentane Wegpunkt-Dateien:
@@ -72,7 +72,7 @@
 
 <!-- about -->
       <li id="about">
-        <h3 id="about-header" onclick="javascript:proSoar.aboutDialog();">About</h3>
+        <h3 id="about-header" onclick="javascript:proSoar.aboutDialog();">Impressum</h3>
 <!--        <div id="about-container" class="collapse">
           proSoar is free software released under the GNU/GPL licence.
           <br>
