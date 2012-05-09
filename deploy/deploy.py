@@ -82,7 +82,8 @@ def main():
   shutil.copytree(os.path.join(web_dev_dir, 'images'), os.path.join(web_dir, 'images'))
   shutil.copytree(os.path.join(web_dev_dir, 'css'), os.path.join(web_dir, 'css'))
   shutil.copy2(os.path.join(web_dev_dir, '.htaccess'), os.path.join(web_dir, '.htaccess'))
-  shutil.copy2(os.path.join(web_dev_dir, 'index.html'), os.path.join(web_dir, 'index.html'))
+  shutil.copy2(os.path.join(web_dev_dir, 'index.html.en'), os.path.join(web_dir, 'index.html.en'))
+  shutil.copy2(os.path.join(web_dev_dir, 'index.html.de'), os.path.join(web_dir, 'index.html.de'))
 
 # prepare translations
   print "Converting .po to .json and copying them to " + web_dir
