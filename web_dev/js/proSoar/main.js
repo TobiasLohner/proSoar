@@ -19,6 +19,7 @@
 * @requires proSoar/taskstore.js
 * @requires proSoar/turnpoint.js
 * @requires proSoar/waypoints.js
+* @requires proSoar/search.js
 **/
 
 var ProSoar = new Class({
@@ -643,6 +644,11 @@ var ProSoar = new Class({
 
     $('buttonbar-save').addEvent('click', function() {
       return this.saveTask();
+    }.bind(this));
+
+    $('buttonbar-search').addEvent('mouseover', function() {
+      var search = new SearchBox(this);
+      return true;
     }.bind(this));
 
   }
