@@ -120,7 +120,7 @@ createTPObj: function(turnpoint) {
 
   tpObj["lon"] = turnpoint.getLon();
   tpObj["lat"] = turnpoint.getLat();
-  tpObj["name"] = turnpoint.getWaypointName();
+  tpObj["name"] = (turnpoint.getWaypointName() == _("Free turnpoint"))?"Free turnpoint":turnpoint.getWaypointName();
   tpObj["altitude"] = turnpoint.getWaypointAltitude();
   tpObj["comment"] = turnpoint.getWaypointComment();
   tpObj["type"] = turnpoint.getSector().getType();

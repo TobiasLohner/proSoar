@@ -2,42 +2,42 @@ var Sector = new Class({
 
   types: {
     daec: {
-      name: "DAeC keyhole",
+      name: _("DAeC keyhole"),
       radius: false,
       radius_def: 10,
     },
     fai: {
-      name: "FAI quadrant", 
+      name: _("FAI quadrant"), 
       radius: false, 
       radius_def: 10,
     },
     faistart: {
-      name: "FAI start quadrant",
+      name: _("FAI start quadrant"),
       radius: false,
       radius_def: 1,
     },
     faifinish: {
-      name: "FAI finish quadrant",
+      name: _("FAI finish quadrant"),
       radius: false,
       radius_def: 1,
     },
     circle: { 
-      name: "Circle", 
+      name: _("Circle"), 
       radius: true,
       radius_def: 10,
     },
     startline: { 
-      name: "Start line",
+      name: _("Start line"),
       radius: true,
       radius_def: 10,
     },
     finishline: { 
-      name: "Finish line", 
+      name: _("Finish line"), 
       radius: true,
       radius_def: 0.5,
     },
     sector: {
-      name: "Sector",
+      name: _("Sector"),
       radius: true,
       radius_def: 10,
       inner_radius: true,
@@ -49,17 +49,17 @@ var Sector = new Class({
       norotate: true,
     },
     bgafixedcourse: {
-      name: "BGA Fixed Course",
+      name: _("BGA Fixed Course"),
       radius: false,
       radius_def: 10
     },
     bgaenhancedoption: {
-      name: "BGA Enh. Opt. Fixed Course",
+      name: _("BGA Enh. Opt. Fixed Course"),
       radius: false,
       radius_def: 10,
     },
     bgastartsector: {
-      name: "BGA Start Sector",
+      name: _("BGA Start Sector"),
       radius: false,
       radius_def: 5,
     },

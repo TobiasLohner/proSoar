@@ -53,7 +53,7 @@ var dlgEditTurnpoints = new Class({
     var tpForm = new Element('div');
     tpForm.setAttribute('class', 'dialog-tabs');
 
-    tpForm.appendChild(this.prepareTaskOptionsTab('General Task Options'));
+    tpForm.appendChild(this.prepareTaskOptionsTab(_('General Task Options')));
 
     this.proSoar.task.first();
 
@@ -64,11 +64,11 @@ var dlgEditTurnpoints = new Class({
         var tpName;
         switch (turnpoint.getPosition()) {
           case 1:
-            tpName = "Start"; break;
+            tpName = _("Start"); break;
           case this.proSoar.task.getLength():
-            tpName = "Finish"; break;
+            tpName = _("Finish"); break;
           default:
-            tpName = "TP&nbsp;" + (turnpoint.getPosition()-1);
+            tpName = _("TP&nbsp;") + (turnpoint.getPosition()-1);
         }
 
         tpTabContainer.appendChild(new Element('li', {
@@ -114,7 +114,7 @@ var dlgEditTurnpoints = new Class({
     });
 
     var taskOptionsFieldsLine = new Element('div', {
-      html: "<label for='task-options-tab-fields-type'>Task type:</label>"
+      html: "<label for='task-options-tab-fields-type'>" + _("Task type") + ":</label>"
     });
 
     var taskOptionsFieldsType = new Element('select', {
@@ -222,7 +222,7 @@ var dlgEditTurnpoints = new Class({
 
     tpSectorFieldsLine = new Element('div', {
       id: "task-turnpoint-edit-line-" + turnpoint.getPosition()+ "-radius",
-      html: "<label for='task-turnpoint-edit-" + turnpoint.getPosition()+ "-radius'>Radius:</label>",
+      html: "<label for='task-turnpoint-edit-" + turnpoint.getPosition()+ "-radius'>" + _("Radius") + ":</label>",
       styles: {
         visibility: Sector.prototype.types[turnpoint.getSector().getType()].radius?'visible':'hidden'
       }
@@ -235,13 +235,13 @@ var dlgEditTurnpoints = new Class({
     tpSectorRadius.setAttribute('value', turnpoint.getSector().getRadius());
 
     tpSectorFieldsLine.appendChild(tpSectorRadius);
-    tpSectorFieldsLine.innerHTML += "&nbsp;km";
+    tpSectorFieldsLine.innerHTML += _("&nbsp;km");
     tpSectorFields.appendChild(tpSectorFieldsLine);
 
 
     tpSectorFieldsLine = new Element('div', {
       id: "task-turnpoint-edit-line-" + turnpoint.getPosition()+ "-innerradius",
-      html: "<label for='task-turnpoint-edit-" + turnpoint.getPosition()+ "-innerradius'>Inner Radius:</label>",
+      html: "<label for='task-turnpoint-edit-" + turnpoint.getPosition()+ "-innerradius'>" + _("Inner Radius") + ":</label>",
       styles: {
         visibility: Sector.prototype.types[turnpoint.getSector().getType()].inner_radius?'visible':'hidden'
       }
@@ -254,13 +254,13 @@ var dlgEditTurnpoints = new Class({
     tpSectorInnerRadius.setAttribute('value', turnpoint.getSector().getInnerRadius());
 
     tpSectorFieldsLine.appendChild(tpSectorInnerRadius);
-    tpSectorFieldsLine.innerHTML += "&nbsp;km";
+    tpSectorFieldsLine.innerHTML += _("&nbsp;km");
     tpSectorFields.appendChild(tpSectorFieldsLine);
 
 
     tpSectorFieldsLine = new Element('div', {
       id: "task-turnpoint-edit-line-" + turnpoint.getPosition()+ "-startradial",
-      html: "<label for='task-turnpoint-edit-" + turnpoint.getPosition()+ "-startradial'>Start Radial:</label>",
+      html: "<label for='task-turnpoint-edit-" + turnpoint.getPosition()+ "-startradial'>" + _("Start Radial") + ":</label>",
       styles: {
         visibility: Sector.prototype.types[turnpoint.getSector().getType()].start_radial?'visible':'hidden'
       }
@@ -273,13 +273,13 @@ var dlgEditTurnpoints = new Class({
     tpSectorStartRadial.setAttribute('value', turnpoint.getSector().getStartRadial());
 
     tpSectorFieldsLine.appendChild(tpSectorStartRadial);
-    tpSectorFieldsLine.innerHTML += "&nbsp;&deg;";
+    tpSectorFieldsLine.innerHTML += _("&nbsp;&deg;");
     tpSectorFields.appendChild(tpSectorFieldsLine);
 
 
     tpSectorFieldsLine = new Element('div', {
       id: "task-turnpoint-edit-line-" + turnpoint.getPosition()+ "-endradial",
-      html: "<label for='task-turnpoint-edit-" + turnpoint.getPosition()+ "-endradial'>End Radial:</label>",
+      html: "<label for='task-turnpoint-edit-" + turnpoint.getPosition()+ "-endradial'>" + _("End Radial") + ":</label>",
       styles: {
         visibility: Sector.prototype.types[turnpoint.getSector().getType()].end_radial?'visible':'hidden'
       }
@@ -292,7 +292,7 @@ var dlgEditTurnpoints = new Class({
     tpSectorEndRadial.setAttribute('value', turnpoint.getSector().getEndRadial());
 
     tpSectorFieldsLine.appendChild(tpSectorEndRadial);
-    tpSectorFieldsLine.innerHTML += "&nbsp;&deg;";
+    tpSectorFieldsLine.innerHTML += _("&nbsp;&deg;");
     tpSectorFields.appendChild(tpSectorFieldsLine);
 
     tpSectorSelect.addEvent('change', function(e) {
@@ -335,7 +335,7 @@ var dlgEditTurnpoints = new Class({
 
     var tpSectorAccept = new Element('button', {
       'class': 'button',
-      'html': 'Accept',
+      'html': _('Accept'),
       events: {
         click: function() { return this.accept(); }.bind(this)
       }
@@ -345,7 +345,7 @@ var dlgEditTurnpoints = new Class({
 
     var tpSectorCancel = new Element('button', {
       'class': 'button',
-      'html': 'Cancel',
+      'html': _('Cancel'),
       events: {
         click: function() { return this.cancel(); }.bind(this)
       }
@@ -467,7 +467,7 @@ var dlgNewTask = new Class({
 
     this.dialog = new MUX.Dialog({
       modal: true,
-      title: 'New & Load Task',
+      title: _('New & Load Task'),
       content: this.prepareNewTaskContent(),
 //        content: $('new-task-dialog').clone(),
       autoOpen: false,
@@ -521,24 +521,24 @@ var dlgNewTask = new Class({
 
     var tabContainer = document.createElement('ul');
     tabContainer.appendChild(new Element('li', {
-      html: 'New'
+      html: _('New')
     }) );
 
     tabContainer.appendChild(new Element('li', {
-      html: 'Load'
+      html: _('Load')
     }) );
 
     tabContainer.appendChild(document.createElement('hr'));
     newTaskContent.insertBefore(tabContainer, newTaskContent.firstChild);
 
-    var newTaskTab = this.prepareTaskOptionsTab('New Task');
+    var newTaskTab = this.prepareTaskOptionsTab(_('New Task'));
     var buttons = new Element('div', {
       'class': 'buttons'
     });
 
     buttons.grab(new Element('button', {
       'class': 'button',
-      html: "New Task",
+      html: _("New Task"),
       events: {
         click: function() { return this.newTask(); }.bind(this)
       }
@@ -547,7 +547,7 @@ var dlgNewTask = new Class({
 
     buttons.grab(new Element('button', {
       'class': 'button',
-      html: "Cancel",
+      html: _("Cancel"),
       events: {
         click: function() { return this.cancel(); }.bind(this)
       }
@@ -566,7 +566,7 @@ var dlgNewTask = new Class({
 
     buttons.grab(new Element('button', {
       'class': 'button',
-      html: "Load Task",
+      html: _("Load Task"),
       events: {
         click: function() { return this.loadTask(); }.bind(this)
       }
@@ -575,7 +575,7 @@ var dlgNewTask = new Class({
 
     buttons.grab(new Element('button', {
       'class': 'button',
-      html: "Cancel",
+      html: _("Cancel"),
       events: {
         click: function() { return this.cancel(); }.bind(this)
       }
@@ -597,7 +597,7 @@ var dlgNewTask = new Class({
   prepareLoadTaskTab: function() {
     var taskLoadTab = new Element('p', {
       id: "task-load-tab",
-      html: "<span class='title'>Select task to load</span>"
+      html: "<span class='title'>" + _("Select task to load") + "</span>"
     });
 
     var taskTableContainer = new Element('div', {
@@ -608,7 +608,7 @@ var dlgNewTask = new Class({
       properties: {
         id: 'task-table'
       },
-      headers: ['Task Name', 'Type', 'Distance', 'Turnpoints', 'Last Modified', ''],
+      headers: [_('Task Name'), _('Type'), _('Distance'), _('Turnpoints'), _('Last Modified'), ''],
       parsers: ['string', 'string', 'float', 'number', 'date', ''],
       zebra: true,
       sortable: true,
@@ -620,9 +620,9 @@ var dlgNewTask = new Class({
     Array.each(this.proSoar.settings.getTaskFiles(), function(item, key, object) {
       var task_type = '';
       switch (item.type) {
-        case 'racing': task_type = 'Racing'; break;
-        case 'aat': task_type = 'AAT'; break;
-        case 'fai': task_type = 'FAI'; break;
+        case 'racing': task_type = _('Racing'); break;
+        case 'aat': task_type = _('AAT'); break;
+        case 'fai': task_type = _('FAI'); break;
       }
 
       var date = new Date().parse(item.date);
@@ -630,7 +630,7 @@ var dlgNewTask = new Class({
       taskTable.push([
         {content: item.name, properties: { 'class': 'name' } },
         task_type,
-        {content: item.distance + '&nbsp;km'},
+        {content: item.distance + _('&nbsp;km')},
         item.turnpoints,
         {content: date.format('%x %X')}, //properties: { 'value': date.format('%s') } },
         new Element('img', {
@@ -676,7 +676,7 @@ var dlgNewTask = new Class({
     });
 
     var taskOptionsFieldsLine = new Element('div', {
-      html: "<label for='task-options-tab-fields-type'>Task type:</label>"
+      html: "<label for='task-options-tab-fields-type'>" + _("Task type") + ":</label>"
     });
 
     var taskOptionsFieldsType = new Element('select', {
@@ -719,20 +719,20 @@ var dlgSaveTask = new Class({
       if (this.proSoar.dialogOverlay) return;
 
       if (this.proSoar.task.getLength() < 2) {
-        alert("Task must have at least start and finish");
+        alert(_("Task must have at least start and finish"));
         return;
       }
 
       var tempTask = this.proSoar.taskStore.toTempJSON(this.proSoar.task);
 
       if (tempTask.status != 200) {
-        alert("An unknown error occured. Please try again.");
+        alert(_("An unknown error occured. Please try again."));
         return;
       }
 
       this.dialog = new MUX.Dialog({
         modal: true,
-        title: 'Save & Export Task',
+        title: _('Save & Export Task'),
         content: this.prepareSaveTaskContent(tempTask.response.json),
 //        content: $('new-task-dialog').clone(),
         autoOpen: false,
@@ -751,7 +751,7 @@ var dlgSaveTask = new Class({
       var inputValidation = /^[^&+/;<>]*$/
       if ($('task-save-name').value.search(inputValidation) == -1
           || $('task-save-name').value == '') {
-        alert("Invalid task name");
+        alert(_("Invalid task name"));
         return;
       }
 
@@ -786,11 +786,11 @@ var dlgSaveTask = new Class({
 
     var tabContainer = document.createElement('ul');
     tabContainer.appendChild(new Element('li', {
-      html: 'Export'
+      html: _('Export')
     }) );
 
     tabContainer.appendChild(new Element('li', {
-      html: 'Save'
+      html: _('Save')
     }) );
 
     tabContainer.appendChild(document.createElement('hr'));
@@ -811,7 +811,7 @@ var dlgSaveTask = new Class({
 */
     buttons.grab(new Element('button', {
       'class': 'button',
-      html: "Close",
+      html: _("Close"),
       events: {
         click: function() { return this.cancel(); }.bind(this)
       }
@@ -830,7 +830,7 @@ var dlgSaveTask = new Class({
 
     buttons.grab(new Element('button', {
       'class': 'button',
-      html: "Save Task",
+      html: _("Save Task"),
       events: {
         click: function() { return this.saveTask(); }.bind(this)
       }
@@ -839,7 +839,7 @@ var dlgSaveTask = new Class({
 
     buttons.grab(new Element('button', {
       'class': 'button',
-      html: "Cancel",
+      html: _("Cancel"),
       events: {
         click: function() { return this.cancel(); }.bind(this)
       }
@@ -860,7 +860,7 @@ var dlgSaveTask = new Class({
   prepareTaskExportTab: function(tempTask) {
     var taskExportTab = new Element('p', {
       id: "task-export-tab",
-      html: "<span class='title'>Select your file format:</span><br>",
+      html: "<span class='title'>" + _("Select your file format") + ":</span><br>",
       style: {
         position: 'relative'
       }
@@ -911,7 +911,7 @@ var dlgSaveTask = new Class({
 
     qrCode.grab(new Element('div', {
       id: 'task-export-tab-qrcode-text',
-      html: 'QR Code'
+      html: _('QR Code')
     }) );
 
 
@@ -934,7 +934,7 @@ var dlgSaveTask = new Class({
       properties: {
         id: 'task-table'
       },
-      headers: ['Task Name', 'Type', 'Distance', 'Turnpoints', 'Last Modified', ''],
+      headers: [_('Task Name'), _('Type'), _('Distance'), _('Turnpoints'), _('Last Modified'), ''],
       parsers: ['string', 'string', 'float', 'number', 'date', ''],
       zebra: true,
       sortable: true,
@@ -951,9 +951,9 @@ var dlgSaveTask = new Class({
     Array.each(this.proSoar.settings.getTaskFiles(), function(item, key, object) {
       var task_type = '';
       switch (item.type) {
-        case 'racing': task_type = 'Racing'; break;
-        case 'aat': task_type = 'AAT'; break;
-        case 'fai': task_type = 'FAI'; break;
+        case 'racing': task_type = _('Racing'); break;
+        case 'aat': task_type = _('AAT'); break;
+        case 'fai': task_type = _('FAI'); break;
       }
       
       var date = new Date().parse(item.date);
@@ -961,7 +961,7 @@ var dlgSaveTask = new Class({
       taskTable.push([
         {content: item.name, properties: { 'class': 'name' } },
         task_type,
-        {content: item.distance + '&nbsp;km', properties: { 'value': item.distance } },
+        {content: item.distance + _('&nbsp;km'), properties: { 'value': item.distance } },
         item.turnpoints,
         {content: date.format('%x %X')}, //properties: { 'value': date.format('%s') } },
         new Element('img', {
@@ -979,9 +979,9 @@ var dlgSaveTask = new Class({
 
     var task_type = '';
     switch (this.proSoar.task.getType()) {
-      case 'racing': task_type = 'Racing'; break;
-      case 'aat': task_type = 'AAT'; break;
-      case 'fai': task_type = 'FAI'; break;
+      case 'racing': task_type = _('Racing'); break;
+      case 'aat': task_type = _('AAT'); break;
+      case 'fai': task_type = _('FAI'); break;
     }
 
     taskTable.reSort();
@@ -989,7 +989,7 @@ var dlgSaveTask = new Class({
     taskSaveTab.grab(taskTableContainer);
 
     var taskSaveInput = new Element('div', {
-      html: "<br><label for='task-save-name'>Save as:</label>"
+      html: "<br><label for='task-save-name'>" + _("Save as") + ":</label>"
     });
 
     taskSaveInput.grab(new Element('input', {
@@ -1041,7 +1041,7 @@ var dlgAbout = new Class({
 
       this.dialog = new MUX.Dialog({
         modal: true,
-        title: 'About',
+        title: _('About'),
         content: this.prepareContent(),
 //        content: $('new-task-dialog').clone(),
         autoOpen: false,
@@ -1067,7 +1067,7 @@ var dlgAbout = new Class({
     
     buttons.grab(new Element('button', {
       'class': 'button',
-      html: "Close",
+      html: _("Close"),
       events: {
         click: function() { return this.dialog.close(); }.bind(this)
       }
@@ -1088,7 +1088,7 @@ var dlgWaypointUpload = new Class({
 
     this.dialog = new MUX.Dialog({
       modal: true,
-      title: 'Add Waypoint File...',
+      title: _('Add Waypoint File...'),
       content: this.prepareContent(),
       autoOpen: false,
       onClose: function() { this.close(); }.bind(this)
@@ -1148,7 +1148,7 @@ var dlgWaypointUpload = new Class({
       type: 'submit',
       id: 'waypoint-upload-submit',
       name: 'waypoint-upload-submit',
-      value: 'Add'
+      value: _('Add')
     }) );
 
     form.grab(formRow);
@@ -1181,7 +1181,7 @@ var dlgDeleteWaypointFile = new Class({
 
     this.dialog = new MUX.Dialog({
       modal: true,
-      title: 'Delete Waypoint File...',
+      title: _('Delete Waypoint File...'),
       content: this.prepareContent(fileId),
       autoOpen: false,
       onClose: function() { this.close(); }.bind(this)
@@ -1212,7 +1212,7 @@ var dlgDeleteWaypointFile = new Class({
 
     content.grab(new Element('p', {
       id: 'delete-waypoint-file-text',
-      html: 'Are you sure you want to delete waypoint file<br />' +
+      html: _('Are you sure you want to delete waypoint file') + '<br />' +
             '<div style="text-align:center; font-weight: bold;">"' + filename + '"?</div>'
     }) );
 
@@ -1222,7 +1222,7 @@ var dlgDeleteWaypointFile = new Class({
 
     var delWPAccept = new Element('button', {
       'class': 'button',
-      'html': 'Accept',
+      'html': _('Accept'),
       events: {
         click: function() { return this.deleteWaypointFileAccept(fileId); }.bind(this)
       }
@@ -1231,7 +1231,7 @@ var dlgDeleteWaypointFile = new Class({
 
     var delWPCancel = new Element('button', {
       'class': 'button',
-      'html': 'Cancel',
+      'html': _('Cancel'),
       events: {
         click: function() { return this.dialog.close(); }.bind(this)
       }

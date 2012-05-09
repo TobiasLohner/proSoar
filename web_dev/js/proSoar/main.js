@@ -428,11 +428,11 @@ var ProSoar = new Class({
 
     switch (turnpoint.getPosition()) {
       case 1:
-        tpNameString = "Start:&nbsp;"; break;
+        tpNameString = _("Start") + ":&nbsp;"; break;
       case this.task.getLength():
-        tpNameString = "Finish:&nbsp;"; break;
+        tpNameString = _("Finish") + ":&nbsp;"; break;
       default:
-        tpNameString = "TP&nbsp;" + (turnpoint.getPosition()-1) + ":&nbsp;";
+        tpNameString = _("TP") + "&nbsp;" + (turnpoint.getPosition()-1) + ":&nbsp;";
     }
 
     tpNameString += turnpoint.getWaypointName(); //getWaypointId()?
@@ -517,7 +517,7 @@ var ProSoar = new Class({
     var faiDistance = this.task.getFaiTriangle().isFAI?this.task.getFaiTriangle().distance:0;
     faiDistance = Math.round(faiDistance/100)/10;
 
-    $('task-is-fai').set('text', faiDistance?'FAI triangle ('+faiDistance+' km)':'');
+    $('task-is-fai').set('text', faiDistance?_('FAI triangle') + ' ('+faiDistance+' km)':'');
   },
 
   newTask: function() {

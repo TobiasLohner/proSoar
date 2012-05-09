@@ -139,7 +139,7 @@ var WaypointContainer = new Class({
     this.chunks = new Object();
     this.settings = settings;
     this.dummyWaypoint = new Waypoint({
-      name: "Free turnpoint",
+      name: _("Free turnpoint"),
       lat: 0,
       lon: 0,
       type: "ATL",

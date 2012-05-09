@@ -45,7 +45,7 @@ var SearchBox = new Class({
 
     var searchBox = new Element('input', {
       id: 'search-box-input',
-      placeholder: "Press ENTER to search",
+      placeholder: _("Press ENTER to search"),
       type: 'text',
       events: {
         'keydown': function(e) {
@@ -89,7 +89,7 @@ var SearchBox = new Class({
     this.searchDiv.empty();
     this.searchDiv.grab(new Element('p', {
       id: 'search-box-searching',
-      html: '<b>Searching...</b>'
+      html: '<b>' + _("Searching") + '...</b>'
     }));
 
     var jsonRequest = new Request.JSON({
@@ -117,7 +117,7 @@ var SearchBox = new Class({
     this.searchDiv.empty();
     this.searchDiv.grab(new Element('p', {
       id: 'search-box-error',
-      html: '<b>Nothing found</b>'
+      html: '<b>' + _("Nothing found") + '</b>'
     }));
     this.close.delay(3000, this);
   }

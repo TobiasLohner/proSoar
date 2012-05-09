@@ -44,14 +44,14 @@ var MapWindow = new Class({
     };
 */
 
-    var osm = new OpenLayers.Layer.OSM("OSM Map");
+    var osm = new OpenLayers.Layer.OSM(_("OSM Map"));
     osm.addOptions({
       transitionEffect: "resize",
       numZoomLevels: 17
     });
     this.map.addLayer(osm);
 
-    var hillshading = new OpenLayers.Layer.TMS("Hill shading",
+    var hillshading = new OpenLayers.Layer.TMS(_("Hill shading"),
 //      "http://toolserver.org/~cmarqu/hill/", {
       "terrain/", {
       type: 'png',
@@ -76,7 +76,7 @@ var MapWindow = new Class({
 
 
 
-    var airspace = new OpenLayers.Layer.TMS("Airspace",
+    var airspace = new OpenLayers.Layer.TMS(_("Airspace"),
       "airspace/", {
       type: 'png',
       getURL: function osm_getTileURL(bounds) {
@@ -100,12 +100,12 @@ var MapWindow = new Class({
     // add google maps if google script loaded
     if (window.google) {
       var google_phy = new OpenLayers.Layer.Google(
-        "Google Physical",
+        _("Google Physical"),
         {type: google.maps.MapTypeId.TERRAIN}
       );
 
       var google_sat = new OpenLayers.Layer.Google(
-        "Google Satellite",
+        _("Google Satellite"),
         {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 20}
       );
  
@@ -171,13 +171,13 @@ var MapWindow = new Class({
       callbacks: {
         'out': this.onWaypointHoverOut.bind(this),
         'click': function(evt) {
-          if (evt.layer.name == "Task") this.taskModifyLine.selectFeature(evt);
-          else if (evt.layer.name == "Airports" || evt.layer.name == "Turnpoints") this.onWaypointSelect(evt);
-          else if (evt.layer.name == "Task Turnpoint Sectors" && !this.taskDrawLine.active)
+          if (evt.layer.name == _("Task")) this.taskModifyLine.selectFeature(evt);
+          else if (evt.layer.name == _("Airports") || evt.layer.name == _("Turnpoints")) this.onWaypointSelect(evt);
+          else if (evt.layer.name == _("Task Turnpoint Sectors") && !this.taskDrawLine.active)
             this.fireEvent("editTurnpoint", evt.sectorId); //this.onTaskTurnpointSectorSelect(evt.sectorId);
         }.bind(this),
         'clickout': function(evt) {
-          if (evt.layer.name == "Airports" || evt.layer.name == "Turnpoints") this.onWaypointUnselect(evt);
+          if (evt.layer.name == _("Airports") || evt.layer.name == _("Turnpoints")) this.onWaypointUnselect(evt);
           else this.taskModifyLine.unselectFeature(evt);
         }.bind(this)
       }
@@ -192,17 +192,17 @@ var MapWindow = new Class({
       highlightOnly: true,
       eventListeners: {
         featurehighlighted: function(evt) {
-          if (evt.feature.layer.name == "Airports"
-              || evt.feature.layer.name == "Turnpoints") this.onWaypointHoverIn(evt.feature);
-          else if (evt.feature.layer.name == "Task Turnpoint Sectors" &&
+          if (evt.feature.layer.name == _("Airports")
+              || evt.feature.layer.name == _("Turnpoints")) this.onWaypointHoverIn(evt.feature);
+          else if (evt.feature.layer.name == _("Task Turnpoint Sectors") &&
                    !this.taskDrawLine.active) {
             this.onSectorHoverIn(evt.feature);
           }
         }.bind(this),
         featureunhighlighted: function(evt) {
-          if (evt.feature.layer.name == "Airports"
-              || evt.feature.layer.name == "Turnpoints") this.onWaypointHoverOut(evt.feature);
-          else if (evt.feature.layer.name == "Task Turnpoint Sectors") this.onSectorHoverOut(evt.feature);
+          if (evt.feature.layer.name == _("Airports")
+              || evt.feature.layer.name == _("Turnpoints")) this.onWaypointHoverOut(evt.feature);
+          else if (evt.feature.layer.name == _("Task Turnpoint Sectors")) this.onSectorHoverOut(evt.feature);
         }.bind(this)
       }
     });
@@ -217,7 +217,7 @@ var MapWindow = new Class({
   },
 
   addAirportsLayer: function() {
-    this.airportLayer = new OpenLayers.Layer.Vector("Airports", {
+    this.airportLayer = new OpenLayers.Layer.Vector(_("Airports"), {
       maxResolution: 1222,
       styleMap: new OpenLayers.StyleMap({
         // Set the external graphic and background graphic images.
@@ -255,7 +255,7 @@ var MapWindow = new Class({
   addTurnpointsLayer: function() {
  //   console.log("adding turnpoints layer");
 
-    this.turnpointLayer = new OpenLayers.Layer.Vector("Turnpoints", {
+    this.turnpointLayer = new OpenLayers.Layer.Vector(_("Turnpoints"), {
       maxResolution: 610,
       styleMap: new OpenLayers.StyleMap({
         // Set the external graphic and background graphic images.
@@ -295,7 +295,7 @@ var MapWindow = new Class({
     );
     
     feature.data.popupContentHTML = 
-      "<div class='header_airport'><img src='images/marker_airport.png' />Airport:</div><div class='name'>"+name+"</div>";
+      "<div class='header_airport'><img src='images/marker_airport.png' />"+_("Airport")+":</div><div class='name'>"+name+"</div>";
     feature.data.popupContentShortHTML =
       "<div class='header_airport'><img src='images/marker_airport.png' />"+name+"</div>";
 
@@ -329,7 +329,7 @@ var MapWindow = new Class({
     );
 
     feature.data.popupContentHTML =
-      "<div class='header_turnpoint'><img src='images/marker_turnpoint.png' />Turnpoint:</div><div class='name'>"+name+"</div>";
+      "<div class='header_turnpoint'><img src='images/marker_turnpoint.png' />"+_("Turnpoint")+":</div><div class='name'>"+name+"</div>";
     feature.data.popupContentShortHTML =
       "<div class='header_turnpoint'><img src='images/marker_turnpoint.png' />"+name+"</div>";
 
@@ -441,7 +441,7 @@ var MapWindow = new Class({
   },
 
   onWaypointHoverOut: function(feature) {
-    if ((feature.layer && feature.layer.name == "Task") || feature.popup_hover == null) return;
+    if ((feature.layer && feature.layer.name == _("Task")) || feature.popup_hover == null) return;
     this.map.removePopup(feature.popup_hover);
     this.map.popup_hover = null;
     feature.popup_hover.destroy();
@@ -465,7 +465,7 @@ var MapWindow = new Class({
   },
 
   addTaskLayer: function() {
-    this.taskLayer = new OpenLayers.Layer.Vector("Task", {
+    this.taskLayer = new OpenLayers.Layer.Vector(_("Task"), {
       styleMap: new OpenLayers.StyleMap({
         'default': new OpenLayers.Style({
           fillColor: "#2200bd",
@@ -483,7 +483,7 @@ var MapWindow = new Class({
         }) 
     }) });
 
-    this.taskTurnpointSectorsLayer = new OpenLayers.Layer.Vector("Task Turnpoint Sectors", {
+    this.taskTurnpointSectorsLayer = new OpenLayers.Layer.Vector(_("Task Turnpoint Sectors"), {
       styleMap: new OpenLayers.StyleMap({
         'default': new OpenLayers.Style({
           fillColor: "#f9e400",
@@ -508,7 +508,7 @@ var MapWindow = new Class({
       'displayInLayerSwitcher': false
     });
 
-    this.taskFAILayer = new OpenLayers.Layer.Vector("Special Task Layer", {
+    this.taskFAILayer = new OpenLayers.Layer.Vector(_("Special Task Layer"), {
       styleMap: new OpenLayers.StyleMap({
         'default': new OpenLayers.Style({
           fillColor: "#3cff00",

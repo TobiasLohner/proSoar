@@ -12,7 +12,7 @@ var Task = new Class({
 
   types: {
     racing: {
-      name: "Racing Task",
+      name: _("Racing Task"),
       start: { startline: true, circle: true, faistart: true, bgastartsector: true },
       sectors: { daec: true, circle: true, fai: true, bgafixedcourse: true, bgaenhancedoption: true },
       finish: { finishline: true, circle: true, faifinish: true },
@@ -21,7 +21,7 @@ var Task = new Class({
       fai_finish_def: false,
     },
     aat: {
-      name: "Assigned Area Task",
+      name: _("Assigned Area Task"),
       start: { startline: true, circle: true, faistart: true, bgastartsector: true },
       sectors: { circle: true, sector: true },
       finish: { finishline: true, circle: true, faifinish: true },
@@ -30,7 +30,7 @@ var Task = new Class({
       fai_finish_def: false,
     },
     fai: {
-      name: "FAI badge/records",
+      name: _("FAI badge/records"),
       start: { startline: true, faistart: true },
       sectors: { fai: true, circle: true },
       finish: { finishline: true, faifinish: true },

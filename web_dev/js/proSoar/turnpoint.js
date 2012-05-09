@@ -14,7 +14,7 @@ var Turnpoint = new Class({
     this.position = a.options.position;
 
     // name of waypoint this turnpoint resides on. "Free turnpoint" if no underlying waypoint
-    this.wpName = a.options.waypoint.name?a.options.waypoint.name:"Free turnpoint";
+    this.wpName = a.options.waypoint.name?a.options.waypoint.name:_("Free turnpoint");
     this.wpComment = a.options.waypoint.comment?a.options.waypoint.comment:"";
     this.wpAltitude = a.options.waypoint.altitude?a.options.waypoint.altitude:0;
 
