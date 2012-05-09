@@ -166,7 +166,7 @@ sub main
     {
         print $jsonobj->pretty->encode( { $basename => $json });
     } else {
-        print $jsonobj->encode($json);
+        print $jsonobj->encode( { $basename => $json } );
     }
 }
 
