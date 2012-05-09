@@ -560,6 +560,28 @@ var ProSoar = new Class({
 
     this.displayTaskDistance();
 
+    // draw the fai triangle if it exists *** needs some rework ***
+    var fai = this.task.getFaiTriangle();
+    if (fai.isFAI) {
+
+      this.task.gotoTurnpoint(fai.i+1);
+      var point1 = this.task.getCurrentTurnpoint().getLonLat();
+
+      this.task.gotoTurnpoint(fai.j+1);
+      var point2 = this.task.getCurrentTurnpoint().getLonLat();
+
+      this.task.gotoTurnpoint(fai.k+1);
+      var point3 = this.task.getCurrentTurnpoint().getLonLat();
+
+      this.map.drawFaiTriangle({
+        point1: point1,
+        point2: point2,
+        point3: point3
+      });
+    } else {
+      this.map.removeFaiTriangle();
+    }
+
     this.map.zoomTo(this.task.getTaskBounds());
 
 //    console.log("Load task:");
