@@ -26,7 +26,7 @@ var proSoar;
 
 // initialize gettext if not done already (as it would be in our dev environment)
 if (typeof(gt) == 'undefined') {
-  var gt = new Gettext({ 'domain': 'de' });
+  gt = new Gettext({ 'domain': initialLanguage });
   function _ (msgid) { return gt.gettext(msgid); }
 }
 

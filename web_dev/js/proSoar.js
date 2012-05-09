@@ -8,7 +8,7 @@ function loadjsfile(filename){
 }
 
 // we need to initialize gettext here already for the dev environment
-var gt = new Gettext({ 'domain': 'de' });
+var gt = new Gettext({ 'domain': initialLanguage });
 function _ (msgid) { return gt.gettext(msgid); }
 
 loadjsfile("js/proSoar/rtree.js");
