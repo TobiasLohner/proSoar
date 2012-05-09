@@ -7,7 +7,7 @@ var SearchBox = new Class({
       if ($(document.body).getElementById('search-box-error') == null)
         return;
       else
-        $(document.body).getElementById('search-box').dispose();
+        $(document.body).getElementById('search-box').destroy();
     }
 
     this.show();
@@ -78,7 +78,7 @@ var SearchBox = new Class({
   },
 
   close: function() {
-    this.searchDiv.dispose();
+    this.searchDiv.destroy();
     this.proSoar.map.activateKeyboardControls();
   },
 

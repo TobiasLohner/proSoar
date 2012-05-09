@@ -639,7 +639,7 @@ var dlgNewTask = new Class({
             click: function(e) {
               e.stopPropagation();
               if (this.deleteTask(item.name))
-                e.target.getParent('tr').dispose();
+                e.target.getParent('tr').destroy();
             }.bind(this)
           }
         })
@@ -970,7 +970,7 @@ var dlgSaveTask = new Class({
             click: function(e) {
               e.stopPropagation();
               if (this.deleteTask(item.name))
-                e.target.getParent('tr').dispose();
+                e.target.getParent('tr').destroy();
             }.bind(this)
           }
         })
