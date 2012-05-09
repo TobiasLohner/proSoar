@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-05-09 22:57+0200\n"
+"POT-Creation-Date: 2012-05-10 00:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,25 +17,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
+#: ../../web_dev/js/proSoar/dialogs.js:50
+msgid "General"
+msgstr ""
+
 #: ../../web_dev/js/proSoar/dialogs.js:56
 msgid "General Task Options"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/dialogs.js:67 ../../web_dev/js/proSoar/main.js:431
+#: ../../web_dev/js/proSoar/dialogs.js:67 ../../web_dev/js/proSoar/main.js:435
 msgid "Start"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/dialogs.js:69 ../../web_dev/js/proSoar/main.js:433
+#: ../../web_dev/js/proSoar/dialogs.js:69 ../../web_dev/js/proSoar/main.js:437
 msgid "Finish"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/dialogs.js:71
-msgid "TP&nbsp;"
+#: ../../web_dev/js/proSoar/dialogs.js:71 ../../web_dev/js/proSoar/main.js:439
+msgid "TP"
 msgstr ""
 
 #: ../../web_dev/js/proSoar/dialogs.js:117
 #: ../../web_dev/js/proSoar/dialogs.js:679
 msgid "Task type"
+msgstr ""
+
+#: ../../web_dev/js/proSoar/dialogs.js:164
+msgid "Sector type"
 msgstr ""
 
 #: ../../web_dev/js/proSoar/dialogs.js:225
@@ -214,11 +222,7 @@ msgstr ""
 msgid "Are you sure you want to delete waypoint file"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/main.js:435
-msgid "TP"
-msgstr ""
-
-#: ../../web_dev/js/proSoar/main.js:516
+#: ../../web_dev/js/proSoar/main.js:520
 msgid "FAI triangle"
 msgstr ""
 
