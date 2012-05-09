@@ -32,6 +32,8 @@ RewriteRule ^terrain/(\d*)/(\d*)/(\d*).png$ http://www.prosoar.de/bin/tilecache.
 
 RewriteRule ^terrain/height/lon([-]?\d*\.?\d*?)/lat([-]?\d*\.?\d*?)$ https://afsserv.akaflieg.uni-stuttgart.de/cgi-bin/get_height.py?lon=$1&lat=$2
 
+# Search
+RewriteRule ^search/([-]?\d*\.?\d*?),([-]?\d*\.?\d*?),([-]?\d*\.?\d*?),([-]?\d*\.?\d*?)/(.*)$ /bin/search.py?bbox=$1,$2,$3,$4&q=$5
 
 </IfModule>
 
