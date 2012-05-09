@@ -143,6 +143,7 @@ var MapWindow = new Class({
     var lonlat = new OpenLayers.LonLat(lon, lat).transform(
       new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
 
+    this.map.zoomTo(10);
     this.map.panTo(lonlat);
   },
 
