@@ -3,7 +3,12 @@ var SearchBox = new Class({
   initialize: function(proSoar) {
     this.proSoar = proSoar;
 
-    if (document.body.getElementById('search-box')) return;
+    if ($(document.body).getElementById('search-box') != null) {
+      if ($(document.body).getElementById('search-box-error') == null)
+        return;
+      else
+        $(document.body).getElementById('search-box').dispose();
+    }
 
     this.show();
 
@@ -93,9 +98,15 @@ var SearchBox = new Class({
     if (result.status == 200 && result.response.json[0]) {
       var res = result.response.json[0];
       this.proSoar.map.panTo(res.lon, res.lat, res.boundingbox);
+      this.close();
+    } else {
+      this.searchDiv.getElementById('search-box-input').dispose();
+      this.searchDiv.grab(new Element('p', {
+        id: 'search-box-error',
+        html: '<b>Nothing found</b>'
+      }));
+      this.close.delay(3000, this);
     }
-
-    this.close();
   }
 
 });

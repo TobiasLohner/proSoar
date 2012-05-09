@@ -515,3 +515,8 @@ body {
   margin-bottom: 0;
 }
 
+#search-box p {
+  margin: 0;
+  padding: 0;
+}
+
