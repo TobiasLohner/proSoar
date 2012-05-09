@@ -139,11 +139,15 @@ var MapWindow = new Class({
     ));
   },
 
-  panTo: function(lon, lat) {
+  panTo: function(lon, lat, bbox) {
     var lonlat = new OpenLayers.LonLat(lon, lat).transform(
       new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
 
-    this.map.zoomTo(10);
+    var bounds = new OpenLayers.Bounds(bbox[2], bbox[0], bbox[3], bbox[1]).transform(
+      new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
+
+    var zoom = Math.min(12, this.map.getZoomForExtent(bounds));
+    this.map.zoomTo(zoom);
     this.map.panTo(lonlat);
   },
 

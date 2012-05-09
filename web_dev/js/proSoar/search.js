@@ -90,7 +90,7 @@ var SearchBox = new Class({
 
     if (result.status == 200 && result.response.json[0]) {
       var res = result.response.json[0];
-      this.proSoar.map.panTo(res.lon, res.lat);
+      this.proSoar.map.panTo(res.lon, res.lat, res.boundingbox);
     }
 
     this.close();
