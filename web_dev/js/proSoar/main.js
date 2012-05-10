@@ -474,10 +474,6 @@ var ProSoar = new Class({
     return tpInfo;
   },
 
-  taskGeneralOptions: function() {
-    console.log("Unused?!?");
-  },
-
   editTurnpoint: function(sectorId) {
     if (this.task.getLength() > 1 && !this.dialogOverlay)
       var editTurnpoint = new dlgEditTurnpoints(this, sectorId);
