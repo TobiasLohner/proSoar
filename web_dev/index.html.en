@@ -15,6 +15,12 @@
 
   <script type="text/javascript" src="settings/initial.js"></script>
 
+  <script type="text/javascript">
+  <!--
+    var initialLanguage = "en";
+  //-->
+  </script>
+
   <script type="text/javascript" src="js/mooTools.js"></script>
   <script type="text/javascript" src="js/OpenLayers/OpenLayers.js"></script>
   <script type="text/javascript" src="js/Gettext.js"></script>

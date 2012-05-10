@@ -28,9 +28,6 @@ def main():
     else:
       print 'var initialLocation = {lon: 10, lat: 50};'
 
-    print 'var initialLanguage = "de"'
-#    print os.environ['HTTP_ACCEPT_LANGUAGE']
-
   elif form.getvalue('as') == 'json':
     print "Content-type: text/html"
     print
