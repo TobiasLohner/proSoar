@@ -104,15 +104,18 @@ var TaskList = new Class({
         "<span class='coordinates'>" + tpCoordinates + "</span>"
     });
   },
+
   prepareTPInfo: function(turnpoint) {
 
     var tpInfo = new Element('div', {
       id: "task-turnpoint-" + turnpoint.getPosition(),
       'class': "turnpoint",
-      'onmouseover': "javascript:proSoar.sectorHoverIn(" + turnpoint.getSector().getId() + ")",
-      'onmouseout': "javascript:proSoar.sectorHoverOut(" + turnpoint.getSector().getId() + ")",
-      'onclick': "javascript:proSoar.editTurnpoint(" + turnpoint.getSector().getId() + ")",
-      html: "<img src='images/sector_" + turnpoint.getSector().getType() + ".png' width='40' height='40' />"
+      html: "<img src='images/sector_" + turnpoint.getSector().getType() + ".png' width='40' height='40' />",
+      events: {
+        mouseover: function() { return this.proSoar.sectorHoverIn(turnpoint.getSector().getId()); }.bind(this),
+        mouseout: function() { return this.proSoar.sectorHoverOut(turnpoint.getSector().getId()); }.bind(this),
+        click: function() { return this.proSoar.editTurnpoint(turnpoint.getSector().getId()); }.bind(this)
+      }
     });
 
     var tpName = this.prepareTPName(turnpoint);
