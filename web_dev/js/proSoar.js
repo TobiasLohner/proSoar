@@ -19,4 +19,5 @@ loadjsfile("js/proSoar/taskstore.js");
 loadjsfile("js/proSoar/fai.js");
 loadjsfile("js/proSoar/dialogs.js");
 loadjsfile("js/proSoar/search.js");
+loadjsfile("js/proSoar/tasklist.js");
 loadjsfile("js/proSoar/init.js");

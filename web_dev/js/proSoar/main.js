@@ -17,6 +17,7 @@
 * @requires proSoar/settings.js 
 * @requires proSoar/task.js
 * @requires proSoar/taskstore.js
+* @requires proSoar/tasklist.js
 * @requires proSoar/turnpoint.js
 * @requires proSoar/waypoints.js
 * @requires proSoar/search.js
@@ -47,6 +48,9 @@ var ProSoar = new Class({
     // create the waypoint container and the task
     this.waypoints = new WaypointContainer(this.settings);
     this.task = new Task();
+
+    // initialize task list display
+    this.tasklist = new TaskList(this);
     
     // add some events 
     this.waypoints.addEvent("NewWaypointsAdded", function() {
@@ -164,7 +168,7 @@ var ProSoar = new Class({
 
     this.map.changeTurnpointSector(this.task.getCurrentTurnpoint().getSector());
 
-    this.updateTaskListDisplay('delete', this.task.getPosition());
+    this.tasklist.update('delete', this.task.getPosition());
     if (this.task.getLength() > 1)
       this.adjustTaskTPSectorOrientation(this.task.getPosition());
 //console.log(components);
@@ -193,7 +197,7 @@ var ProSoar = new Class({
       this.task.getCurrentTurnpoint().setWaypointAltitude(this.waypoints.getByLonLat(e.lon, e.lat).getAltitude());
       this.task.getCurrentTurnpoint().setWaypointComment(this.waypoints.getByLonLat(e.lon, e.lat).getComment());
       this.map.moveTurnpointSector(e.point, this.task.getCurrentTurnpoint().getSector().getId());
-      this.updateTaskListDisplay('move', position);
+      this.tasklist.update('move', position);
       this.adjustTaskTPSectorOrientation(position);
 
     } else if (e.taskLength > this.task.getLength()) {
@@ -230,8 +234,8 @@ var ProSoar = new Class({
       
       position = e.position;
 
-      this.updateTaskListDisplay('modify', position-1);
-      this.updateTaskListDisplay('add', position);
+      this.tasklist.update('modify', position-1);
+      this.tasklist.update('add', position);
       this.adjustTaskTPSectorOrientation(position);
 
     } else if (e.taskLength < this.task.getLength() && this.task.getLength() > 2) {
@@ -268,7 +272,7 @@ var ProSoar = new Class({
         }
         i++;
       } while (this.task.next());
-      this.updateTaskListDisplay('delete', position);
+      this.tasklist.update('delete', position);
       this.adjustTaskTPSectorOrientation(position);
     }
 
@@ -346,134 +350,6 @@ var ProSoar = new Class({
 
   },
 
-  updateTaskListDisplay: function(action, position) {
-    if (position < 1) return;
-
-    var pos_restore = this.task.getPosition();
- 
-    var previousNumTP = 0;
-    var currentNumTP = this.task.getLength();
-
-    if (action == 'add')
-      previousNumTP = currentNumTP - 1;
-    else if (action == 'delete')
-      previousNumTP = currentNumTP + 1;
-    else if (action == 'modify' || action == 'move')
-      previousNumTP = currentNumTP;
-      
-    if ((currentNumTP > previousNumTP && position == currentNumTP)
-        || action == 'fill') {
-      // add at end of list
-      this.task.gotoTurnpoint(position);
-      $('task-turnpoints').grab( this.prepareTPInfo(this.task.getCurrentTurnpoint()) );
-
-    } else if (currentNumTP > previousNumTP && position < currentNumTP) {
-      // add in the middle of list
-
-      this.task.last();
-      do {
-        this.prepareTPInfo(this.task.getCurrentTurnpoint()).replaces(
-          $('task-turnpoint-' + (this.task.getPosition()-1)) );
-      } while (this.task.previous() && this.task.getPosition() != position);
-
-      $('task-turnpoint-' + (position+1)).grab(
-        this.prepareTPInfo(this.task.getCurrentTurnpoint()), 'before' );
-    
-    } else if (currentNumTP < previousNumTP) {
-      // delete from the list
-
-      $('task-turnpoint-' + position).destroy();
-
-      if (position == previousNumTP) {
-        this.task.last();
-        this.prepareTPInfo(this.task.getCurrentTurnpoint()).replaces(
-          $('task-turnpoint-' + (this.task.getPosition())) );
-      } else {
-        this.task.gotoTurnpoint(position);
-
-        do {
-        this.prepareTPInfo(this.task.getCurrentTurnpoint()).replaces(
-          $('task-turnpoint-' + (this.task.getPosition()+1)) );
-        } while (this.task.next());
-      }
-
-    } else {
-      // only TP change
-
-      this.task.gotoTurnpoint(position);
-     
-      if (action == 'modify') {
-        this.prepareTPInfo(this.task.getCurrentTurnpoint()).replaces(
-          $('task-turnpoint-' + position) );
-
-      } else if (action == 'move') {
-        this.prepareTPName(this.task.getCurrentTurnpoint()).replaces(
-          $('task-turnpoint-name-' + position) );
-      }
-    }
-    
-    if (this.task.getLength() > 1) {
-      this.displayTaskDistance();
-    }
-
-    this.task.gotoTurnpoint(pos_restore);
-  },
-
-  clearTaskListDisplay: function() {
-    $('task-turnpoints').empty();
-  },
-
-  prepareTPName: function(turnpoint) {
-    var tpNameString;
-
-    switch (turnpoint.getPosition()) {
-      case 1:
-        tpNameString = _("Start") + ":&nbsp;"; break;
-      case this.task.getLength():
-        tpNameString = _("Finish") + ":&nbsp;"; break;
-      default:
-        tpNameString = _("TP") + "&nbsp;" + (turnpoint.getPosition()-1) + ":&nbsp;";
-    }
-
-    tpNameString += turnpoint.getWaypointName(); //getWaypointId()?
-//      this.waypoints.getById(turnpoint.getWaypointId()).getName():"Free turnpoint";
-
-    var tpCoordinates = OpenLayers.Util.getFormattedLonLat(turnpoint.getLat(), "lat", "dms") +
-      "&nbsp;" + OpenLayers.Util.getFormattedLonLat(turnpoint.getLon(), "lon", "dms");
-
-    return new Element('div', {
-      id: "task-turnpoint-name-" + turnpoint.getPosition(),
-      html: "<div class='title'>" + tpNameString + "</div>" +
-        "<span class='coordinates'>" + tpCoordinates + "</span>"
-    });
-  },
-
-  prepareTPInfo: function(turnpoint) {
-    
-    var tpInfo = new Element('div', {
-      id: "task-turnpoint-" + turnpoint.getPosition(),
-      'class': "turnpoint",
-      'onmouseover': "javascript:proSoar.sectorHoverIn(" + turnpoint.getSector().getId() + ")",
-      'onmouseout': "javascript:proSoar.sectorHoverOut(" + turnpoint.getSector().getId() + ")",
-      'onclick': "javascript:proSoar.editTurnpoint(" + turnpoint.getSector().getId() + ")",
-      html: "<img src='images/sector_" + turnpoint.getSector().getType() + ".png' width='40' height='40' />"
-    });
-
-    var tpName = this.prepareTPName(turnpoint);
-    tpInfo.grab(tpName);
-
-    var tpType = turnpoint.getSector().getName();
-    if (Sector.prototype.types[turnpoint.getSector().getType()].radius)
-      tpType += ", R = " + turnpoint.getSector().getRadius() + " km";
-   
-    tpInfo.grab(new Element('span', {
-      'class': "type",
-      html: tpType
-    }) ); 
-
-    return tpInfo;
-  },
-
   editTurnpoint: function(sectorId) {
     if (this.task.getLength() > 1 && !this.dialogOverlay)
       var editTurnpoint = new dlgEditTurnpoints(this, sectorId);
@@ -504,25 +380,14 @@ var ProSoar = new Class({
     this.map.highlightSectorOut(sectorId);
     $('task-turnpoint-' + position).removeClass('hover');
   },
-
-  displayTaskDistance: function() {
-    var distance = this.task.getTotalDistance();
- 
-    $('task-total-distance').set('text', distance + " km");
-    
-    var faiDistance = this.task.getFaiTriangle().isFAI?this.task.getFaiTriangle().distance:0;
-    faiDistance = Math.round(faiDistance/100)/10;
-
-    $('task-is-fai').set('text', faiDistance?_('FAI triangle') + ' ('+faiDistance+' km)':'');
-  },
-
+  
   newTask: function() {
     var newTaskDialog = new dlgNewTask(proSoar);
   },
 
   loadTask: function(task) {
     this.map.newTask();
-    this.clearTaskListDisplay();
+    this.tasklist.clear();
 
     delete this.task;
     this.task = task;
@@ -543,8 +408,8 @@ var ProSoar = new Class({
         this.map.addTurnpointSector(this.task.getCurrentTurnpoint().getLonLat(),
           this.task.getCurrentTurnpoint().getSector()) );
 
-      this.updateTaskListDisplay('modify', i);
-      this.updateTaskListDisplay('fill', i+1);
+      this.tasklist.update('modify', i);
+      this.tasklist.update('fill', i+1);
 
       i++;
     } while (this.task.next());
@@ -554,7 +419,7 @@ var ProSoar = new Class({
       i--;
     } while (this.task.previous());
 
-    this.displayTaskDistance();
+    this.tasklist.displayTaskDistance();
 
     // draw the fai triangle if it exists *** needs some rework ***
     var fai = this.task.getFaiTriangle();

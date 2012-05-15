@@ -443,7 +443,7 @@ var dlgEditTurnpoints = new Class({
       if (redraw) {
         this.proSoar.map.changeTurnpointSector(this.proSoar.task.getCurrentTurnpoint().getSector());
         this.proSoar.adjustTaskTPSectorOrientation(position);
-        this.proSoar.updateTaskListDisplay('modify', position);
+        this.proSoar.tasklist.update('modify', position);
       }
 
     } while (this.proSoar.task.next());
@@ -484,13 +484,13 @@ var dlgNewTask = new Class({
 
   newTask: function() {
     this.proSoar.map.newTask();
-    this.proSoar.clearTaskListDisplay();
+    this.proSoar.tasklist.clear();
 
     delete this.proSoar.task;
     this.proSoar.task = new Task();
 
     this.saveTaskOptions();
-    this.proSoar.displayTaskDistance();
+    this.proSoar.tasklist.displayTaskDistance();
 
     this.dialog.close();
   },
