@@ -58,6 +58,11 @@ var Turnpoint = new Class({
     return this.position;
   },
 
+  // set the sector
+  setSector: function(sector) {
+    this.sector = sector;
+  },
+
   getSector: function() {
     return this.sector;
   },
