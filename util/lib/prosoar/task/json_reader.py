@@ -92,7 +92,7 @@ def parse_sector(sector, tp):
     sector.end_radial = float(tp.get('end_radial'))
 
 def get_altitude(lon, lat):
-  url = 'http://localhost/terrain/height/lon'+str(lon)+'/lat'+str(lat)
+  url = 'http://www.prosoar.de/terrain/height/lon'+str(lon)+'/lat'+str(lat)
 
   try:
     request = urllib2.urlopen(url)
