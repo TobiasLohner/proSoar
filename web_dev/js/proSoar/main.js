@@ -540,6 +540,16 @@ var ProSoar = new Class({
       }.bind(this)
     });
 
+  },
+
+  moveTurnpointUp: function(position) {
+    this.task.moveUp(position);
+    this.loadTask(this.task, true);
+  },
+
+  moveTurnpointDown: function(position) {
+    this.task.moveDown(position);
+    this.loadTask(this.task, true);
   }
 
 });
