@@ -97,6 +97,7 @@ body {
 }
 
 #task-turnpoints .turnpoint {
+  position: relative;
   border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px;
   border: 1px solid #999;
   clear: both;
@@ -117,7 +118,7 @@ body {
   padding: 0;
 }
 
-#task-turnpoints .turnpoint img {
+#task-turnpoints .turnpoint .turnpoint-img {
   float: left;
   width: 40px;
   height: 40px;
@@ -150,6 +151,34 @@ body {
 #task-turnpoints .turnpoint .type {
   font-size: 0.9em;
 }
+
+#task-turnpoints .turnpoint-modifier {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#task-turnpoints .turnpoint-modifier-up {
+  position: absolute;
+  top: 2px;
+  left: 5px;
+}
+
+#task-turnpoints .turnpoint-modifier-down {
+  position: absolute;
+  bottom: 2px;
+  left: 5px;
+}
+
+#task-turnpoints .turnpoint-modifier-delete {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+}
+
+
 
 #map {
   display: block;

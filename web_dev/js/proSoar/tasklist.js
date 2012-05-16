@@ -110,10 +110,18 @@ var TaskList = new Class({
     var tpInfo = new Element('div', {
       id: "task-turnpoint-" + turnpoint.getPosition(),
       'class': "turnpoint",
-      html: "<img src='images/sector_" + turnpoint.getSector().getType() + ".png' width='40' height='40' />",
+      html: "<img class='turnpoint-img' src='images/sector_" + turnpoint.getSector().getType() + ".png' width='40' height='40' />",
       events: {
-        mouseover: function() { return this.proSoar.sectorHoverIn(turnpoint.getSector().getId()); }.bind(this),
-        mouseout: function() { return this.proSoar.sectorHoverOut(turnpoint.getSector().getId()); }.bind(this),
+        mouseover: function(e) {
+          this.proSoar.sectorHoverIn(turnpoint.getSector().getId());
+          $("task-turnpoint-" + turnpoint.getPosition()).getElement('.turnpoint-img').setStyle('opacity', '0.2');
+          $("task-turnpoint-modifier-" + turnpoint.getPosition()).setStyle('visibility', 'visible');
+        }.bind(this),
+        mouseout: function(e) {
+          this.proSoar.sectorHoverOut(turnpoint.getSector().getId());
+          $("task-turnpoint-modifier-" + turnpoint.getPosition()).setStyle('visibility', 'hidden');
+          $("task-turnpoint-" + turnpoint.getPosition()).getElement('.turnpoint-img').setStyle('opacity', '1');
+        }.bind(this),
         click: function() { return this.proSoar.editTurnpoint(turnpoint.getSector().getId()); }.bind(this)
       }
     });
@@ -130,7 +138,62 @@ var TaskList = new Class({
       html: tpType
     }) );
 
+    tpInfo.grab(this.createTPModifier(turnpoint));
+
     return tpInfo;
+  },
+
+  createTPModifier: function(turnpoint) {
+
+    var tpModifier = new Element('div', {
+      id: "task-turnpoint-modifier-" + turnpoint.getPosition(),
+      'class': "turnpoint-modifier",
+      styles: {
+        'visibility': 'hidden'
+      }
+    });
+
+    if (turnpoint.getPosition() != 1) {
+      tpModifier.grab(new Element('img', {
+        id: "task-turnpoint-modifier-up-" + turnpoint.getPosition(),
+        'class': "turnpoint-modifier-up",
+        src: "images/turnpoint_up.png",
+        events: {
+          click: function(e) {
+            this.proSoar.moveTurnpointUp(turnpoint.getPosition());
+            return false;
+          }.bind(this)
+        }
+      }) );
+    }
+
+    if (turnpoint.getPosition() != this.proSoar.task.getLength()) {
+      tpModifier.grab(new Element('img', {
+        id: "task-turnpoint-modifier-down-" + turnpoint.getPosition(),
+        'class': "turnpoint-modifier-down",
+        src: "images/turnpoint_down.png",
+        events: {
+          click: function(e) {
+            this.proSoar.moveTurnpointDown(turnpoint.getPosition());
+            return false;
+          }.bind(this)
+        }
+      }) );
+    }
+
+    tpModifier.grab(new Element('img', {
+      id: "task-turnpoint-modifier-delete-" + turnpoint.getPosition(),
+      'class': "turnpoint-modifier-delete",
+      src: 'images/turnpoint_remove.png',
+      events: {
+        click: function(e) {
+          this.proSoar.removeTaskTurnpoint(turnpoint.getPosition());
+          return false;
+        }.bind(this)
+      }
+    }) );
+
+    return tpModifier;
   },
 
   displayTaskDistance: function() {
