@@ -97,10 +97,9 @@ def get_altitude(lon, lat):
   try:
     request = urllib2.urlopen(url)
     reply = request.read()
+    height_reply = json.loads(reply)
   except urllib2.URLError, e:
-    reply = '{}'
-
-  height_reply = json.loads(reply)
+    height_reply = '{}'
 
   return float(height_reply.get('height', 0))
 
