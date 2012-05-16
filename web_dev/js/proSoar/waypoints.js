@@ -204,10 +204,9 @@ var WaypointContainer = new Class({
 
     Array.each(this.getArray(), function(item, key, object) {
       if (item.getFileId() == fileId) {
-        item.setFileId(-1);
-        item.setViewable(false);
+        this.rt.remove({x: item.getLon(), y: item.getLat(), w: 0, h: 0}, item);
       }
-    });
+    }.bind(this));
 
     Array.each(this.getArray(), function(item, key, object) {
       if (item.getFileId() > fileId) {
