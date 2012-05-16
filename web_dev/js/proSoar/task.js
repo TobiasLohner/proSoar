@@ -294,6 +294,71 @@ var Task = new Class({
     return this.fai.isFAI();
   },
 
+
+  moveDown: function(position) {
+    this.gotoTurnpoint(position);
+    if (this.current.getNext() == null) return;
+
+    this.moveUp(this.current.getNext().getPosition());
+  },
+
+  moveUp: function(position) {
+    this.gotoTurnpoint(position);
+    if (this.current.getPrevious() == null) return;
+
+    var before = this.current.getPrevious().getPrevious();
+    var previous = this.current.getPrevious();
+    var next = this.current;
+    var after = this.current.getNext();
+
+    if (before) {
+      before.setNext(next);
+      next.setPrevious(before);
+    } else {
+      // switch turnpoint types
+      var temp = next.getSector();
+      next.setSector(previous.getSector());
+      previous.setSector(temp);
+      next.setPrevious(null);
+    }
+
+    next.setNext(previous);
+    previous.setPrevious(next);
+
+    if (after) {
+      previous.setNext(after);
+      after.setPrevious(previous);
+    } else {
+      // switch turnpoint types
+      var temp = next.getSector();
+      next.setSector(previous.getSector());
+      previous.setSector(temp);
+      previous.setNext(null);
+    }
+
+    var temp = next.getPosition();
+    next.setPosition(previous.getPosition());
+    previous.setPosition(temp);
+
+
+    if (before) {
+      before.updateBearing();
+      before.updateNextLeg();
+    }
+
+    next.updateNextLeg();
+    next.updateBearing();
+
+    previous.updateNextLeg();
+    previous.updateBearing();
+
+    if (after) {
+      after.updateBearing();
+    }
+
+    this.current = previous;
+  },
+
   // return the total distance around all task turnpoints
   getTotalDistance: function() {
     if (!this.first()) return 0;
