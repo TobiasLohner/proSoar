@@ -764,7 +764,7 @@ var MapWindow = new Class({
 
     task.geometry.components = taskline;
 
-    var modifiedState = this.taskModifyLine.modified;
+    var modifiedState = this.taskModifyLine.virtualVertices.length?true:false;
     if (modifiedState) this.taskModifyLine.deactivate();
 
     this.taskLayer.drawFeature(task);
