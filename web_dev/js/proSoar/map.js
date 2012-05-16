@@ -225,8 +225,8 @@ var MapWindow = new Class({
 //        backgroundGraphic: "images/marker_middle_airport_shadow.png",
         // Makes sure the background graphic is placed correctly relative
         // to the external graphic.
-        graphicXOffset: -(23/2),
-        graphicYOffset: -(30/2),
+//        graphicXOffset: -(23/2),
+//        graphicYOffset: -(30/2),
         graphicWidth: 23,
         graphicHeight: 30,
 //        backgroundXOffset: -(31/2),
@@ -263,8 +263,8 @@ var MapWindow = new Class({
 //        backgroundGraphic: "images/marker_small_turnpoint_shadow.png",
         // Makes sure the background graphic is placed correctly relative
         // to the external graphic.
-        graphicXOffset: -(20/2),
-        graphicYOffset: -(20/2),
+//        graphicXOffset: -(20/2),
+//        graphicYOffset: -(20/2),
         graphicWidth: 20,
         graphicHeight: 20,
 //        backgroundXOffset: -(23/2),
