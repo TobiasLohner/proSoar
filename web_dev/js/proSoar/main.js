@@ -474,17 +474,31 @@ var ProSoar = new Class({
   },
 
   toggleTurnpointFile: function(fileId) {
+
     Array.each(this.waypoints.getArray(), function(item, key, object) {
       if(item.getFileId() == fileId) {
         item.toggleViewable();
       }
     });
 
-    Object.each(this.settings.getTurnpointFiles(), function(item, key, object) {
-      if(item.fileId == fileId) item.display = !item.display;
-    });
+    var turnpointFile = this.settings.getTurnpointFile(fileId);
 
-    this.includeNewWaypointsToMap('moved');
+    turnpointFile.display = !turnpointFile.display;
+
+    if (!turnpointFile.display) {
+      // remove unused turnpoints
+      var turnpointArray = this.map.getTurnpointArray();
+      for (var i = turnpointArray.length-1; i >= 0; i--) {
+        //console.log("remove turnpoint: " + this.waypoints.getById(item.waypointId).getName());
+        var waypoint = this.waypoints.getByLonLat(turnpointArray[i].lon, turnpointArray[i].lat);
+        if (!waypoint.isViewable()) {
+          waypoint.setOnMap(false);
+          this.map.removeTurnpoint(i);
+        }
+      }
+    } else {
+      this.includeNewWaypointsToMap('moved');
+    }
   },
 
   deleteWaypointFile: function(fileId) {
