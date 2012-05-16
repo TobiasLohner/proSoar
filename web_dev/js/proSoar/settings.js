@@ -83,6 +83,14 @@ var Settings = new Class({
     return this.turnpointFiles;
   },
 
+  getTurnpointFile: function(fileId) {
+    for (var i = this.turnpointFiles.length - 1; i >= 0; i--) {
+      if(this.turnpointFiles[i].fileId == fileId) return this.turnpointFiles[i];
+    }
+
+    return null;
+  },
+
   removeTurnpointFile: function(fileId) {
     if (fileId < 1) return;
 
