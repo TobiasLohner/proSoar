@@ -550,6 +550,10 @@ var ProSoar = new Class({
   moveTurnpointDown: function(position) {
     this.task.moveDown(position);
     this.loadTask(this.task, true);
+  },
+
+  removeTaskTurnpoint: function(position) {
+    this.map.deleteTaskPoint(position);
   }
 
 });

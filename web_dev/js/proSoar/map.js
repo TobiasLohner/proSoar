@@ -735,19 +735,57 @@ var MapWindow = new Class({
       }.bind(this));
     } else {
 
-    // modification has stopped. just compare task point ids to identify removed points
-    var pointIds = Array();
+      // modification has stopped. just compare task point ids to identify removed points
+      var pointIds = Array();
    
-    Array.each(evt.feature.geometry.components, function(item, key, object) {
+      Array.each(evt.feature.geometry.components, function(item, key, object) {
+        pointIds.push(item.id);
+      });
+
+      this.fireEvent("modifyTaskPoint", {
+        mapIds: pointIds,
+        taskLength: evt.feature.geometry.components.length,
+        position: -1
+      });
+    }
+  },
+
+  deleteTaskPoint: function(pointId) {
+    var task = this.taskLayer.features[0];
+    var taskline = task.geometry.components;
+
+    pointId = pointId - 1;
+
+    if (taskline.length > 2 && pointId < taskline.length) {
+      taskline.splice(pointId, 1);
+    } else {
+      return;
+    }
+
+    task.geometry.components = taskline;
+
+    var modifiedState = this.taskModifyLine.modified;
+    if (modifiedState) this.taskModifyLine.deactivate();
+
+    this.taskLayer.drawFeature(task);
+
+    if (modifiedState) {
+      this.taskModifyLine.activate();
+      this.taskModifyLine.selectFeature(this.taskLayer.features[0]);
+    }
+
+    // compare task point ids to identify removed points
+    var pointIds = Array();
+
+    Array.each(taskline, function(item, key, object) {
       pointIds.push(item.id);
     });
-    
+
     this.fireEvent("modifyTaskPoint", {
       mapIds: pointIds,
-      taskLength: evt.feature.geometry.components.length,
+      taskLength: taskline.length,
       position: -1
     });
-    }
   },
 
   findSnapTarget: function(target) {
