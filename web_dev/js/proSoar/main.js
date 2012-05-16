@@ -385,7 +385,7 @@ var ProSoar = new Class({
     var newTaskDialog = new dlgNewTask(proSoar);
   },
 
-  loadTask: function(task) {
+  loadTask: function(task, zoom) {
     this.map.newTask();
     this.tasklist.clear();
 
@@ -443,7 +443,7 @@ var ProSoar = new Class({
       this.map.removeFaiTriangle();
     }
 
-    this.map.zoomTo(this.task.getTaskBounds());
+    if (!arguments[1]) this.map.zoomTo(this.task.getTaskBounds());
 
 //    console.log("Load task:");
 //    console.log(task);
