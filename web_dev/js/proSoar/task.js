@@ -329,10 +329,12 @@ var Task = new Class({
       previous.setNext(after);
       after.setPrevious(previous);
     } else {
-      // switch turnpoint types
-      var temp = next.getSector();
-      next.setSector(previous.getSector());
-      previous.setSector(temp);
+      if (before){
+        // switch turnpoint types (but only once if there are only two turnpoints)
+        var temp = next.getSector();
+        next.setSector(previous.getSector());
+        previous.setSector(temp);
+      }
       previous.setNext(null);
     }
 
