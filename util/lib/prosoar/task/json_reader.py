@@ -2,6 +2,7 @@ from prosoar.task.task import Task
 from prosoar.task.turnpoint import Turnpoint
 
 import json
+import urllib2
 
 def parse_json_task(json_string):
   task = Task()
@@ -45,7 +46,12 @@ def parse_turnpoint(task, tp):
   turnpoint.name = tp['name']
   turnpoint.lon = float(tp['lon'])
   turnpoint.lat = float(tp['lat'])
-  turnpoint.altitude = float(tp['altitude'])
+
+  if turnpoint.name == 'Free turnpoint':
+    turnpoint.altitude = get_altitude(turnpoint.lon, turnpoint.lat)
+  else:
+    turnpoint.altitude = float(tp['altitude'])
+
   turnpoint.comment = tp['comment']
 
   if tp['type']:
@@ -85,4 +91,16 @@ def parse_sector(sector, tp):
   if 'end_radial' in tp:
     sector.end_radial = float(tp.get('end_radial'))
 
+def get_altitude(lon, lat):
+  url = 'http://localhost/terrain/height/lon'+str(lon)+'/lat'+str(lat)
+
+  try:
+    request = urllib2.urlopen(url)
+    reply = request.read()
+  except urllib2.URLError, e:
+    reply = '{}'
+
+  height_reply = json.loads(reply)
+
+  return float(height_reply.get('height', 0))
 
