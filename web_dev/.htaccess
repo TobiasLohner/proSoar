@@ -30,7 +30,7 @@ RewriteRule ^airspace/(\d*)/(\d*)/(\d*).png$ http://www.prosoar.de/bin/tilecache
 # Terrain
 RewriteRule ^terrain/(\d*)/(\d*)/(\d*).png$ http://www.prosoar.de/bin/tilecache.cgi/1.0.0/terrain/$1/$2/$3.png
 
-RewriteRule ^terrain/height/lon([-]?\d*\.?\d*?)/lat([-]?\d*\.?\d*?)$ https://afsserv.akaflieg.uni-stuttgart.de/cgi-bin/get_height.py?lon=$1&lat=$2
+RewriteRule ^terrain/height/lon([-]?\d*\.?\d*?)/lat([-]?\d*\.?\d*?)$ https://afsserv.akaflieg.uni-stuttgart.de/tobias/get_height.py?lon=$1&lat=$2
 
 # Search
 RewriteRule ^search/([-]?\d*\.?\d*?),([-]?\d*\.?\d*?),([-]?\d*\.?\d*?),([-]?\d*\.?\d*?)/(.*)$ /bin/search.py?bbox=$1,$2,$3,$4&q=$5
