@@ -21,6 +21,7 @@
 * @requires proSoar/turnpoint.js
 * @requires proSoar/waypoints.js
 * @requires proSoar/search.js
+* @requires proSoar/igcfile.js
 **/
 
 var ProSoar = new Class({
@@ -76,6 +77,9 @@ var ProSoar = new Class({
     this.taskStore.addEvent("setSettings", function(settings) {
       this.settings.addSettingsFromJSON(settings);
     }.bind(this));  
+
+    // initialize Infoscreen
+    this.InfoscreenIGC = new InfoscreenIGC(this);
 
     // enable task creation  
     this.map.drawTaskLine();

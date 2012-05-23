@@ -76,6 +76,13 @@
         </div>
       </li>
 
+<!-- igc file upload -->
+      <li id="igcfile">
+        <h3 id="igcfile-header" class="collapse">Analyse</h3>
+        <div id="igcfile-container" class="collapse">
+        </div>
+      </li>
+
 <!-- about -->
       <li id="about">
         <h3 id="about-header" onclick="javascript:proSoar.aboutDialog();">About</h3>

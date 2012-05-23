@@ -464,6 +464,111 @@ var MapWindow = new Class({
     this.taskTurnpointSectorsLayer.drawFeature(this.taskTurnpointSectors[sectorId], 'default');
   },
 
+  addIGCLayer: function() {
+    this.igcLayer = new OpenLayers.Layer.Vector(_("IGC"), {
+      styleMap: new OpenLayers.StyleMap({
+        'default': new OpenLayers.Style({
+          strokeColor: "#df0044",
+          strokeWidth: 2
+        })
+    }) });
+    this.map.addLayer(this.igcLayer);
+  },
+
+  addIGCFeature: function(flight) {
+
+//    this.igcLayer.addFeatures([new OpenLayers.Feature.Vector(igcFileFeature)]);
+    var vertices = new Array();
+    var igc_bounds = new OpenLayers.Bounds();
+//    vertices[0] = new OpenLayers.Geometry.Point(flight[0].x, flight[0].y);
+//    vertices[0].lod = flight[0].l;
+    vertices[0] = new OpenLayers.Geometry.Point(flight[0][0], flight[0][1]);
+    vertices[0].lod = flight[0][2];
+    igc_bounds.extend(vertices[0]);
+
+
+    for (var i = 1; i < flight.length; i++) {
+      vertices[i] = new OpenLayers.Geometry.Point(
+        vertices[i-1].x + flight[i][0], vertices[i-1].y + flight[i][1]);
+//        vertices[i-1].x + flight[i].x, vertices[i-1].y + flight[i].y);
+//      vertices[i].lod = flight[i].l;
+      vertices[i].lod = flight[i][2];
+      igc_bounds.extend(vertices[i]);
+    }
+
+    var simplifyVectorFeature = function(igc_bounds) {
+      if (igc_bounds.CLASS_NAME == "OpenLayers.Bounds") {
+        var bounds = igc_bounds;
+      } else {
+        var bounds = this.map.getExtent().scale(2);
+      }
+
+//      var vertices = igcFileFeature.getVertices();
+
+      var multiLineString = new Array();
+      var inside = false;
+      var last = null;
+
+      var points = new Array();
+
+      var zoom = this.map.getZoom();
+      var lod = 0;
+      if (zoom > 8)
+        lod = 1;
+      if (zoom > 10)
+        lod = 2;
+      if (zoom > 12)
+        lod = 3;
+
+      for (var i = 0; i < vertices.length; i++) {
+        if (vertices[i].lod > lod) continue;
+
+        if (bounds.contains(vertices[i].x, vertices[i].y)) {
+          // inside. add to lineString.
+          inside = true;
+
+          if (last) {
+            // first add the previous vertice (but only once).
+            points.push(last);
+            last = null;
+          }
+
+          // add current vertice
+          points.push(vertices[i]);
+        } else {
+          if (inside) {
+            // first vertice outside. add this one.
+            points.push(vertices[i]);
+            // create linestring and add it to multilinestring
+            multiLineString.push(new OpenLayers.Geometry.LineString(points));
+            // reset points array
+            points = new Array();
+          }
+          // no longer inside
+          inside = false;
+          last = vertices[i];
+        }
+      }
+
+      // push last linestring if not done already
+      if (inside) multiLineString.push(new OpenLayers.Geometry.LineString(points));
+
+      this.igcLayer.removeAllFeatures({silent: true});
+      var feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.MultiLineString(multiLineString));
+      this.igcLayer.addFeatures(feature);
+    }.bind(this);
+
+    this.map.zoomToExtent(igc_bounds);
+    simplifyVectorFeature(igc_bounds);
+
+    this.igcLayer.events.register("zoomend", this, simplifyVectorFeature);
+    this.igcLayer.events.register("moveend", this, simplifyVectorFeature);
+  },
+
+  removeIGCFeature: function() {
+    this.igcLayer.removeAllFeatures();
+  },
+
   addTaskLayer: function() {
     this.taskLayer = new OpenLayers.Layer.Vector(_("Task"), {
       styleMap: new OpenLayers.StyleMap({

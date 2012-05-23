@@ -42,7 +42,7 @@ function init() {
         max_height -= object.y;
       });
 
-      max_height -= 12; // adjust for (3 times upper and lower) margin of h3
+      max_height -= 16; // adjust for (4 times upper and lower) margin of h3
 
       $$('#menu li div.collapse').each( function(object, i) {
         object.setStyle('height', max_height);
@@ -62,7 +62,7 @@ function collabsible() {
     max_height -= object.y;
   });
 
-  max_height -= 12; // adjust for (3 times upper and lower) margin of h3
+  max_height -= 16; // adjust for (4 times upper and lower) margin of h3
 
   var list = $$('#menu li div.collapse');
   var headings = $$('#menu li h3.collapse');
