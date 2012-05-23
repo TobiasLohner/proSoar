@@ -632,7 +632,7 @@ var dlgNewTask = new Class({
         task_type,
         {content: item.distance + _('&nbsp;km')},
         item.turnpoints,
-        {content: date.format('%x %X')}, //properties: { 'value': date.format('%s') } },
+        {content: date.format(_("%x %X"))}, //properties: { 'value': date.format('%s') } },
         new Element('img', {
           'src': 'images/delete.png',
           events: {
@@ -963,7 +963,7 @@ var dlgSaveTask = new Class({
         task_type,
         {content: item.distance + _('&nbsp;km'), properties: { 'value': item.distance } },
         item.turnpoints,
-        {content: date.format('%x %X')}, //properties: { 'value': date.format('%s') } },
+        {content: date.format(_("%x %X"))}, //properties: { 'value': date.format('%s') } },
         new Element('img', {
           'src': 'images/delete.png',
           events: {

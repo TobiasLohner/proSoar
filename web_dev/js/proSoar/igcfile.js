@@ -142,8 +142,8 @@ var InfoscreenIGC = new Class({
 
     var takeoff_landing = new Element('div', {
       id: 'igcfile-takeoff-landing',
-      html: _("Takeoff") + ': ' + takeoff_time.format('%x %X') + '<br>' +
-            _("Landing") + ': ' + landing_time.format('%x %X')
+      html: _("Takeoff") + ': ' + takeoff_time.format(_("%x %X")) + '<br>' +
+            _("Landing") + ': ' + landing_time.format(_("%x %X"))
     });
 
     info.grab(takeoff_landing);
