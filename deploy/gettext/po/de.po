@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-05-10 00:07+0200\n"
-"PO-Revision-Date: 2012-05-10 00:12+0200\n"
+"POT-Creation-Date: 2012-05-23 12:37+0200\n"
+"PO-Revision-Date: 2012-05-23 12:50+0200\n"
 "Last-Translator: Tobias Lohner <info@prosoar.de>\n"
 "Language-Team: Deutsch <>\n"
 "MIME-Version: 1.0\n"
@@ -26,15 +26,18 @@ msgstr "Allgemein"
 msgid "General Task Options"
 msgstr "Allgemeine Aufgabenoptionen"
 
-#: ../../web_dev/js/proSoar/dialogs.js:67 ../../web_dev/js/proSoar/main.js:435
+#: ../../web_dev/js/proSoar/dialogs.js:67
+#: ../../web_dev/js/proSoar/tasklist.js:88
 msgid "Start"
 msgstr "Start"
 
-#: ../../web_dev/js/proSoar/dialogs.js:69 ../../web_dev/js/proSoar/main.js:437
+#: ../../web_dev/js/proSoar/dialogs.js:69
+#: ../../web_dev/js/proSoar/tasklist.js:90
 msgid "Finish"
 msgstr "Ziel"
 
-#: ../../web_dev/js/proSoar/dialogs.js:71 ../../web_dev/js/proSoar/main.js:439
+#: ../../web_dev/js/proSoar/dialogs.js:71
+#: ../../web_dev/js/proSoar/tasklist.js:92
 msgid "TP"
 msgstr "WP"
 
@@ -212,6 +215,7 @@ msgid "Add Waypoint File..."
 msgstr "Wegpunktedatei hinzufügen..."
 
 #: ../../web_dev/js/proSoar/dialogs.js:1151
+#: ../../web_dev/js/proSoar/igcfile.js:73
 msgid "Add"
 msgstr "Hinzufügen"
 
@@ -223,9 +227,47 @@ msgstr "Wegpunktedatei löschen..."
 msgid "Are you sure you want to delete waypoint file"
 msgstr "Bist du sicher, dass du diese Wegpunktedatei löschen willst:"
 
-#: ../../web_dev/js/proSoar/main.js:520
-msgid "FAI triangle"
-msgstr "FAI Dreieck"
+#: ../../web_dev/js/proSoar/igcfile.js:18
+msgid "Add IGC File..."
+msgstr "IGC-Datei hinzufügen..."
+
+#: ../../web_dev/js/proSoar/igcfile.js:104
+msgid "Analyse IGC file"
+msgstr "IGC-Datei analysieren"
+
+#: ../../web_dev/js/proSoar/igcfile.js:128
+msgid "File"
+msgstr "Datei"
+
+#: ../../web_dev/js/proSoar/igcfile.js:145
+msgid "Takeoff"
+msgstr "Start"
+
+#: ../../web_dev/js/proSoar/igcfile.js:146
+msgid "Landing"
+msgstr "Landung"
+
+#: ../../web_dev/js/proSoar/igcfile.js:167
+msgid "OLC"
+msgstr "OLC"
+
+#: ../../web_dev/js/proSoar/igcfile.js:173
+msgid "Plus"
+msgstr "Plus"
+
+#: ../../web_dev/js/proSoar/igcfile.js:174
+#: ../../web_dev/js/proSoar/igcfile.js:180
+msgid "km"
+msgstr "km"
+
+#: ../../web_dev/js/proSoar/igcfile.js:175
+#: ../../web_dev/js/proSoar/igcfile.js:181
+msgid "km/h"
+msgstr "km/h"
+
+#: ../../web_dev/js/proSoar/igcfile.js:179
+msgid "Triangle"
+msgstr "Dreieck"
 
 #: ../../web_dev/js/proSoar/map.js:47
 msgid "OSM Map"
@@ -248,7 +290,7 @@ msgid "Google Satellite"
 msgstr "Google Satellit"
 
 #: ../../web_dev/js/proSoar/map.js:174 ../../web_dev/js/proSoar/map.js:444
-#: ../../web_dev/js/proSoar/map.js:468
+#: ../../web_dev/js/proSoar/map.js:573
 msgid "Task"
 msgstr "Aufgabe"
 
@@ -259,7 +301,7 @@ msgid "Airports"
 msgstr "Flugplätze"
 
 #: ../../web_dev/js/proSoar/map.js:176 ../../web_dev/js/proSoar/map.js:197
-#: ../../web_dev/js/proSoar/map.js:205 ../../web_dev/js/proSoar/map.js:486
+#: ../../web_dev/js/proSoar/map.js:205 ../../web_dev/js/proSoar/map.js:591
 msgid "Task Turnpoint Sectors"
 msgstr "Aufgaben Wendepunkt-Sektoren"
 
@@ -271,7 +313,11 @@ msgstr "Flugplatz"
 msgid "Turnpoint"
 msgstr "Wendepunkt"
 
-#: ../../web_dev/js/proSoar/map.js:511
+#: ../../web_dev/js/proSoar/map.js:468
+msgid "IGC"
+msgstr "IGC"
+
+#: ../../web_dev/js/proSoar/map.js:616
 msgid "Special Task Layer"
 msgstr "Spezieller Aufgaben-Layer"
 
@@ -342,6 +388,10 @@ msgstr ""
 #: ../../web_dev/js/proSoar/task.js:33
 msgid "FAI badge/records"
 msgstr "FAI Abzeichen/Rekord"
+
+#: ../../web_dev/js/proSoar/tasklist.js:207
+msgid "FAI triangle"
+msgstr "FAI Dreieck"
 
 #: ../../web_dev/js/proSoar/taskstore.js:123
 #: ../../web_dev/js/proSoar/turnpoint.js:17
