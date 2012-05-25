@@ -14,5 +14,7 @@ web_dev/images/OpenLayers
 storage/map/airspace/*
 !storage/map/airspace/airspace.map
 
+!storage/terrain/
+
 *.swp
 *.swo

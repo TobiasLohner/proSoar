@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+
+RewriteEngine On
+
+# Terrain
+# serve levels 0 to 7 directly.
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^([0-7])/(\d*)/(\d*).png$ $1/$2/$3.png [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([0-7])/(\d*)/(\d*).png$ /terrain/empty.png [L]
+
+RewriteRule ^(\d*)/(\d*)/(\d*).png$ http://www.prosoar.de/bin/tilecache.cgi/1.0.0/terrain/$1/$2/$3.png [L]
+
+RewriteRule ^height/lon([-]?\d*\.?\d*?)/lat([-]?\d*\.?\d*?)$ https://afsserv.akaflieg.uni-stuttgart.de/tobias/get_height.py?lon=$1&lat=$2
+
+
+</IfModule>
+
