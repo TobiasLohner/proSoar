@@ -491,20 +491,12 @@ var MapWindow = new Class({
     for (var i = 1; i < flight.length; i++) {
       vertices[i] = new OpenLayers.Geometry.Point(
         vertices[i-1].x + flight[i][0], vertices[i-1].y + flight[i][1]);
-//        vertices[i-1].x + flight[i].x, vertices[i-1].y + flight[i].y);
-//      vertices[i].lod = flight[i].l;
       vertices[i].lod = flight[i][2];
       igc_bounds.extend(vertices[i]);
     }
 
-    var simplifyVectorFeature = function(igc_bounds) {
-      if (igc_bounds.CLASS_NAME == "OpenLayers.Bounds") {
-        var bounds = igc_bounds;
-      } else {
-        var bounds = this.map.getExtent().scale(2);
-      }
-
-//      var vertices = igcFileFeature.getVertices();
+    var simplifyVectorFeature = function(e) {
+      var bounds = e.object.getExtent().scale(2);
 
       var multiLineString = new Array();
       var inside = false;
@@ -512,7 +504,7 @@ var MapWindow = new Class({
 
       var points = new Array();
 
-      var zoom = this.map.getZoom();
+      var zoom = e.object.map.getZoom();
       var lod = 0;
       if (zoom > 8)
         lod = 1;
@@ -554,13 +546,13 @@ var MapWindow = new Class({
       // push last linestring if not done already
       if (inside) multiLineString.push(new OpenLayers.Geometry.LineString(points));
 
-      this.igcLayer.removeAllFeatures({silent: true});
+      e.object.removeAllFeatures({silent: true});
       var feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.MultiLineString(multiLineString));
-      this.igcLayer.addFeatures(feature);
-    }.bind(this);
+      e.object.addFeatures(feature);
+    };
 
     this.map.zoomToExtent(igc_bounds);
-    simplifyVectorFeature(igc_bounds);
+    simplifyVectorFeature({object: this.igcLayer});
 
     this.igcLayer.events.register("zoomend", this, simplifyVectorFeature);
     this.igcLayer.events.register("moveend", this, simplifyVectorFeature);
