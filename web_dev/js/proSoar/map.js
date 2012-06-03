@@ -469,7 +469,7 @@ var MapWindow = new Class({
     this.igcLayer = new OpenLayers.Layer.Vector(_("IGC"), {
       styleMap: new OpenLayers.StyleMap({
         'default': new OpenLayers.Style({
-          strokeColor: "#df0044",
+          strokeColor: "${color}",
           strokeWidth: 2
         })
     }) });
@@ -532,7 +532,8 @@ var MapWindow = new Class({
         if (inside) multiLineString.push(new OpenLayers.Geometry.LineString(points));
 
         if (multiLineString.length > 0) {
-          features.push(new OpenLayers.Feature.Vector(new OpenLayers.Geometry.MultiLineString(multiLineString)));
+          features.push(new OpenLayers.Feature.Vector(new OpenLayers.Geometry.MultiLineString(multiLineString),
+            { color: e.object.full_geometries[j].color } ));
           e.object.full_geometries[j].featureId = features[features.length - 1].id;
         }
       }
@@ -546,14 +547,24 @@ var MapWindow = new Class({
   },
 
   addIGCFeature: function(flight) {
-    this.igcLayer.full_geometries.push({featureId: null, id: 0, vertices: new Array()});
+    var colors = ['#df0044', '#ff29d4', '#0049f5', '#9d00e0']
+
+    this.igcLayer.full_geometries.push({
+      featureId: null,
+      id: 0,
+      color: colors[0],
+      vertices: new Array()
+    });
+
+    var id = this.igcLayer.full_geometries.length - 1;
 
     if (this.igcLayer.full_geometries.length > 1) {
-      this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 1].id =
-        this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 2].id + 1;
+      this.igcLayer.full_geometries[id].id =
+        this.igcLayer.full_geometries[id - 1].id + 1;
+      this.igcLayer.full_geometries[id].color = colors[id%(colors.length)];
     }
 
-    var vertices = this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 1].vertices;
+    var vertices = this.igcLayer.full_geometries[id].vertices;
 
     var igc_bounds = new OpenLayers.Bounds();
 
@@ -572,7 +583,7 @@ var MapWindow = new Class({
     this.map.zoomToExtent(igc_bounds);
     this.igcLayer.redraw();
 
-    return this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 1].id;
+    return this.igcLayer.full_geometries[id].id;
   },
 
   removeIGCFeature: function(id) {
