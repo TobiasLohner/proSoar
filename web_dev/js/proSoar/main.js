@@ -22,6 +22,7 @@
 * @requires proSoar/waypoints.js
 * @requires proSoar/search.js
 * @requires proSoar/igcfile.js
+* @requires proSoar/google.js
 **/
 
 var ProSoar = new Class({

@@ -96,21 +96,27 @@ var MapWindow = new Class({
     });
     this.map.addLayer(airspace);
 
+    var loadGoogleLayers_periodicalID;
+    var loadGoogleLayers = function() {
+      // add google maps if google script loaded
+      if (window.google) {
+        clearInterval(loadGoogleLayers_periodicalID);
+        var google_phy = new OpenLayers.Layer.Google(
+          _("Google Physical"),
+          {type: google.maps.MapTypeId.TERRAIN}
+        );
 
-    // add google maps if google script loaded
-    if (window.google) {
-      var google_phy = new OpenLayers.Layer.Google(
-        _("Google Physical"),
-        {type: google.maps.MapTypeId.TERRAIN}
-      );
-
-      var google_sat = new OpenLayers.Layer.Google(
-        _("Google Satellite"),
-        {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 20}
-      );
+        var google_sat = new OpenLayers.Layer.Google(
+          _("Google Satellite"),
+          {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 20}
+        );
  
-      this.map.addLayers([google_phy, google_sat]);
-    }
+        this.map.addLayers([google_phy, google_sat]);
+      }
+    }.bind(this);
+
+    // check for google maps api every 1 second.
+    loadGoogleLayers_periodicalID = loadGoogleLayers.periodical(1000);
 
     OpenLayers.Feature.Vector.style['default']['strokeWidth'] = '4';
  

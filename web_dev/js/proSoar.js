@@ -22,3 +22,5 @@ loadjsfile("js/proSoar/search.js");
 loadjsfile("js/proSoar/tasklist.js");
 loadjsfile("js/proSoar/igcfile.js");
 loadjsfile("js/proSoar/init.js");
+
+loadjsfile("js/proSoar/google.js");
