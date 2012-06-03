@@ -1390,7 +1390,7 @@ solveSphericalFAISector_1 = function(a, gamma) {
 
   // initial solution
   var b = -14 * a * (7 * Math.cos(gamma) - 18) / 275;
-
+/*
   b = b / R_EARTH;
   a = a / R_EARTH;
 
@@ -1399,6 +1399,8 @@ solveSphericalFAISector_1 = function(a, gamma) {
   }
 
   return b * R_EARTH;
+*/
+  return b;
 };
 
 
@@ -1409,7 +1411,7 @@ solveSphericalFAISector_2 = function(a, gamma) {
 
   // initial solution
   var b = -275 * a / (14 * (7 * Math.cos(gamma) - 18));
-
+/*
   b = b / R_EARTH;
   a = a / R_EARTH;
 
@@ -1418,6 +1420,8 @@ solveSphericalFAISector_2 = function(a, gamma) {
   }
 
   return b * R_EARTH;
+*/
+  return b;
 };
 
 /*
