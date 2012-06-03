@@ -62,8 +62,9 @@ MAP
     NAME 'Airspace WAVE'
     TYPE POLYGON 
     CONNECTIONTYPE OGR
-    CONNECTION "gml/de.gml"
-#    TILEINDEX "airspace.gml"
+#    CONNECTION "airspace.gml"
+#    CONNECTION "gml/de.gml"
+    TILEINDEX "airspace.gml,0"
 #    TILEITEM "LOCATION"
     STATUS DEFAULT
   
@@ -94,8 +95,8 @@ MAP
     NAME 'Airspace CLASS A and B'
     TYPE POLYGON
     CONNECTIONTYPE OGR
-    CONNECTION "gml/de.gml"
-#    TILEINDEX "airspace.gml"
+#    CONNECTION "gml/de.gml"
+    TILEINDEX "airspace.gml,0"
 #    TILEITEM "LOCATION"
     STATUS DEFAULT
 
@@ -104,7 +105,7 @@ MAP
     END
 
     CLASS
-      EXPRESSION ('[CLASS]' eq 'A')
+      EXPRESSION (('[CLASS]' eq 'A') AND !('[NAME]' =~ /^FIR/))
       NAME 'A'
       STYLE
         OUTLINECOLOR 211 0 32
@@ -119,7 +120,7 @@ MAP
     END
 
     CLASS
-      EXPRESSION ('[CLASS]' eq 'B')
+      EXPRESSION (('[CLASS]' eq 'B') AND !('[NAME]' =~ /^FIR/))
       NAME 'B'
       STYLE
         OUTLINECOLOR 0 12 211
@@ -141,8 +142,8 @@ MAP
     NAME 'Airspace CLASS C to D (CTR)'
     TYPE POLYGON 
     CONNECTIONTYPE OGR
-    CONNECTION "gml/de.gml"
-#    TILEINDEX "airspace.gml"
+#    CONNECTION "gml/de.gml"
+    TILEINDEX "airspace.gml,0"
 #    TILEITEM "LOCATION"
     STATUS DEFAULT
         
@@ -151,7 +152,7 @@ MAP
     END 
 
     CLASS
-      EXPRESSION ('[CLASS]' eq 'C')
+      EXPRESSION (('[CLASS]' eq 'C') AND !('[NAME]' =~ /^FIR/))
       NAME 'C'
       STYLE
         OUTLINECOLOR 0 12 211
@@ -169,7 +170,7 @@ MAP
 ## AIRSPACE CLASS D
 ##
     CLASS
-      EXPRESSION ('[CLASS]' eq 'D')
+      EXPRESSION (('[CLASS]' eq 'D') AND !('[NAME]' =~ /^FIR/))
       NAME 'D'
       STYLE
         OUTLINECOLOR 0 12 211
@@ -210,8 +211,8 @@ MAP
     NAME 'Airspace CLASS E, F and TMZ'
     TYPE POLYGON 
     CONNECTIONTYPE OGR
-    CONNECTION "gml/de.gml"
-#    TILEINDEX "airspace.gml"
+#    CONNECTION "gml/de.gml"
+    TILEINDEX "airspace.gml,0"
 #    TILEITEM "LOCATION"
     STATUS DEFAULT
 
@@ -219,15 +220,15 @@ MAP
       "init=epsg:4326"
     END
 
-    CLASS
-      EXPRESSION ('[CLASS]' eq 'E')
-      NAME 'CTR'
-      STYLE
-        OUTLINECOLOR 0 12 211
-        WIDTH 2
-        LINECAP butt
-      END
-    END
+#    CLASS
+#      EXPRESSION ('[CLASS]' eq 'E')
+#      NAME 'CTR'
+#      STYLE
+#        OUTLINECOLOR 0 12 211
+#        WIDTH 2
+#        LINECAP butt
+#      END
+#    END
 
 ##
 ## AIRSPACE CLASS F
@@ -267,8 +268,8 @@ MAP
     NAME 'Airspace DANGER and RESTRICTED'
     TYPE POLYGON 
     CONNECTIONTYPE OGR
-    CONNECTION "gml/de.gml"
-#    TILEINDEX "airspace.gml"
+#    CONNECTION "gml/de.gml"
+    TILEINDEX "airspace.gml,0"
 #    TILEITEM "LOCATION"
     STATUS DEFAULT
 
@@ -277,7 +278,7 @@ MAP
     END
  
     CLASS
-      EXPRESSION ('[TYPE]' eq 'DANGER')
+      EXPRESSION ('[CLASS]' eq 'Q')
       NAME "ED-R"
       STYLE
         OUTLINECOLOR 211 0 32
@@ -294,7 +295,8 @@ MAP
 ## RESTRICTED AIRSPACE (CLASS R)
 ##
     CLASS
-      EXPRESSION ('[TYPE]' eq 'RESTRICTED')
+      #EXPRESSION ('[TYPE]' eq 'RESTRICTED')
+      EXPRESSION ('[CLASS]' eq 'R')
       NAME "ED-R"
       STYLE
         OUTLINECOLOR 211 0 32
