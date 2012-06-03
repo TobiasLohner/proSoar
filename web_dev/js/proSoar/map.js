@@ -26,7 +26,7 @@ var MapWindow = new Class({
       theme: null
     });
 
-    OpenLayers.Layer.Vector.prototype.renderers = ["SVG2", "VML", "Canvas"];
+    OpenLayers.Layer.Vector.prototype.renderers = ["SVG", "VML", "Canvas"];
  
     this.map.addControl(new OpenLayers.Control.PanZoomBar());
     this.map.addControl(new OpenLayers.Control.LayerSwitcher({'ascending':false}));
