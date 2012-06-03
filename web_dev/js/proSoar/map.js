@@ -474,15 +474,83 @@ var MapWindow = new Class({
         })
     }) });
     this.map.addLayer(this.igcLayer);
+    this.igcLayer.full_geometries = new Array();
+
+    var simplifyVectorFeature = function(e) {
+      var bounds = e.object.getExtent().scale(2);
+
+      var features = new Array();
+
+      var zoom = e.object.map.getZoom();
+      var lod = 0;
+      if (zoom > 8)
+        lod = 1;
+      if (zoom > 10)
+        lod = 2;
+      if (zoom > 12)
+        lod = 3;
+
+      for (var j = 0; j < e.object.full_geometries.length; j++) {
+        var vertices = e.object.full_geometries[j].vertices;
+
+        var multiLineString = new Array();
+        var points = new Array();
+        var inside = false;
+        var last = null;
+
+        for (var i = 0; i < vertices.length; i++) {
+          if (vertices[i].lod > lod) continue;
+
+          if (bounds.contains(vertices[i].x, vertices[i].y)) {
+            // inside. add to lineString.
+            inside = true;
+
+            if (last) {
+              // first add the previous vertice (but only once).
+              points.push(last);
+              last = null;
+            }
+
+            // add current vertice
+            points.push(vertices[i]);
+          } else {
+            if (inside) {
+              // first vertice outside. add this one.
+              points.push(vertices[i]);
+              // create linestring and add it to multilinestring
+              multiLineString.push(new OpenLayers.Geometry.LineString(points));
+              // reset points array
+              points = new Array();
+            }
+            // no longer inside
+            inside = false;
+            last = vertices[i];
+          }
+        }
+
+        // push last linestring if not done already
+        if (inside) multiLineString.push(new OpenLayers.Geometry.LineString(points));
+
+        if (multiLineString.length > 0) {
+          features.push(new OpenLayers.Feature.Vector(new OpenLayers.Geometry.MultiLineString(multiLineString)));
+          e.object.full_geometries[j].featureId = features[features.length - 1].id;
+        }
+      }
+
+      e.object.removeAllFeatures({silent: true});
+      e.object.addFeatures(features);
+    };
+
+    this.igcLayer.events.register("zoomend", this, simplifyVectorFeature);
+    this.igcLayer.events.register("moveend", this, simplifyVectorFeature);
   },
 
   addIGCFeature: function(flight) {
+    this.igcLayer.full_geometries.push({featureId: null, vertices: new Array()});
+    var vertices = this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 1].vertices;
 
-//    this.igcLayer.addFeatures([new OpenLayers.Feature.Vector(igcFileFeature)]);
-    var vertices = new Array();
     var igc_bounds = new OpenLayers.Bounds();
-//    vertices[0] = new OpenLayers.Geometry.Point(flight[0].x, flight[0].y);
-//    vertices[0].lod = flight[0].l;
+
     vertices[0] = new OpenLayers.Geometry.Point(flight[0][0], flight[0][1]);
     vertices[0].lod = flight[0][2];
     igc_bounds.extend(vertices[0]);
@@ -495,71 +563,14 @@ var MapWindow = new Class({
       igc_bounds.extend(vertices[i]);
     }
 
-    var simplifyVectorFeature = function(e) {
-      var bounds = e.object.getExtent().scale(2);
-
-      var multiLineString = new Array();
-      var inside = false;
-      var last = null;
-
-      var points = new Array();
-
-      var zoom = e.object.map.getZoom();
-      var lod = 0;
-      if (zoom > 8)
-        lod = 1;
-      if (zoom > 10)
-        lod = 2;
-      if (zoom > 12)
-        lod = 3;
-
-      for (var i = 0; i < vertices.length; i++) {
-        if (vertices[i].lod > lod) continue;
-
-        if (bounds.contains(vertices[i].x, vertices[i].y)) {
-          // inside. add to lineString.
-          inside = true;
-
-          if (last) {
-            // first add the previous vertice (but only once).
-            points.push(last);
-            last = null;
-          }
-
-          // add current vertice
-          points.push(vertices[i]);
-        } else {
-          if (inside) {
-            // first vertice outside. add this one.
-            points.push(vertices[i]);
-            // create linestring and add it to multilinestring
-            multiLineString.push(new OpenLayers.Geometry.LineString(points));
-            // reset points array
-            points = new Array();
-          }
-          // no longer inside
-          inside = false;
-          last = vertices[i];
-        }
-      }
-
-      // push last linestring if not done already
-      if (inside) multiLineString.push(new OpenLayers.Geometry.LineString(points));
-
-      e.object.removeAllFeatures({silent: true});
-      var feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.MultiLineString(multiLineString));
-      e.object.addFeatures(feature);
-    };
-
     this.map.zoomToExtent(igc_bounds);
-    simplifyVectorFeature({object: this.igcLayer});
-
-    this.igcLayer.events.register("zoomend", this, simplifyVectorFeature);
-    this.igcLayer.events.register("moveend", this, simplifyVectorFeature);
+    this.igcLayer.redraw();
   },
 
   removeIGCFeature: function() {
-    this.igcLayer.removeAllFeatures();
+    var feature = this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 1];
+    this.igcLayer.destroyFeatures(this.igcLayer.getFeatureById(feature.featureId));
+    this.igcLayer.full_geometries.splice(-1, 1);
   },
 
   addTaskLayer: function() {
