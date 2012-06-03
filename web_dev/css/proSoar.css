@@ -458,21 +458,21 @@ body {
   margin-top: 0.2em;
 }
 
-#igcfile-info {
+.igcfile-info {
   padding: 4px;
 }
 
-#igcfile-info #igcfile-name img {
+.igcfile-info #igcfile-name img {
   float: right;
   cursor: pointer;
 }
 
-#igcfile-info #igcfile-takeoff-landing {
+.igcfile-info #igcfile-takeoff-landing {
   margin-top: 0.2em;
   margin-bottom: 0.2em;
 }
 
-#igcfile-info #igcfile-contest {
+.igcfile-info #igcfile-contest {
   border: 1px solid #e1e1e1;
 }
 

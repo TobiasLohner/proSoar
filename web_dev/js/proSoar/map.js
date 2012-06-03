@@ -546,7 +546,13 @@ var MapWindow = new Class({
   },
 
   addIGCFeature: function(flight) {
-    this.igcLayer.full_geometries.push({featureId: null, vertices: new Array()});
+    this.igcLayer.full_geometries.push({featureId: null, id: 0, vertices: new Array()});
+
+    if (this.igcLayer.full_geometries.length > 1) {
+      this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 1].id =
+        this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 2].id + 1;
+    }
+
     var vertices = this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 1].vertices;
 
     var igc_bounds = new OpenLayers.Bounds();
@@ -565,12 +571,25 @@ var MapWindow = new Class({
 
     this.map.zoomToExtent(igc_bounds);
     this.igcLayer.redraw();
+
+    return this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 1].id;
   },
 
-  removeIGCFeature: function() {
-    var feature = this.igcLayer.full_geometries[this.igcLayer.full_geometries.length - 1];
+  removeIGCFeature: function(id) {
+    var feature = null;
+    var i = 0;
+
+    for (i; i < this.igcLayer.full_geometries.length; i++) {
+      if (this.igcLayer.full_geometries[i].id == id) {
+        feature = this.igcLayer.full_geometries[i];
+        break;
+      }
+    }
+
+    if (!feature) return;
+
     this.igcLayer.destroyFeatures(this.igcLayer.getFeatureById(feature.featureId));
-    this.igcLayer.full_geometries.splice(-1, 1);
+    this.igcLayer.full_geometries.splice(i, 1);
   },
 
   addTaskLayer: function() {

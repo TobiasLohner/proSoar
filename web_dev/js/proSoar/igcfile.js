@@ -4,7 +4,7 @@ var InfoscreenIGC = new Class({
 
   initialize: function(proSoar) {
     this.proSoar = proSoar;
-    this.igcfile = null;
+    this.igcfile = new Array();
 
     this.proSoar.map.addIGCLayer();
     this.showUploadButton();
@@ -87,14 +87,16 @@ var InfoscreenIGC = new Class({
 
   addIGCFileComplete: function(response) {
     if (response.success) {
-      this.igcfile = response.flight;
-      this.igcFileAdded();
+      this.igcfile.push(response.flight);
+      this.igcFileAdded(this.igcfile.length - 1);
     }
 
     this.dialog.close();
   },
 
   showUploadButton: function() {
+    if ($('igcfile-upload')) return;
+
     var button = new Element('div', {
       'id': 'igcfile-upload'
     });
@@ -111,34 +113,39 @@ var InfoscreenIGC = new Class({
     $("igcfile-container").grab(button);
   },
 
-  igcFileAdded: function() {
-    this.proSoar.map.addIGCFeature(this.igcfile.trace);
-    $("igcfile-upload-button").dispose();
+  igcFileAdded: function(id) {
+    this.igcfile[id].featureId = this.proSoar.map.addIGCFeature(this.igcfile[id].trace);
 
-    $("igcfile-container").grab(this.prepareIGCFileInfo());
+    if (this.igcfile.length > 3)
+      $("igcfile-upload").dispose();
+
+    $("igcfile-container").grab(this.prepareIGCFileInfo(id));
   },
 
-  prepareIGCFileInfo: function() {
+  prepareIGCFileInfo: function(id) {
     var info = new Element('div', {
-      id: 'igcfile-info'
+      id: 'igcfile-' + this.igcfile[id].featureId + '-info',
+      'class': 'igcfile-info'
     });
 
     var filename = new Element('div', {
       id: 'igcfile-name',
-      html: _("File") + ': ' + this.igcfile.filename
+      html: _("File") + ': ' + this.igcfile[id].filename
     });
 
     filename.grab(new Element('img', {
       src: 'images/delete.png',
       events: {
-        click: function(e) { return this.deleteIGCFile(); }.bind(this)
+        click: function(featureId) {
+          return this.deleteIGCFile(featureId);
+        }.bind(this, this.igcfile[id].featureId)
       }
     }) );
 
     info.grab(filename);
 
-    var takeoff_time = new Date().parse(this.igcfile.info.takeoff);
-    var landing_time = new Date().parse(this.igcfile.info.landing);
+    var takeoff_time = new Date().parse(this.igcfile[id].info.takeoff);
+    var landing_time = new Date().parse(this.igcfile[id].info.landing);
 
     var takeoff_landing = new Element('div', {
       id: 'igcfile-takeoff-landing',
@@ -152,13 +159,13 @@ var InfoscreenIGC = new Class({
       id: 'igcfile-contest'
     });
 
-    contest.grab(this.showOLCPlus());
+    contest.grab(this.showOLCPlus(id));
     info.grab(contest);
 
     return info;
   },
 
-  showOLCPlus: function() {
+  showOLCPlus: function(id) {
     var olcplus = new Element('table', {
       id: 'igcfile-contest-olcplus'
     });
@@ -171,14 +178,14 @@ var InfoscreenIGC = new Class({
 
     tbody.grab(new Element('tr', {
       html: '<td>' + _("Plus") + ':</td>' +
-            '<td>' + Math.round(this.igcfile.info.olc_plus.plus.distance/10)/100 + ' ' + _("km") + '</td>' +
-            '<td>' + Math.round(this.igcfile.info.olc_plus.plus.speed*3.6*10)/10 + ' ' + _("km/h") + '</td>'
+            '<td>' + Math.round(this.igcfile[id].info.olc_plus.plus.distance/10)/100 + ' ' + _("km") + '</td>' +
+            '<td>' + Math.round(this.igcfile[id].info.olc_plus.plus.speed*3.6*10)/10 + ' ' + _("km/h") + '</td>'
     }) );
 
     tbody.grab(new Element('tr', {
       html: '<td>' + _("Triangle") + ':</td>' +
-            '<td>' + Math.round(this.igcfile.info.olc_plus.triangle.distance/10)/100 + ' ' + _("km") + '</td>' +
-            '<td>' + Math.round(this.igcfile.info.olc_plus.triangle.speed*3.6*10)/10 + ' ' + _("km/h") + '</td>'
+            '<td>' + Math.round(this.igcfile[id].info.olc_plus.triangle.distance/10)/100 + ' ' + _("km") + '</td>' +
+            '<td>' + Math.round(this.igcfile[id].info.olc_plus.triangle.speed*3.6*10)/10 + ' ' + _("km/h") + '</td>'
     }) );
 
     olcplus.grab(tbody);
@@ -186,10 +193,17 @@ var InfoscreenIGC = new Class({
     return olcplus;
   },
 
-  deleteIGCFile: function() {
-    this.proSoar.map.removeIGCFeature();
-    delete this.igcfile;
-    $('igcfile-info').dispose();
+  deleteIGCFile: function(featureId) {
+    this.proSoar.map.removeIGCFeature(featureId);
+    $('igcfile-' + featureId + '-info').dispose();
+
+    for (var i = 0; i < this.igcfile.length; i++) {
+      if (this.igcfile[i].featureId == featureId) {
+        this.igcfile.splice(i, 1);
+        break;
+      }
+    }
+
     this.showUploadButton();
   }
 
