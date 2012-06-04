@@ -72,6 +72,8 @@ MAP
       "init=epsg:4326"
     END
 
+    MAXSCALEDENOM 10000000
+
     CLASS
       EXPRESSION ('[CLASS]' eq 'W')
       NAME 'WAVE'
@@ -219,6 +221,8 @@ MAP
     PROJECTION
       "init=epsg:4326"
     END
+
+    MAXSCALEDENOM 10000000
 
 #    CLASS
 #      EXPRESSION ('[CLASS]' eq 'E')
