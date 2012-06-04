@@ -473,134 +473,42 @@ var MapWindow = new Class({
           strokeWidth: 2
         })
     }) });
+
     this.map.addLayer(this.igcLayer);
-    this.igcLayer.full_geometries = new Array();
-
-    var simplifyVectorFeature = function(e) {
-      var bounds = e.object.getExtent().scale(2);
-
-      var features = new Array();
-
-      var zoom = e.object.map.getZoom();
-      var lod = 0;
-      if (zoom > 8)
-        lod = 1;
-      if (zoom > 10)
-        lod = 2;
-      if (zoom > 12)
-        lod = 3;
-
-      for (var j = 0; j < e.object.full_geometries.length; j++) {
-        var vertices = e.object.full_geometries[j].vertices;
-
-        var multiLineString = new Array();
-        var points = new Array();
-        var inside = false;
-        var last = null;
-
-        for (var i = 0; i < vertices.length; i++) {
-          if (vertices[i].lod > lod) continue;
-
-          if (bounds.contains(vertices[i].x, vertices[i].y)) {
-            // inside. add to lineString.
-            inside = true;
-
-            if (last) {
-              // first add the previous vertice (but only once).
-              points.push(last);
-              last = null;
-            }
-
-            // add current vertice
-            points.push(vertices[i]);
-          } else {
-            if (inside) {
-              // first vertice outside. add this one.
-              points.push(vertices[i]);
-              // create linestring and add it to multilinestring
-              multiLineString.push(new OpenLayers.Geometry.LineString(points));
-              // reset points array
-              points = new Array();
-            }
-            // no longer inside
-            inside = false;
-            last = vertices[i];
-          }
-        }
-
-        // push last linestring if not done already
-        if (inside) multiLineString.push(new OpenLayers.Geometry.LineString(points));
-
-        if (multiLineString.length > 0) {
-          features.push(new OpenLayers.Feature.Vector(new OpenLayers.Geometry.MultiLineString(multiLineString),
-            { color: e.object.full_geometries[j].color } ));
-          e.object.full_geometries[j].featureId = features[features.length - 1].id;
-        }
-      }
-
-      e.object.removeAllFeatures({silent: true});
-      e.object.addFeatures(features);
-    };
-
-    this.igcLayer.events.register("zoomend", this, simplifyVectorFeature);
-    this.igcLayer.events.register("moveend", this, simplifyVectorFeature);
+    this.map.events.register("moveend", this.igcLayer, this.igcLayer.redraw);
   },
 
   addIGCFeature: function(flight) {
     var colors = ['#df0044', '#ff29d4', '#0049f5', '#9d00e0']
 
-    this.igcLayer.full_geometries.push({
-      featureId: null,
-      id: 0,
-      color: colors[0],
-      vertices: new Array()
-    });
+    var id = this.igcLayer.features.length;
 
-    var id = this.igcLayer.full_geometries.length - 1;
-
-    if (this.igcLayer.full_geometries.length > 1) {
-      this.igcLayer.full_geometries[id].id =
-        this.igcLayer.full_geometries[id - 1].id + 1;
-      this.igcLayer.full_geometries[id].color = colors[id%(colors.length)];
-    }
-
-    var vertices = this.igcLayer.full_geometries[id].vertices;
-
+    var vertices = new Array();
+    var verticesLoD = new Array();
     var igc_bounds = new OpenLayers.Bounds();
 
     vertices[0] = new OpenLayers.Geometry.Point(flight[0][0], flight[0][1]);
-    vertices[0].lod = flight[0][2];
+    verticesLoD[0] = flight[0][2];
     igc_bounds.extend(vertices[0]);
 
-
-    for (var i = 1; i < flight.length; i++) {
+    for (var i = 1, len = flight.length; i < len; i++) {
       vertices[i] = new OpenLayers.Geometry.Point(
         vertices[i-1].x + flight[i][0], vertices[i-1].y + flight[i][1]);
-      vertices[i].lod = flight[i][2];
+      verticesLoD[i] = flight[i][2];
       igc_bounds.extend(vertices[i]);
     }
 
+    this.igcLayer.addFeatures(new OpenLayers.Feature.Vector(
+      new OpenLayers.Geometry.ProgressiveLineString(vertices, verticesLoD, [0, 8, 10, 12]),
+      { color: colors[id%(colors.length)] }
+    ));
     this.map.zoomToExtent(igc_bounds);
-    this.igcLayer.redraw();
 
-    return this.igcLayer.full_geometries[id].id;
+    return this.igcLayer.features[id].id;
   },
 
   removeIGCFeature: function(id) {
-    var feature = null;
-    var i = 0;
-
-    for (i; i < this.igcLayer.full_geometries.length; i++) {
-      if (this.igcLayer.full_geometries[i].id == id) {
-        feature = this.igcLayer.full_geometries[i];
-        break;
-      }
-    }
-
-    if (!feature) return;
-
-    this.igcLayer.destroyFeatures(this.igcLayer.getFeatureById(feature.featureId));
-    this.igcLayer.full_geometries.splice(i, 1);
+    this.igcLayer.destroyFeatures(this.igcLayer.getFeatureById(id));
   },
 
   addTaskLayer: function() {
