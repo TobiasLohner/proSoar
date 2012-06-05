@@ -25,7 +25,7 @@ RewriteRule ^settings/load$ /bin/get_userconfig.py?as=json
 RewriteRule ^settings/initial.js$ /bin/get_userconfig.py?as=js
 
 # Airspace
-RewriteRule ^airspace/(\d*)/(\d*)/(\d*).png$ http://www.prosoar.de/bin/tilecache.cgi/1.0.0/basic/$1/$2/$3.png
+RewriteRule ^airspace/(\d*)/(\d*)/(\d*).png$ /bin/tilecache.cgi/1.0.0/basic/$1/$2/$3.png [P,L]
 
 # Terrain
 # serve levels 0 to 6 directly.
