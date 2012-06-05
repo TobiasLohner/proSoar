@@ -51,6 +51,16 @@ var MapWindow = new Class({
     });
     this.map.addLayer(osm);
 
+    var hillshading = new OpenLayers.Layer.XYZ(_("Hill shading"),
+      "terrain/${z}/${x}/${y}.png", {
+      isBaseLayer: false,
+      sphericalMercator: true,
+      transparent: true,
+      'visibility': true,
+      'displayInLayerSwitcher': false,
+    });
+
+/*
     var hillshading = new OpenLayers.Layer.TMS(_("Hill shading"),
 //      "http://toolserver.org/~cmarqu/hill/", {
       "terrain/", {
@@ -70,12 +80,20 @@ var MapWindow = new Class({
       'visibility': true, 
       'displayInLayerSwitcher': false,
     });
+*/
     this.map.addLayer(hillshading);
     
     osm.events.register('visibilitychanged', this, function() { hillshading.setVisibility(osm.getVisibility()); });
 
+    var airspace = new OpenLayers.Layer.XYZ(_("Airspace"),
+      "airspace/${z}/${x}/${y}.png", {
+      isBaseLayer: false,
+      transparent: true,
+      'visibility': true,
+      'displayInLayerSwitcher': true
+    });
 
-
+/*
     var airspace = new OpenLayers.Layer.TMS(_("Airspace"),
       "airspace/", {
       type: 'png',
@@ -94,6 +112,7 @@ var MapWindow = new Class({
       'visibility': true,
       'displayInLayerSwitcher': true
     });
+*/
     this.map.addLayer(airspace);
 
     OpenLayers.Feature.Vector.style['default']['strokeWidth'] = '4';
