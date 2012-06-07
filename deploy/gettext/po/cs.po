@@ -1,0 +1,407 @@
+# Czech translation for prosoar
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the prosoar package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: prosoar\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-05-23 14:53+0200\n"
+"PO-Revision-Date: 2012-06-06 21:59+0000\n"
+"Last-Translator: Nikola Zizkovsky <Unknown>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-06-07 17:08+0000\n"
+"X-Generator: Launchpad (build 15353)\n"
+
+#: ../../web_dev/js/proSoar/dialogs.js:50
+msgid "General"
+msgstr "Obecné"
+
+#: ../../web_dev/js/proSoar/dialogs.js:56
+msgid "General Task Options"
+msgstr "Obecné nastavení úlohy"
+
+#: ../../web_dev/js/proSoar/dialogs.js:67
+#: ../../web_dev/js/proSoar/tasklist.js:88
+msgid "Start"
+msgstr "Start"
+
+#: ../../web_dev/js/proSoar/dialogs.js:69
+#: ../../web_dev/js/proSoar/tasklist.js:90
+msgid "Finish"
+msgstr "Cíl"
+
+#: ../../web_dev/js/proSoar/dialogs.js:71
+#: ../../web_dev/js/proSoar/tasklist.js:92
+msgid "TP"
+msgstr "TP"
+
+#: ../../web_dev/js/proSoar/dialogs.js:117
+#: ../../web_dev/js/proSoar/dialogs.js:679
+msgid "Task type"
+msgstr "Typ úlohy"
+
+#: ../../web_dev/js/proSoar/dialogs.js:164
+msgid "Sector type"
+msgstr "Typ sektoru"
+
+#: ../../web_dev/js/proSoar/dialogs.js:225
+msgid "Radius"
+msgstr "Poloměr"
+
+#: ../../web_dev/js/proSoar/dialogs.js:238
+#: ../../web_dev/js/proSoar/dialogs.js:257
+#: ../../web_dev/js/proSoar/dialogs.js:633
+#: ../../web_dev/js/proSoar/dialogs.js:964
+msgid "&nbsp;km"
+msgstr "&nbsp;km"
+
+#: ../../web_dev/js/proSoar/dialogs.js:244
+msgid "Inner Radius"
+msgstr "Vnitřní poloměr"
+
+#: ../../web_dev/js/proSoar/dialogs.js:263
+msgid "Start Radial"
+msgstr "Počáteční úhel"
+
+#: ../../web_dev/js/proSoar/dialogs.js:276
+#: ../../web_dev/js/proSoar/dialogs.js:295
+msgid "&nbsp;&deg;"
+msgstr "&nbsp;&deg;"
+
+#: ../../web_dev/js/proSoar/dialogs.js:282
+msgid "End Radial"
+msgstr "Koncový úhel"
+
+#: ../../web_dev/js/proSoar/dialogs.js:338
+#: ../../web_dev/js/proSoar/dialogs.js:1225
+msgid "Accept"
+msgstr "Potvrdit"
+
+#: ../../web_dev/js/proSoar/dialogs.js:348
+#: ../../web_dev/js/proSoar/dialogs.js:550
+#: ../../web_dev/js/proSoar/dialogs.js:578
+#: ../../web_dev/js/proSoar/dialogs.js:842
+#: ../../web_dev/js/proSoar/dialogs.js:1234
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: ../../web_dev/js/proSoar/dialogs.js:470
+msgid "New & Load Task"
+msgstr "Nový & Nahraj úlohu"
+
+#: ../../web_dev/js/proSoar/dialogs.js:524
+msgid "New"
+msgstr "Nový"
+
+#: ../../web_dev/js/proSoar/dialogs.js:528
+msgid "Load"
+msgstr "Nahrát"
+
+#: ../../web_dev/js/proSoar/dialogs.js:534
+#: ../../web_dev/js/proSoar/dialogs.js:541
+msgid "New Task"
+msgstr "Nová úloha"
+
+#: ../../web_dev/js/proSoar/dialogs.js:569
+msgid "Load Task"
+msgstr "Nahrát úlohu"
+
+#: ../../web_dev/js/proSoar/dialogs.js:600
+msgid "Select task to load"
+msgstr "Vyber úlohu"
+
+#: ../../web_dev/js/proSoar/dialogs.js:611
+#: ../../web_dev/js/proSoar/dialogs.js:937
+msgid "Task Name"
+msgstr "Název úlohy"
+
+#: ../../web_dev/js/proSoar/dialogs.js:611
+#: ../../web_dev/js/proSoar/dialogs.js:937
+msgid "Type"
+msgstr "Typ"
+
+#: ../../web_dev/js/proSoar/dialogs.js:611
+#: ../../web_dev/js/proSoar/dialogs.js:937
+msgid "Distance"
+msgstr "Vzdálenost"
+
+#: ../../web_dev/js/proSoar/dialogs.js:611
+#: ../../web_dev/js/proSoar/dialogs.js:937 ../../web_dev/js/proSoar/map.js:175
+#: ../../web_dev/js/proSoar/map.js:180 ../../web_dev/js/proSoar/map.js:196
+#: ../../web_dev/js/proSoar/map.js:204 ../../web_dev/js/proSoar/map.js:258
+msgid "Turnpoints"
+msgstr "Otočné body"
+
+#: ../../web_dev/js/proSoar/dialogs.js:611
+#: ../../web_dev/js/proSoar/dialogs.js:937
+msgid "Last Modified"
+msgstr "Naposledy upraveno"
+
+#: ../../web_dev/js/proSoar/dialogs.js:623
+#: ../../web_dev/js/proSoar/dialogs.js:954
+#: ../../web_dev/js/proSoar/dialogs.js:982
+msgid "Racing"
+msgstr "Soutěžní úloha po určené trati"
+
+#: ../../web_dev/js/proSoar/dialogs.js:624
+#: ../../web_dev/js/proSoar/dialogs.js:955
+#: ../../web_dev/js/proSoar/dialogs.js:983
+msgid "AAT"
+msgstr "Rychlostní úloha přes určené prosotry (AAT)"
+
+#: ../../web_dev/js/proSoar/dialogs.js:625
+#: ../../web_dev/js/proSoar/dialogs.js:956
+#: ../../web_dev/js/proSoar/dialogs.js:984
+msgid "FAI"
+msgstr "FAI"
+
+#: ../../web_dev/js/proSoar/dialogs.js:635
+#: ../../web_dev/js/proSoar/dialogs.js:966
+#: ../../web_dev/js/proSoar/igcfile.js:145
+#: ../../web_dev/js/proSoar/igcfile.js:146
+#, python-format
+msgid "%x %X"
+msgstr "%x %X"
+
+#: ../../web_dev/js/proSoar/dialogs.js:722
+msgid "Task must have at least start and finish"
+msgstr "Úloha musí obsahovat alespoň Start a Cíl"
+
+#: ../../web_dev/js/proSoar/dialogs.js:729
+msgid "An unknown error occured. Please try again."
+msgstr "Nastala neznámá chyba. Prosím, zkuste to znovu."
+
+#: ../../web_dev/js/proSoar/dialogs.js:735
+msgid "Save & Export Task"
+msgstr "Uložit & Exportovat úlohu"
+
+#: ../../web_dev/js/proSoar/dialogs.js:754
+msgid "Invalid task name"
+msgstr "Neplatný název úlohy"
+
+#: ../../web_dev/js/proSoar/dialogs.js:789
+msgid "Export"
+msgstr "Exportovat"
+
+#: ../../web_dev/js/proSoar/dialogs.js:793
+msgid "Save"
+msgstr "Uložit"
+
+#: ../../web_dev/js/proSoar/dialogs.js:814
+#: ../../web_dev/js/proSoar/dialogs.js:1070
+msgid "Close"
+msgstr "Zavřít"
+
+#: ../../web_dev/js/proSoar/dialogs.js:833
+msgid "Save Task"
+msgstr "Uložit úlohu"
+
+#: ../../web_dev/js/proSoar/dialogs.js:863
+msgid "Select your file format"
+msgstr "Vyberte formát vašeho  souboru"
+
+#: ../../web_dev/js/proSoar/dialogs.js:914
+msgid "QR Code"
+msgstr "QR kód"
+
+#: ../../web_dev/js/proSoar/dialogs.js:992
+msgid "Save as"
+msgstr "Uložit jako"
+
+#: ../../web_dev/js/proSoar/dialogs.js:1044
+msgid "About"
+msgstr "O aplikaci"
+
+#: ../../web_dev/js/proSoar/dialogs.js:1091
+msgid "Add Waypoint File..."
+msgstr "Přidat soubor otočných bodů"
+
+#: ../../web_dev/js/proSoar/dialogs.js:1151
+#: ../../web_dev/js/proSoar/igcfile.js:73
+msgid "Add"
+msgstr "Přidat"
+
+#: ../../web_dev/js/proSoar/dialogs.js:1184
+msgid "Delete Waypoint File..."
+msgstr "Odstranit soubor otočných bodů"
+
+#: ../../web_dev/js/proSoar/dialogs.js:1215
+msgid "Are you sure you want to delete waypoint file"
+msgstr "Opravdu chcete odstranit soubor otočných bodů"
+
+#: ../../web_dev/js/proSoar/igcfile.js:18
+msgid "Add IGC File..."
+msgstr "Přidej IGC soubor"
+
+#: ../../web_dev/js/proSoar/igcfile.js:104
+msgid "Analyse IGC file"
+msgstr "Analýza IGC souboru"
+
+#: ../../web_dev/js/proSoar/igcfile.js:128
+msgid "File"
+msgstr "Soubor"
+
+#: ../../web_dev/js/proSoar/igcfile.js:145
+msgid "Takeoff"
+msgstr "Vzlet"
+
+#: ../../web_dev/js/proSoar/igcfile.js:146
+msgid "Landing"
+msgstr "Přistání"
+
+#: ../../web_dev/js/proSoar/igcfile.js:167
+msgid "OLC"
+msgstr "OLC"
+
+#: ../../web_dev/js/proSoar/igcfile.js:173
+msgid "Plus"
+msgstr "Plus"
+
+#: ../../web_dev/js/proSoar/igcfile.js:174
+#: ../../web_dev/js/proSoar/igcfile.js:180
+msgid "km"
+msgstr "km"
+
+#: ../../web_dev/js/proSoar/igcfile.js:175
+#: ../../web_dev/js/proSoar/igcfile.js:181
+msgid "km/h"
+msgstr "km/h"
+
+#: ../../web_dev/js/proSoar/igcfile.js:179
+msgid "Triangle"
+msgstr "Trojúhelník"
+
+#: ../../web_dev/js/proSoar/map.js:47
+msgid "OSM Map"
+msgstr "OSM Mapa"
+
+#: ../../web_dev/js/proSoar/map.js:54
+msgid "Hill shading"
+msgstr "Stínování kopců"
+
+#: ../../web_dev/js/proSoar/map.js:79
+msgid "Airspace"
+msgstr "Vzdušný prostor"
+
+#: ../../web_dev/js/proSoar/map.js:103
+msgid "Google Physical"
+msgstr "Google Physical"
+
+#: ../../web_dev/js/proSoar/map.js:108
+msgid "Google Satellite"
+msgstr "Google družice"
+
+#: ../../web_dev/js/proSoar/map.js:174 ../../web_dev/js/proSoar/map.js:444
+#: ../../web_dev/js/proSoar/map.js:573
+msgid "Task"
+msgstr "Úloha"
+
+#: ../../web_dev/js/proSoar/map.js:175 ../../web_dev/js/proSoar/map.js:180
+#: ../../web_dev/js/proSoar/map.js:195 ../../web_dev/js/proSoar/map.js:203
+#: ../../web_dev/js/proSoar/map.js:220
+msgid "Airports"
+msgstr "Letiště"
+
+#: ../../web_dev/js/proSoar/map.js:176 ../../web_dev/js/proSoar/map.js:197
+#: ../../web_dev/js/proSoar/map.js:205 ../../web_dev/js/proSoar/map.js:591
+msgid "Task Turnpoint Sectors"
+msgstr "Sektory v úloze"
+
+#: ../../web_dev/js/proSoar/map.js:298
+msgid "Airport"
+msgstr "Letiště"
+
+#: ../../web_dev/js/proSoar/map.js:332
+msgid "Turnpoint"
+msgstr "Otočný bod"
+
+#: ../../web_dev/js/proSoar/map.js:468
+msgid "IGC"
+msgstr "IGC"
+
+#: ../../web_dev/js/proSoar/map.js:616
+msgid "Special Task Layer"
+msgstr ""
+
+#: ../../web_dev/js/proSoar/search.js:48
+msgid "Press ENTER to search"
+msgstr "Pro hledání stiskni ENTER"
+
+#: ../../web_dev/js/proSoar/search.js:92
+msgid "Searching"
+msgstr "Vyhledávání"
+
+#: ../../web_dev/js/proSoar/search.js:120
+msgid "Nothing found"
+msgstr "Nenalezeno"
+
+#: ../../web_dev/js/proSoar/sector.js:5
+msgid "DAeC keyhole"
+msgstr ""
+
+#: ../../web_dev/js/proSoar/sector.js:10
+msgid "FAI quadrant"
+msgstr ""
+
+#: ../../web_dev/js/proSoar/sector.js:15
+msgid "FAI start quadrant"
+msgstr ""
+
+#: ../../web_dev/js/proSoar/sector.js:20
+msgid "FAI finish quadrant"
+msgstr ""
+
+#: ../../web_dev/js/proSoar/sector.js:25
+msgid "Circle"
+msgstr "Kruh"
+
+#: ../../web_dev/js/proSoar/sector.js:30
+msgid "Start line"
+msgstr "Startovní páska"
+
+#: ../../web_dev/js/proSoar/sector.js:35
+msgid "Finish line"
+msgstr "Cílová páska"
+
+#: ../../web_dev/js/proSoar/sector.js:40
+msgid "Sector"
+msgstr "Sektor"
+
+#: ../../web_dev/js/proSoar/sector.js:52
+msgid "BGA Fixed Course"
+msgstr ""
+
+#: ../../web_dev/js/proSoar/sector.js:57
+msgid "BGA Enh. Opt. Fixed Course"
+msgstr ""
+
+#: ../../web_dev/js/proSoar/sector.js:62
+msgid "BGA Start Sector"
+msgstr ""
+
+#: ../../web_dev/js/proSoar/task.js:15
+msgid "Racing Task"
+msgstr "Soutěžní úloha"
+
+#: ../../web_dev/js/proSoar/task.js:24
+msgid "Assigned Area Task"
+msgstr "Rychlostní úloha přes určené prostory"
+
+#: ../../web_dev/js/proSoar/task.js:33
+msgid "FAI badge/records"
+msgstr "FAI odznaky/rekordy"
+
+#: ../../web_dev/js/proSoar/tasklist.js:207
+msgid "FAI triangle"
+msgstr "FAI trojúhelník"
+
+#: ../../web_dev/js/proSoar/taskstore.js:123
+#: ../../web_dev/js/proSoar/turnpoint.js:17
+#: ../../web_dev/js/proSoar/waypoints.js:142
+msgid "Free turnpoint"
+msgstr "Volný otočný bod"
