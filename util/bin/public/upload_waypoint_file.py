@@ -67,9 +67,10 @@ def save_uploaded_file (form, form_field, upload_dir):
 #  fout = file (os.path.join(upload_dir, fileitem.filename), 'wb')
  
   chunks = 0
+  max_size = 5 # * 128kb
 
   # maximum 3*128kb file size
-  while chunks < 3:
+  while chunks < max_size:
     chunks += 1
     chunk = fileitem.file.read(1024*128)
     if not chunk: break
@@ -77,7 +78,7 @@ def save_uploaded_file (form, form_field, upload_dir):
  
   fout.close()
 
-  if os.path.getsize(fout.name) == 1024*128*3 \
+  if os.path.getsize(fout.name) == 1024*128*max_size \
      or os.path.getsize(fout.name) == 0:
     os.remove(fout.name)
     return False
