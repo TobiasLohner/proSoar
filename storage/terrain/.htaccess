@@ -4,13 +4,13 @@ RewriteEngine On
 
 # Terrain
 # serve levels 0 to 10 directly.
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^([0-9]|10)/(\d*)/(\d*).png$ $1/$2/$3.png [L]
+#RewriteCond %{REQUEST_FILENAME} -f
+#RewriteRule ^([0-9]|10)/(\d*)/(\d*).png$ $1/$2/$3.png [L]
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([0-9]|10)/(\d*)/(\d*).png$ /terrain/empty.png [P,L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^([0-9]|10)/(\d*)/(\d*).png$ /terrain/empty.png [P,L]
 
-RewriteRule ^(\d*)/(\d*)/(\d*).png$ /bin/tilecache.cgi/1.0.0/terrain/$1/$2/$3.png [P,L]
+#RewriteRule ^(\d*)/(\d*)/(\d*).png$ /bin/tilecache.cgi/1.0.0/terrain/$1/$2/$3.png [P,L]
 
 RewriteRule ^height/lon([-]?\d*\.?\d*?)/lat([-]?\d*\.?\d*?)$ /bin/get_height.py?lon=$1&lat=$2
 
