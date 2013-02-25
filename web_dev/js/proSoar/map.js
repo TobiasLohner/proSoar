@@ -52,7 +52,8 @@ var MapWindow = new Class({
     this.map.addLayer(osm);
 
     var hillshading = new OpenLayers.Layer.XYZ(_("Hill shading"),
-      "terrain/${z}/${x}/${y}.png", {
+      "http://toolserver.org/~cmarqu/hill/${z}/${x}/${y}.png", {
+//      "terrain/${z}/${x}/${y}.png", {
       isBaseLayer: false,
       sphericalMercator: true,
       transparent: true,
