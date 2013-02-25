@@ -17,7 +17,7 @@ def create_seeyou_task(task, taskname = ''):
   
   for key, turnpoint in enumerate(task):
     if turnpoint.name == 'Free turnpoint':
-      turnpoint.name = '{:02d} '.format(key+1) + turnpoint.name
+      turnpoint.name = '{0:0=2d} '.format(key+1) + turnpoint.name
     
     if key == 0:
       point_type = 'start'
