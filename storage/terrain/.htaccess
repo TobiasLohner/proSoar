@@ -12,7 +12,7 @@ RewriteRule ^([0-9]|10)/(\d*)/(\d*).png$ /terrain/empty.png [P,L]
 
 RewriteRule ^(\d*)/(\d*)/(\d*).png$ /bin/tilecache.cgi/1.0.0/terrain/$1/$2/$3.png [P,L]
 
-RewriteRule ^height/lon([-]?\d*\.?\d*?)/lat([-]?\d*\.?\d*?)$ https://afsserv.akaflieg.uni-stuttgart.de/tobias/get_height.py?lon=$1&lat=$2
+RewriteRule ^height/lon([-]?\d*\.?\d*?)/lat([-]?\d*\.?\d*?)$ /bin/get_height.py?lon=$1&lat=$2
 
 
 </IfModule>
