@@ -9,6 +9,7 @@ import os
 
 def main():
   srtm_dir = "/home/tobias/srtm_v4"
+  gdallocationinfo = os.path.join(srtm_dir, 'gdallocationinfo')
 
   form = cgi.FieldStorage()
 
@@ -28,7 +29,7 @@ def main():
 
     srtm_file = '/vsizip/' + srtm_dir + '/' + srtm_file_basename + '.zip' + '/' + srtm_file_basename + '.tif' 
 
-    process = subprocess.Popen(['/usr/bin/gdallocationinfo', '-b', '1', '-valonly', '-lifonly', '-wgs84',
+    process = subprocess.Popen([gdallocationinfo, '-b', '1', '-valonly', '-lifonly', '-wgs84',
       srtm_file, str(lon), str(lat)], stdout=subprocess.PIPE)
     stdout, stderr = process.communicate()
 
