@@ -8,7 +8,7 @@ import math
 import os
 
 def main():
-  srtm_dir = "/home/tobias/hillshading/fine/tiff"
+  srtm_dir = "/home/tobias/srtm_v4"
 
   form = cgi.FieldStorage()
 
