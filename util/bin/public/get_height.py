@@ -8,7 +8,7 @@ import math
 import os
 
 def main():
-  srtm_dir = "/home/tobias/srtm_v4"
+  srtm_dir = "/home/tobs/srtm_v4"
   gdallocationinfo = os.path.join(srtm_dir, 'gdallocationinfo')
 
   form = cgi.FieldStorage()
