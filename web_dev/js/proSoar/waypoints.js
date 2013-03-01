@@ -267,7 +267,10 @@ var WaypointContainer = new Class({
 
   getChunk: function(lon_left, lat_lower, type, fileId) {
     // download chunk from server
-    
+
+    // sanity check
+    if (lon_left < -180 || lon_left > 180 || lat_lower < -90 || lat_lower > 90) return;
+
     if (type == 'airports')
       this.populateFromJSON(0, 'airports/lon'+lon_left+'/lat'+lat_lower);
 //      this.populateFromJSON(0, 'dynamic/waypoints.pl?type=airport&lon='+lon_left+'&lat='+lat_lower);
