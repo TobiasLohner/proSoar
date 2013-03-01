@@ -14,6 +14,7 @@
 * @requires proSoar/fai.js
 * @requires proSoar/map.js
 * @requires proSoar/sector.js
+* @requires proSoar/faitrianglerenderer.js
 * @requires proSoar/sectorrenderer.js
 * @requires proSoar/settings.js 
 * @requires proSoar/task.js

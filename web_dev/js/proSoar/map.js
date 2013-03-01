@@ -1053,7 +1053,7 @@ var MapWindow = new Class({
     triangle.push(new OpenLayers.Geometry.Point(point3.lon, point3.lat));
     triangle.push(new OpenLayers.Geometry.Point(point1.lon, point1.lat));
 
-    var side = this.calculateTriangleDirection(fai.point1, fai.point2, fai.point3);
+    var reverse = this.calculateTriangleDirection(fai.point1, fai.point2, fai.point3);
 
     var triangle_feature = this.taskFAILayer.getFeaturesByAttribute('type', 'triangle');
     var sector1_feature = this.taskFAILayer.getFeaturesByAttribute('type', 'sector1');
@@ -1065,20 +1065,20 @@ var MapWindow = new Class({
         new OpenLayers.Geometry.LineString(triangle), { 'type': 'triangle' });
 
       sector1_feature = new OpenLayers.Feature.Vector(
-        new OpenLayers.Geometry.LinearRing(
-        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2, side, this.map_projection)),
+        new OpenLayers.Geometry.LinearRing(GenerateFAITriangleArea(fai.point1, fai.point2, reverse))
+          .transform(this.epsg4326, this.map_projection),
         { 'type': 'sector1', color: '#22ff00' } );
       sector1_feature.renderIntent = 'faisector';
 
       sector2_feature = new OpenLayers.Feature.Vector(
-        new OpenLayers.Geometry.LinearRing(
-        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point2, fai.point3, side, this.map_projection)),
+        new OpenLayers.Geometry.LinearRing(GenerateFAITriangleArea(fai.point2, fai.point3, reverse))
+          .transform(this.epsg4326, this.map_projection),
         { 'type': 'sector2', color: '#ff4600' } );
       sector2_feature.renderIntent = 'faisector';
 
       sector3_feature = new OpenLayers.Feature.Vector(
-        new OpenLayers.Geometry.LinearRing(
-          OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point3, fai.point1, side, this.map_projection)),
+        new OpenLayers.Geometry.LinearRing(GenerateFAITriangleArea(fai.point3, fai.point1, reverse))
+          .transform(this.epsg4326, this.map_projection),
         { 'type': 'sector3', color: '#0064ff' } );
       sector3_feature.renderIntent = 'faisector';
 
@@ -1088,16 +1088,16 @@ var MapWindow = new Class({
       triangle_feature[0].geometry.components = triangle;
 
       sector1_feature[0].geometry.components =
-        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2,
-          side, this.map_projection);
+        GenerateFAITriangleArea(fai.point1, fai.point2, reverse);
+      sector1_feature[0].geometry.transform(this.epsg4326, this.map_projection);
 
       sector2_feature[0].geometry.components =
-        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point2, fai.point3,
-          side, this.map_projection);
+        GenerateFAITriangleArea(fai.point2, fai.point3, reverse);
+      sector2_feature[0].geometry.transform(this.epsg4326, this.map_projection);
 
       sector3_feature[0].geometry.components =
-        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point3, fai.point1,
-          side, this.map_projection);
+        GenerateFAITriangleArea(fai.point3, fai.point1, reverse);
+      sector3_feature[0].geometry.transform(this.epsg4326, this.map_projection);
 
       this.taskFAILayer.drawFeature(triangle_feature[0]);
       this.taskFAILayer.drawFeature(sector1_feature[0]);
@@ -1126,7 +1126,7 @@ var MapWindow = new Class({
     p2_p3_p1_angle = p2_p3_p1_angle%360;
     p3_p1_p2_angle = p3_p1_p2_angle%360;
 
-    return (p1_p2_p3_angle + p2_p3_p1_angle + p3_p1_p2_angle + 360 > 0)?1:-1;
+    return (p1_p2_p3_angle + p2_p3_p1_angle + p3_p1_p2_angle + 360 > 0)?true:false;
   }
 
 });
