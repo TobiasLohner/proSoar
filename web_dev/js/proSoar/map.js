@@ -1039,7 +1039,6 @@ var MapWindow = new Class({
   },
 
   drawFaiTriangle: function(fai) {
-//  drawContestLine: function(points) {
     var point1 = new OpenLayers.LonLat(fai.point1.lon, fai.point1.lat).transform(
       this.epsg4326, this.map_projection);
     var point2 = new OpenLayers.LonLat(fai.point2.lon, fai.point2.lat).transform(
@@ -1047,12 +1046,12 @@ var MapWindow = new Class({
     var point3 = new OpenLayers.LonLat(fai.point3.lon, fai.point3.lat).transform(
       this.epsg4326, this.map_projection);
  
-    var points = new Array();
+    var triangle = new Array();
 
-    points.push(new OpenLayers.Geometry.Point(point1.lon, point1.lat));
-    points.push(new OpenLayers.Geometry.Point(point2.lon, point2.lat));
-    points.push(new OpenLayers.Geometry.Point(point3.lon, point3.lat));
-    points.push(new OpenLayers.Geometry.Point(point1.lon, point1.lat));
+    triangle.push(new OpenLayers.Geometry.Point(point1.lon, point1.lat));
+    triangle.push(new OpenLayers.Geometry.Point(point2.lon, point2.lat));
+    triangle.push(new OpenLayers.Geometry.Point(point3.lon, point3.lat));
+    triangle.push(new OpenLayers.Geometry.Point(point1.lon, point1.lat));
 
     var side = this.calculateTriangleDirection(fai.point1, fai.point2, fai.point3);
 
@@ -1060,7 +1059,7 @@ var MapWindow = new Class({
       this.faiTriangle = new Object();
 
       this.faiTriangle.geometry = new OpenLayers.Feature.Vector(
-        new OpenLayers.Geometry.LineString(points));
+        new OpenLayers.Geometry.LineString(triangle));
 
       this.faiTriangle.sector1 = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.LinearRing(
@@ -1084,7 +1083,7 @@ var MapWindow = new Class({
         this.faiTriangle.sector2, this.faiTriangle.sector3]);
 
     } else {
-      this.faiTriangle.geometry.geometry.components = points;
+      this.faiTriangle.geometry.geometry.components = triangle;
 
       this.faiTriangle.sector1.geometry.components =
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2,
