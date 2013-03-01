@@ -10,6 +10,7 @@ function loadjsfile(filename){
 loadjsfile("js/proSoar/rtree.js");
 loadjsfile("js/proSoar/main.js");
 loadjsfile("js/proSoar/settings.js");
+loadjsfile("js/proSoar/sectorrenderer.js");
 loadjsfile("js/proSoar/map.js");
 loadjsfile("js/proSoar/waypoints.js");
 loadjsfile("js/proSoar/sector.js");
