@@ -856,18 +856,16 @@ var MapWindow = new Class({
   },
 
   findSnapTarget: function(target) {
-    var min = 999999;
+    var min = 999999999;
     var foundFeature = null;
     
     for (var i = 0; i < target.layer.features.length; i++) {
 
-      var dist = Math.sqrt(
-        Math.pow(target.point.x - target.layer.features[i].geometry.x, 2) +
-        Math.pow(target.point.y - target.layer.features[i].geometry.y, 2) );
+      var dist = Math.pow(target.point.x - target.layer.features[i].geometry.x, 2) +
+                 Math.pow(target.point.y - target.layer.features[i].geometry.y, 2);
       if (dist < min) {
         foundFeature = target.layer.features[i];
         min = dist;
-        if (min < 1) break;
       }
     }
 
