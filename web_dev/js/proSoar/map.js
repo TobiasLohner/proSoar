@@ -127,9 +127,34 @@ var MapWindow = new Class({
         this.epsg4326,
         this.map_projection ),
       9 );
+
+    this.addGoogleLayers();
   },
 
   addGoogleLayers: function() {
+    var google_phy_dummy = new OpenLayers.Layer.Vector(_("Google Physical"), {
+      eventListeners: {
+        "visibilitychanged": function(e) {
+          loadGoogle();
+        }.bind(this)
+      },
+      isBaseLayer: true,
+      visibility: false
+    });
+
+    var google_sat_dummy = new OpenLayers.Layer.Vector(_("Google Satellite"), {
+      eventListeners: {
+        "visibilitychanged": function(e) {
+          loadGoogle();
+        }.bind(this) 
+      },
+      isBaseLayer: true,
+      visibility: false
+    });
+    this.map.addLayers([google_phy_dummy, google_sat_dummy]);
+  },
+
+  addRealGoogleLayers: function() {
     // add google maps if google script loaded
     if (window.google) {
       var google_phy = new OpenLayers.Layer.Google(
@@ -142,7 +167,16 @@ var MapWindow = new Class({
         {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 20}
       );
 
+      var google_phy_dummy = this.map.getLayersByName(_("Google Physical"))[0];
+      var google_sat_dummy = this.map.getLayersByName(_("Google Satellite"))[0];
+
       this.map.addLayers([google_phy, google_sat]);
+
+      if (this.map.baseLayer.name == _("Google Physical")) this.map.setBaseLayer(google_phy);
+      else this.map.setBaseLayer(google_sat);
+
+      this.map.removeLayer(google_phy_dummy);
+      this.map.removeLayer(google_sat_dummy);
     }
   },
 
