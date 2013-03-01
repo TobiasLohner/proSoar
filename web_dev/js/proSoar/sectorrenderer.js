@@ -26,13 +26,14 @@ OpenLayers.Geometry.Polygon.createSector = function(origin, radius,
   var angle;
   var new_lonlat, geom_point;
 
+  var epsg4326 = new OpenLayers.Projection("EPSG:4326");
 
   if ((end_radial - start_radial)%360 == 0) {
     var points = new Array();
     for (var i = 0; i < sides; i++) {
         angle = (i * 360 / sides);
         new_lonlat = OpenLayers.Util.destinationVincenty(origin, angle, radius);
-        new_lonlat.transform(this.epsg4326, projection);
+        new_lonlat.transform(epsg4326, projection);
         geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
         points.push(geom_point);
     }
@@ -43,7 +44,7 @@ OpenLayers.Geometry.Polygon.createSector = function(origin, radius,
       for (var i = 0; i < sides; i++) {
           angle = (i * 360 / sides);
           new_lonlat = OpenLayers.Util.destinationVincenty(origin, angle, inner_radius);
-          new_lonlat.transform(this.epsg4326, projection);
+          new_lonlat.transform(epsg4326, projection);
           geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
           points.push(geom_point);
       }
@@ -59,7 +60,7 @@ OpenLayers.Geometry.Polygon.createSector = function(origin, radius,
     for (var i = 0; i <= sides; i++) {
         angle = start_radial + (i * ((end_radial - start_radial + 360)%360) / sides);
         new_lonlat = OpenLayers.Util.destinationVincenty(origin, angle, radius);
-        new_lonlat.transform(this.epsg4326, projection);
+        new_lonlat.transform(epsg4326, projection);
         geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
         points.push(geom_point);
     }
@@ -67,7 +68,7 @@ OpenLayers.Geometry.Polygon.createSector = function(origin, radius,
     for (var i = sides; i >= 0; i--) {
         angle = start_radial + (i * ((end_radial - start_radial + 360)%360) / sides);
         new_lonlat = OpenLayers.Util.destinationVincenty(origin, angle, inner_radius);
-        new_lonlat.transform(this.epsg4326, projection);
+        new_lonlat.transform(epsg4326, projection);
         geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
         points.push(geom_point);
     }
@@ -85,6 +86,7 @@ OpenLayers.Geometry.Polygon.createKeyholeSector = function(origin, outer_radius,
   var new_lonlat, geom_point;
   var points = new Array();
 
+  var epsg4326 = new OpenLayers.Projection("EPSG:4326");
   for (var i = 0; i < sides; i++) {
     angle = (i * 360 / sides) - 45;
     if (angle >= -45 && angle <= 45) {
@@ -92,7 +94,7 @@ OpenLayers.Geometry.Polygon.createKeyholeSector = function(origin, outer_radius,
     } else {
       new_lonlat = OpenLayers.Util.destinationVincenty(origin, angle, inner_radius);
     }
-    new_lonlat.transform(this.epsg4326, projection);
+    new_lonlat.transform(epsg4326, projection);
     geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
     points.push(geom_point);
   }
@@ -108,6 +110,7 @@ OpenLayers.Geometry.Polygon.createBGAEnhancedOptionSector = function(origin, out
   var new_lonlat, geom_point;
   var points = new Array();
 
+  var epsg4326 = new OpenLayers.Projection("EPSG:4326");
   for (var i = 0; i < sides; i++) {
     angle = (i * 360 / sides) - 90;
     if (angle >= -90 && angle <= 90) {
@@ -115,7 +118,7 @@ OpenLayers.Geometry.Polygon.createBGAEnhancedOptionSector = function(origin, out
     } else {
       new_lonlat = OpenLayers.Util.destinationVincenty(origin, angle, inner_radius);
     }
-    new_lonlat.transform(this.epsg4326, projection);
+    new_lonlat.transform(epsg4326, projection);
     geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
     points.push(geom_point);
   }
@@ -141,17 +144,18 @@ OpenLayers.Geometry.Polygon.createLine = function(origin, radius, projection)
   var new_lonlat, geom_point;
   var points = new Array();
 
+  var epsg4326 = new OpenLayers.Projection("EPSG:4326");
   new_lonlat = OpenLayers.Util.destinationVincenty(origin, -90, radius);
-  new_lonlat.transform(this.epsg4326, projection);
+  new_lonlat.transform(epsg4326, projection);
   geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
   points.push(geom_point);
 
-  new_lonlat = origin.clone().transform(this.epsg4326, projection);
+  new_lonlat = origin.clone().transform(epsg4326, projection);
   geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
   points.push(geom_point);
 
   new_lonlat = OpenLayers.Util.destinationVincenty(origin, +90, radius);
-  new_lonlat.transform(this.epsg4326, projection);
+  new_lonlat.transform(epsg4326, projection);
   geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
   points.push(geom_point);
 
@@ -175,6 +179,8 @@ OpenLayers.Geometry.Polygon.createFAITriangleSector = function(point1, point2, s
   var p2_p1_angle = calculateBearing(point2, point1);
   var p1_p2_dist = Util_distVincenty(point1, point2);
 
+  var epsg4326 = new OpenLayers.Projection("EPSG:4326");
+
   // first circle around point1
   for (var i = 1; i <= steps; i++) {
     var gamma = gamma_max - (gamma_max - gamma_min)/steps * i;
@@ -182,7 +188,7 @@ OpenLayers.Geometry.Polygon.createFAITriangleSector = function(point1, point2, s
     var distance = solveSphericalFAISector_1(p1_p2_dist, gamma);
 
     new_lonlat = OpenLayers.Util.destinationVincenty(point1, angle, distance);
-    new_lonlat.transform(this.epsg4326, projection);
+    new_lonlat.transform(epsg4326, projection);
     var geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
 
     points.push(geom_point);
@@ -195,7 +201,7 @@ OpenLayers.Geometry.Polygon.createFAITriangleSector = function(point1, point2, s
     var distance = solveSphericalFAISector_1(p1_p2_dist, gamma);
 
     new_lonlat = OpenLayers.Util.destinationVincenty(point2, angle, distance);
-    new_lonlat.transform(this.epsg4326, projection);
+    new_lonlat.transform(epsg4326, projection);
     var geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
 
     points.push(geom_point);
@@ -208,7 +214,7 @@ OpenLayers.Geometry.Polygon.createFAITriangleSector = function(point1, point2, s
     var distance = solveSphericalFAISector_2(p1_p2_dist, gamma);
 
     new_lonlat = OpenLayers.Util.destinationVincenty(point2, angle, distance);
-    new_lonlat.transform(this.epsg4326, projection);
+    new_lonlat.transform(epsg4326, projection);
     var geom_point = new OpenLayers.Geometry.Point(new_lonlat.lon, new_lonlat.lat);
 
     points.push(geom_point);
