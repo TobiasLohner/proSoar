@@ -1055,60 +1055,61 @@ var MapWindow = new Class({
 
     var side = this.calculateTriangleDirection(fai.point1, fai.point2, fai.point3);
 
-    if (!this.faiTriangle) {
-      this.faiTriangle = new Object();
+    var triangle_feature = this.taskFAILayer.getFeaturesByAttribute('type', 'triangle');
+    var sector1_feature = this.taskFAILayer.getFeaturesByAttribute('type', 'sector1');
+    var sector2_feature = this.taskFAILayer.getFeaturesByAttribute('type', 'sector2');
+    var sector3_feature = this.taskFAILayer.getFeaturesByAttribute('type', 'sector3');
 
-      this.faiTriangle.geometry = new OpenLayers.Feature.Vector(
-        new OpenLayers.Geometry.LineString(triangle));
+    if (triangle_feature.length == 0) {
+      triangle_feature = new OpenLayers.Feature.Vector(
+        new OpenLayers.Geometry.LineString(triangle), { 'type': 'triangle' });
 
-      this.faiTriangle.sector1 = new OpenLayers.Feature.Vector(
+      sector1_feature = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.LinearRing(
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2, side, this.map_projection)),
-        { color: '#22ff00' } );
-      this.faiTriangle.sector1.renderIntent = 'faisector';
+        { 'type': 'sector1', color: '#22ff00' } );
+      sector1_feature.renderIntent = 'faisector';
 
-      this.faiTriangle.sector2 = new OpenLayers.Feature.Vector(
+      sector2_feature = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.LinearRing(
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point2, fai.point3, side, this.map_projection)),
-        { color: '#ff4600' } );
-      this.faiTriangle.sector2.renderIntent = 'faisector';
+        { 'type': 'sector2', color: '#ff4600' } );
+      sector2_feature.renderIntent = 'faisector';
 
-      this.faiTriangle.sector3 = new OpenLayers.Feature.Vector(
+      sector3_feature = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.LinearRing(
           OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point3, fai.point1, side, this.map_projection)),
-        { color: '#0064ff' } );
-      this.faiTriangle.sector3.renderIntent = 'faisector';
+        { 'type': 'sector3', color: '#0064ff' } );
+      sector3_feature.renderIntent = 'faisector';
 
-      this.taskFAILayer.addFeatures([this.faiTriangle.geometry, this.faiTriangle.sector1,
-        this.faiTriangle.sector2, this.faiTriangle.sector3]);
+      this.taskFAILayer.addFeatures([triangle_feature, sector1_feature, sector2_feature, sector3_feature]);
 
     } else {
-      this.faiTriangle.geometry.geometry.components = triangle;
+      triangle_feature[0].geometry.components = triangle;
 
-      this.faiTriangle.sector1.geometry.components =
+      sector1_feature[0].geometry.components =
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2,
           side, this.map_projection);
 
-      this.faiTriangle.sector2.geometry.components =
+      sector2_feature[0].geometry.components =
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point2, fai.point3,
           side, this.map_projection);
 
-      this.faiTriangle.sector3.geometry.components =
+      sector3_feature[0].geometry.components =
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point3, fai.point1,
           side, this.map_projection);
 
-      this.taskFAILayer.drawFeature(this.faiTriangle.geometry);
-      this.taskFAILayer.drawFeature(this.faiTriangle.sector1);
-      this.taskFAILayer.drawFeature(this.faiTriangle.sector2);
-      this.taskFAILayer.drawFeature(this.faiTriangle.sector3);
+      this.taskFAILayer.drawFeature(triangle_feature[0]);
+      this.taskFAILayer.drawFeature(sector1_feature[0]);
+      this.taskFAILayer.drawFeature(sector2_feature[0]);
+      this.taskFAILayer.drawFeature(sector3_feature[0]);
     } 
     
   },
 
   removeFaiTriangle: function() {
-    if (this.faiTriangle) {
-      this.taskFAILayer.removeFeatures([this.faiTriangle.geometry, this.faiTriangle.sector1,
-        this.faiTriangle.sector2, this.faiTriangle.sector3]);
+    if (this.taskFAILayer.getFeaturesByAttribute('type', 'triangle').lenght != 0) {
+      this.taskFAILayer.removeAllFeatures();
     }
   },
 
