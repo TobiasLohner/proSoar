@@ -51,6 +51,10 @@ var MapWindow = new Class({
     });
     this.map.addLayer(osm);
 
+    // beware: the map projection is set only after the first layer has been added
+    this.map_projection = this.map.getProjectionObject();
+    this.epsg4326 = new OpenLayers.Projection("EPSG:4326");
+
     var hillshading = new OpenLayers.Layer.XYZ(_("Hill shading"),
       "http://toolserver.org/~cmarqu/hill/${z}/${x}/${y}.png", {
 //      "terrain/${z}/${x}/${y}.png", {
@@ -120,8 +124,8 @@ var MapWindow = new Class({
  
     this.map.setCenter(
       new OpenLayers.LonLat(loc.lon, loc.lat).transform(
-        new OpenLayers.Projection("EPSG:4326"),
-        this.map.getProjectionObject() ),
+        this.epsg4326,
+        this.map_projection ),
       9 );
   },
 
@@ -144,8 +148,8 @@ var MapWindow = new Class({
 
   getExtent: function() {
     return this.map.getExtent().transform(
-      this.map.getProjectionObject(),
-      new OpenLayers.Projection("EPSG:4326") );
+      this.map_projection,
+      this.epsg4326 );
   },
 
   getResolution: function() {
@@ -155,17 +159,17 @@ var MapWindow = new Class({
   zoomTo: function(bounds) {
     var zoomBounds = new OpenLayers.Bounds.fromArray(bounds);
     this.map.zoomToExtent(zoomBounds.transform(
-      new OpenLayers.Projection("EPSG:4326"),
-      this.map.getProjectionObject()
+      this.epsg4326,
+      this.map_projection
     ));
   },
 
   panTo: function(lon, lat, bbox) {
     var lonlat = new OpenLayers.LonLat(lon, lat).transform(
-      new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
+      this.epsg4326, this.map_projection);
 
     var bounds = new OpenLayers.Bounds(bbox[2], bbox[0], bbox[3], bbox[1]).transform(
-      new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
+      this.epsg4326, this.map_projection);
 
     var zoom = Math.min(12, this.map.getZoomForExtent(bounds));
     this.map.zoomTo(zoom);
@@ -310,8 +314,8 @@ var MapWindow = new Class({
   addAirport: function(lon, lat, name, runwayDirection) {
     var feature = new OpenLayers.Feature.Vector(
       new OpenLayers.Geometry.Point(lon, lat).transform(
-        new OpenLayers.Projection("EPSG:4326"),
-        this.map.getProjectionObject() ),
+        this.epsg4326,
+        this.map_projection ),
       { runwayDirection: runwayDirection }
     );
     
@@ -345,8 +349,8 @@ var MapWindow = new Class({
 
     var feature = new OpenLayers.Feature.Vector(
       new OpenLayers.Geometry.Point(lon, lat).transform(
-        new OpenLayers.Projection("EPSG:4326"),
-        this.map.getProjectionObject() )
+        this.epsg4326,
+        this.map_projection )
     );
 
     feature.data.popupContentHTML =
@@ -677,8 +681,8 @@ var MapWindow = new Class({
     }
 
     var originTrans = point.clone();
-    if (this.map.getProjectionObject().getCode() !== "EPSG:4326") {
-        originTrans = originTrans.transform(this.map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+    if (this.map_projection.getCode() !== "EPSG:4326") {
+        originTrans = originTrans.transform(this.map_projection, this.epsg4326);
     }
     var latlon = new OpenLayers.LonLat(originTrans.x, originTrans.y);
 
@@ -742,10 +746,10 @@ var MapWindow = new Class({
     var to = new OpenLayers.LonLat(point.lon, point.lat);
 
     var from = this.taskTurnpointSectors[sectorId].origin.transform(
-      new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
+      this.epsg4326, this.map_projection);
 
     var pixel = this.taskTurnpointSectorsLayer.getViewPortPxFromLonLat(
-      to.clone().transform(new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject()));
+      to.clone().transform(this.epsg4326, this.map_projection));
 
     var lastPixel = this.taskTurnpointSectorsLayer.getViewPortPxFromLonLat(from);
     var res = this.map.getResolution();
@@ -764,7 +768,7 @@ var MapWindow = new Class({
     if (Math.abs(old_bearing - bearing) < 1) return;
   
     var origin = this.taskTurnpointSectors[sectorId].origin.clone().transform(
-      new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject() );
+      this.epsg4326, this.map_projection );
     
     this.taskTurnpointSectors[sectorId].geometry.rotate(
       old_bearing - bearing,
@@ -780,15 +784,13 @@ var MapWindow = new Class({
     if (this.snapControl.hasSnappedIn) {
       snapWaypoint = this.findSnapTarget(this.snapControl.hasSnappedIn);
     }
-    
-    var projection = this.map.getProjectionObject();
 
     if (evt.vertex) {
       Array.each(evt.feature.geometry.components, function(item, key, object) {
         // check if only one point changed
          if (evt.vertex.id == item.id) {
           var point = evt.vertex.clone().transform(
-            projection, new OpenLayers.Projection("EPSG:4326"));
+            this.map_projection, this.epsg4326);
           //console.log("found pair");
           this.fireEvent("modifyTaskPoint", {
             point: { lon: point.x, lat: point.y },
@@ -880,8 +882,8 @@ var MapWindow = new Class({
     
 
     var originTrans = new OpenLayers.LonLat(point.vertex.x, point.vertex.y);
-    if (this.map.getProjectionObject().getCode() !== "EPSG:4326") {
-        originTrans = originTrans.transform(this.map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+    if (this.map_projection.getCode() !== "EPSG:4326") {
+        originTrans = originTrans.transform(this.map_projection, this.epsg4326);
     } 
 //console.log(point);
     this.fireEvent("modifyTaskPoint", {
@@ -903,7 +905,7 @@ var MapWindow = new Class({
 /*
  * activate this for great circle linestring
     this.taskLine = new OpenLayers.Feature.Vector(
-      GreatCircle_toLineString(linestring, this.map.getProjectionObject()) );
+      GreatCircle_toLineString(linestring, this.map_projection) );
     this.taskLine.geometry_flat = linestring;
     this.taskLayer.addFeatures(this.taskLine);
 */
@@ -936,7 +938,7 @@ var MapWindow = new Class({
 
     Array.each(turnpoints, function(item, key, object) {
       var lonlat = new OpenLayers.LonLat(item.lon, item.lat).transform(
-        new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
+        this.epsg4326, this.map_projection);
       points.push(new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat));
     }.bind(this));
 
@@ -977,58 +979,58 @@ var MapWindow = new Class({
     switch(sector.getType()) {
       case 'circle':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
-          lonlat, radius, 0, 0, 0, 50, this.map.getProjectionObject());
+          lonlat, radius, 0, 0, 0, 50, this.map_projection);
         break;
 
       case 'daec':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createKeyholeSector(
-          lonlat, 10000, 500, 48, this.map.getProjectionObject());
+          lonlat, 10000, 500, 48, this.map_projection);
         break;
 
       case 'fai':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
-          lonlat, 10000, 0, -45, 45, 12, this.map.getProjectionObject());
+          lonlat, 10000, 0, -45, 45, 12, this.map_projection);
         break;
       
       case 'faistart':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
-          lonlat, 1000, 0, -45, 45, 12, this.map.getProjectionObject());
+          lonlat, 1000, 0, -45, 45, 12, this.map_projection);
         break;
 
       case 'faifinish':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
-          lonlat, 1000, 0, -45, 45, 12, this.map.getProjectionObject());
+          lonlat, 1000, 0, -45, 45, 12, this.map_projection);
         break;
 
       case 'startline':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createStartLine(
-          lonlat, radius, this.map.getProjectionObject());
+          lonlat, radius, this.map_projection);
         break;
 
       case 'finishline':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createFinishLine(
-          lonlat, radius, this.map.getProjectionObject());
+          lonlat, radius, this.map_projection);
         break;
 
       case 'bgastartsector':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createBGAEnhancedOptionSector(
-          lonlat, 5000, 0, 48, this.map.getProjectionObject());
+          lonlat, 5000, 0, 48, this.map_projection);
         break;
 
       case 'bgafixedcourse':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createKeyholeSector(
-          lonlat, 20000, 500, 48, this.map.getProjectionObject());
+          lonlat, 20000, 500, 48, this.map_projection);
         break;
 
       case 'bgaenhancedoption':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createBGAEnhancedOptionSector(
-          lonlat, 10000, 500, 48, this.map.getProjectionObject());
+          lonlat, 10000, 500, 48, this.map_projection);
         break;
 
       case 'sector':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
           lonlat, radius, inner_radius, start_radial, end_radial,
-          50, this.map.getProjectionObject());
+          50, this.map_projection);
         break;
 
     }
@@ -1039,11 +1041,11 @@ var MapWindow = new Class({
   drawFaiTriangle: function(fai) {
 //  drawContestLine: function(points) {
     var point1 = new OpenLayers.LonLat(fai.point1.lon, fai.point1.lat).transform(
-      new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
+      this.epsg4326, this.map_projection);
     var point2 = new OpenLayers.LonLat(fai.point2.lon, fai.point2.lat).transform(
-      new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
+      this.epsg4326, this.map_projection);
     var point3 = new OpenLayers.LonLat(fai.point3.lon, fai.point3.lat).transform(
-      new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject());
+      this.epsg4326, this.map_projection);
  
     var points = new Array();
 
@@ -1062,20 +1064,20 @@ var MapWindow = new Class({
 
       this.faiTriangle.sector1 = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.LinearRing(
-        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2,
-          side, this.map.getProjectionObject()) ), { color: '#22ff00' } );
+        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2, side, this.map_projection)),
+        { color: '#22ff00' } );
       this.faiTriangle.sector1.renderIntent = 'faisector';
 
       this.faiTriangle.sector2 = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.LinearRing(
-        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point2, fai.point3,
-          side, this.map.getProjectionObject()) ), { color: '#ff4600' } );
+        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point2, fai.point3, side, this.map_projection)),
+        { color: '#ff4600' } );
       this.faiTriangle.sector2.renderIntent = 'faisector';
 
       this.faiTriangle.sector3 = new OpenLayers.Feature.Vector(
         new OpenLayers.Geometry.LinearRing(
-        OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point3, fai.point1,
-          side, this.map.getProjectionObject()) ), { color: '#0064ff' } );
+          OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point3, fai.point1, side, this.map_projection)),
+        { color: '#0064ff' } );
       this.faiTriangle.sector3.renderIntent = 'faisector';
 
       this.taskFAILayer.addFeatures([this.faiTriangle.geometry, this.faiTriangle.sector1,
@@ -1086,15 +1088,15 @@ var MapWindow = new Class({
 
       this.faiTriangle.sector1.geometry.components =
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point1, fai.point2,
-          side, this.map.getProjectionObject());
+          side, this.map_projection);
 
       this.faiTriangle.sector2.geometry.components =
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point2, fai.point3,
-          side, this.map.getProjectionObject());
+          side, this.map_projection);
 
       this.faiTriangle.sector3.geometry.components =
         OpenLayers.Geometry.Polygon.createFAITriangleSector(fai.point3, fai.point1,
-          side, this.map.getProjectionObject());
+          side, this.map_projection);
 
       this.taskFAILayer.drawFeature(this.faiTriangle.geometry);
       this.taskFAILayer.drawFeature(this.faiTriangle.sector1);
