@@ -971,9 +971,6 @@ var MapWindow = new Class({
 
   createTurnpointSectorGeometry: function(lonlat, sector) {
     var radius = sector.getRadius()*1000;
-    var inner_radius = sector.getInnerRadius()*1000;
-    var start_radial = sector.getStartRadial();
-    var end_radial = sector.getEndRadial();
     var turnpointGeometry;
 
     switch(sector.getType()) {
@@ -1028,6 +1025,9 @@ var MapWindow = new Class({
         break;
 
       case 'sector':
+        var inner_radius = sector.getInnerRadius()*1000;
+        var start_radial = sector.getStartRadial();
+        var end_radial = sector.getEndRadial();
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
           lonlat, radius, inner_radius, start_radial, end_radial,
           50, this.map_projection);
