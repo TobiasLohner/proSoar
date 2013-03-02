@@ -283,5 +283,7 @@ GenerateFAITriangleArea = function(point1, point2, reverse) {
                                    dist_min, dist_max,
                                    reverse);
 
+  points.push(points[0]);
+
   return points;
 };
