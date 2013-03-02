@@ -1010,52 +1010,52 @@ var MapWindow = new Class({
     switch(sector.getType()) {
       case 'circle':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
-          lonlat, radius, 0, 0, 0, 50, this.map_projection);
+          lonlat, radius, 0, 0, 0, 50);
         break;
 
       case 'daec':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createKeyholeSector(
-          lonlat, 10000, 500, 48, this.map_projection);
+          lonlat, 10000, 500, 48);
         break;
 
       case 'fai':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
-          lonlat, 10000, 0, -45, 45, 12, this.map_projection);
+          lonlat, 10000, 0, -45, 45, 12);
         break;
       
       case 'faistart':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
-          lonlat, 1000, 0, -45, 45, 12, this.map_projection);
+          lonlat, 1000, 0, -45, 45, 12);
         break;
 
       case 'faifinish':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
-          lonlat, 1000, 0, -45, 45, 12, this.map_projection);
+          lonlat, 1000, 0, -45, 45, 12);
         break;
 
       case 'startline':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createStartLine(
-          lonlat, radius, this.map_projection);
+          lonlat, radius);
         break;
 
       case 'finishline':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createFinishLine(
-          lonlat, radius, this.map_projection);
+          lonlat, radius);
         break;
 
       case 'bgastartsector':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createBGAEnhancedOptionSector(
-          lonlat, 5000, 0, 48, this.map_projection);
+          lonlat, 5000, 0, 48);
         break;
 
       case 'bgafixedcourse':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createKeyholeSector(
-          lonlat, 20000, 500, 48, this.map_projection);
+          lonlat, 20000, 500, 48);
         break;
 
       case 'bgaenhancedoption':
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createBGAEnhancedOptionSector(
-          lonlat, 10000, 500, 48, this.map_projection);
+          lonlat, 10000, 500, 48);
         break;
 
       case 'sector':
@@ -1063,13 +1063,12 @@ var MapWindow = new Class({
         var start_radial = sector.getStartRadial();
         var end_radial = sector.getEndRadial();
         turnpointGeometry = new OpenLayers.Geometry.Polygon.createSector(
-          lonlat, radius, inner_radius, start_radial, end_radial,
-          50, this.map_projection);
+          lonlat, radius, inner_radius, start_radial, end_radial, 50);
         break;
 
     }
 
-    return turnpointGeometry;
+    return turnpointGeometry.transform(this.epsg4326, this.map_projection);
   },
 
   drawFaiTriangle: function(fai) {
