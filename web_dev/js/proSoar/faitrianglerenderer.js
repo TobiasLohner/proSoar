@@ -43,7 +43,7 @@ GenerateFAITriangleRight = function(points, origin, bearing_c, dist_c, dist_min,
   var delta_distance = (dist_max - dist_min) / STEPS;
   var total_distance = dist_min;
 
-  for (var i = 0; i < STEPS /*&& total_distance < LARGE_THRESHOLD*/; i++,
+  for (var i = 0; i < STEPS && total_distance < LARGE_THRESHOLD; i++,
          total_distance += delta_distance) {
     var dist_a = SMALL_MIN_LEG * total_distance;
     var dist_b = total_distance - dist_a - dist_c;
@@ -73,7 +73,7 @@ GenerateFAITriangleLeft = function(points, origin, bearing_c, dist_c, dist_min, 
 
   for (var i = 0; i < STEPS; i++,
          total_distance -= delta_distance) {
-    //if (total_distance >= LARGE_THRESHOLD) continue;
+    if (total_distance >= LARGE_THRESHOLD) continue;
 
     var dist_b = SMALL_MIN_LEG * total_distance;
     var dist_a = total_distance - dist_b - dist_c;
@@ -192,6 +192,8 @@ GenerateFAITriangleLargeLeft1 = function(points, origin, bearing_c, dist_c, dist
   var total_start = Math.min(dist_max, max_total_for_a);
   var total_end = LARGE_THRESHOLD;
 
+  if (total_start <= total_end) return points;
+
   var delta_distance = (total_start - total_end) / STEPS;
   var total_distance = total_start;
 
@@ -247,7 +249,6 @@ GenerateFAITriangleArea = function(point1, point2, reverse) {
 
   points = GenerateFAITriangleRight(points, point1, bearing_c, dist_c, dist_min, dist_max, reverse);
 
-/*
   if (large_dist_max > LARGE_THRESHOLD) {
     points = GenerateFAITriangleLargeBottomRight(points, point1, bearing_c, dist_c,
                                                  reverse);
@@ -273,7 +274,7 @@ GenerateFAITriangleArea = function(point1, point2, reverse) {
 
     points = GenerateFAITriangleLargeBottomLeft(points, point1, bearing_c, dist_c,
                                                 reverse);
-  } else */ {
+  } else {
     points = GenerateFAITriangleTop(points, point1, bearing_c, dist_c,
                                     dist_max,
                                     reverse);
