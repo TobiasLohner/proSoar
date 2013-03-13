@@ -63,7 +63,7 @@ def write_seeyou_waypoints(waypoints, path):
         raise TypeError("WaypointList expected")
     
     with open(path, "w") as f:
-        f.write('name,code,country,lat,lon,elev,style,rwdir,rwlen,freq,desc')
+        f.write('name,code,country,lat,lon,elev,style,rwdir,rwlen,freq,desc\r\n')
         for waypoint in waypoints:
             f.write(__compose_line(waypoint) + '\r\n')
     
