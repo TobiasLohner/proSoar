@@ -23,7 +23,8 @@ def main():
 
   for waypoint in waypoints:
     if (not waypoint.type == 'airport') \
-       and (not waypoint.type == 'glider_site'):
+       and (not waypoint.type == 'glider_site') \
+       and (not waypoint.type == 'ulm'):
       continue
 
     db_index_lon = math.floor(waypoint.lon/5)*5
