@@ -1,6 +1,7 @@
-all: openlayers mootools
+all: openlayers mootools airport-database
 
 DOWNLOAD_FOLDER = .tmp
+STORAGE_FOLDER = storage
 JS_FOLDER = web_dev/js
 IMG_FOLDER = web_dev/images
 
@@ -84,3 +85,13 @@ $(MOOTOOLS_MORE_FOLDER)/Source/More/More.js: $(DOWNLOAD_FOLDER)/$(MOOTOOLS_MORE_
 
 $(DOWNLOAD_FOLDER)/$(MOOTOOLS_MORE_ARCHIVE):
 	wget -N --no-use-server-timestamps -P $(DOWNLOAD_FOLDER) $(MOOTOOLS_MORE_URL)
+
+
+# Airport Database
+
+AIRPORT_DB_FOLDER = $(STORAGE_FOLDER)/airports
+
+airport-database: $(AIRPORT_DB_FOLDER)/lon0/lat45
+
+$(AIRPORT_DB_FOLDER)/lon0/lat45:
+	util/bin/private/gen_airports
