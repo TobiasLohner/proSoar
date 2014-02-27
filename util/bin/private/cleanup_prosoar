@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-import os, sys
+import os
+import sys
 from datetime import datetime
 import shutil
 
@@ -9,80 +10,85 @@ sys.path.append(os.path.join(app_dir, 'lib'))
 
 users_dir = os.path.join(app_dir, 'storage', 'users')
 
+
 def main():
-  available_users = os.listdir(users_dir)
+    available_users = os.listdir(users_dir)
 
-  d = datetime.now()
+    d = datetime.now()
 
-  for uid in available_users:
-    lastvisit = check_lastvisit(uid)
-    
-    if (d - lastvisit).days > 180:
-      # delete user
-      print "delete " + uid
-      shutil.rmtree(os.path.join(users_dir, uid))
-      continue
+    for uid in available_users:
+        lastvisit = check_lastvisit(uid)
 
-    # delete temporary task files
-    remaining = delete_tasktemp(uid)
+        if (d - lastvisit).days > 180:
+            # delete user
+            print "delete " + uid
+            shutil.rmtree(os.path.join(users_dir, uid))
+            continue
 
-    if remaining == 0 and not check_indivitual_content(uid):
-       # delete user
-      print "delete " + uid
-      shutil.rmtree(os.path.join(users_dir, uid))
+        # delete temporary task files
+        remaining = delete_tasktemp(uid)
+
+        if remaining == 0 and not check_indivitual_content(uid):
+           # delete user
+            print "delete " + uid
+            shutil.rmtree(os.path.join(users_dir, uid))
 
 
 def delete_tasktemp(uid):
-  uid_dir = os.path.join(users_dir, uid)
+    uid_dir = os.path.join(users_dir, uid)
 
-  temptasks = os.listdir(uid_dir)
-  
-  remaining = 0
+    temptasks = os.listdir(uid_dir)
 
-  for tf in temptasks:
-    if tf[0:9] == 'tasktemp_':
-      stat = os.stat(os.path.join(uid_dir, tf))
-      remaining += 1
-      
-      if (datetime.now() - datetime.fromtimestamp(stat.st_mtime)).days >= 1:
-        os.unlink(os.path.join(uid_dir, tf))
-        remaining -= 1
+    remaining = 0
 
-  return remaining
+    for tf in temptasks:
+        if tf[0:9] == 'tasktemp_':
+            stat = os.stat(os.path.join(uid_dir, tf))
+            remaining += 1
+
+            age = (datetime.now() - datetime.fromtimestamp(stat.st_mtime))
+            if age.days >= 1:
+                os.unlink(os.path.join(uid_dir, tf))
+                remaining -= 1
+
+    return remaining
+
 
 def check_indivitual_content(uid):
-  uid_dir = os.path.join(users_dir, uid)
-  config_file = os.path.join(uid_dir, 'config')
+    uid_dir = os.path.join(users_dir, uid)
+    config_file = os.path.join(uid_dir, 'config')
 
-  with open(config_file, 'r') as f:
-    for line in f:
-      if line.startswith('tp_file'):
-        return 1
+    with open(config_file, 'r') as f:
+        for line in f:
+            if line.startswith('tp_file'):
+                return 1
 
-      if line.startswith('task'):
-        return 1
+            if line.startswith('task'):
+                return 1
 
 
 def check_lastvisit(uid):
-  uid_dir = os.path.join(users_dir, uid)
+    uid_dir = os.path.join(users_dir, uid)
 
-  if not os.path.exists(uid_dir):
+    if not os.path.exists(uid_dir):
+        return datetime(1970, 1, 1)
+
+    config_file = os.path.join(uid_dir, 'config')
+
+    if not os.path.exists(config_file):
+        return datetime(1970, 1, 1)
+
+    with open(config_file, 'r') as f:
+        for line in f:
+            if line.startswith('lastvisit'):
+                return datetime.strptime(
+                    line[10:].rstrip(),
+                    '%Y-%m-%dT%H:%M:%S.%f'
+                )
+
+    # no lastvisit found in file?
     return datetime(1970, 1, 1)
-
-  config_file = os.path.join(uid_dir, 'config')
-
-  if not os.path.exists(config_file):
-    return datetime(1970, 1, 1)
-
-  with open(config_file, 'r') as f:
-    for line in f:
-      if line.startswith('lastvisit'):
-        return datetime.strptime(line[10:].rstrip(), '%Y-%m-%dT%H:%M:%S.%f')
-
-  # no lastvisit found in file?
-  return datetime(1970, 1, 1)
 
 
 if __name__ == '__main__':
-  main()
-
+    main()
