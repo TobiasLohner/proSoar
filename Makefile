@@ -1,0 +1,30 @@
+all: openlayers
+
+DOWNLOAD_FOLDER = .tmp
+JS_FOLDER = web_dev/js
+IMG_FOLDER = web_dev/images
+
+clean:
+	rm -rf $(DOWNLOAD_FOLDER)
+
+
+# OpenLayers
+
+OPENLAYERS_VERSION = 2.13.1
+OPENLAYERS_NAME = OpenLayers-$(OPENLAYERS_VERSION)
+OPENLAYERS_ARCHIVE = $(OPENLAYERS_NAME).tar.gz
+OPENLAYERS_URL = http://openlayers.org/download/$(OPENLAYERS_ARCHIVE)
+OPENLAYERS_JS_FOLDER = $(JS_FOLDER)/OpenLayers
+OPENLAYERS_IMG_FOLDER = $(IMG_FOLDER)/OpenLayers
+
+openlayers: $(JS_FOLDER)/OpenLayers/lib/OpenLayers.js
+
+$(JS_FOLDER)/OpenLayers/lib/OpenLayers.js: $(DOWNLOAD_FOLDER)/$(OPENLAYERS_ARCHIVE)
+	tar -C $(DOWNLOAD_FOLDER) -xmf $(DOWNLOAD_FOLDER)/$(OPENLAYERS_ARCHIVE)
+	mkdir -p $(JS_FOLDER)/OpenLayers/
+	cp -r $(DOWNLOAD_FOLDER)/$(OPENLAYERS_NAME)/lib/ $(JS_FOLDER)/OpenLayers/lib/
+	cp -r $(DOWNLOAD_FOLDER)/$(OPENLAYERS_NAME)/img/ $(IMG_FOLDER)/OpenLayers
+
+$(DOWNLOAD_FOLDER)/$(OPENLAYERS_ARCHIVE):
+	wget -N -P $(DOWNLOAD_FOLDER) $(OPENLAYERS_URL)
+
