@@ -1,4 +1,4 @@
-all: openlayers mootools airport-database
+all: openlayers mootools airport-database geo-ip
 
 DOWNLOAD_FOLDER = .tmp
 STORAGE_FOLDER = storage
@@ -95,3 +95,21 @@ airport-database: $(AIRPORT_DB_FOLDER)/lon0/lat45
 
 $(AIRPORT_DB_FOLDER)/lon0/lat45:
 	util/bin/private/gen_airports
+
+
+# MaxMind GeoIP Database
+
+GEO_IP_FILE = GeoLiteCity.dat
+GEO_IP_ARCHIVE = $(GEO_IP_FILE).gz
+GEO_IP_URL = http://geolite.maxmind.com/download/geoip/database/$(GEO_IP_ARCHIVE)
+
+geo-ip: $(STORAGE_FOLDER)/$(GEO_IP_FILE)
+
+$(STORAGE_FOLDER)/$(GEO_IP_FILE): $(DOWNLOAD_FOLDER)/$(GEO_IP_FILE)
+	cp $< $@
+
+$(DOWNLOAD_FOLDER)/$(GEO_IP_FILE): $(DOWNLOAD_FOLDER)/$(GEO_IP_ARCHIVE)
+	gunzip -c $(DOWNLOAD_FOLDER)/$(GEO_IP_ARCHIVE) > $(DOWNLOAD_FOLDER)/$(GEO_IP_FILE)
+
+$(DOWNLOAD_FOLDER)/$(GEO_IP_ARCHIVE):
+	wget -N -P $(DOWNLOAD_FOLDER) $(GEO_IP_URL)
