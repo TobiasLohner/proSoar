@@ -1,12 +1,14 @@
-all: openlayers mootools airport-database geo-ip
+all: openlayers mootools airport-database geo-ip deploy
 
 DOWNLOAD_FOLDER = .tmp
 STORAGE_FOLDER = storage
 JS_FOLDER = web_dev/js
 IMG_FOLDER = web_dev/images
+DEPLOY_FOLDER = web
 
 clean:
 	rm -rf $(DOWNLOAD_FOLDER)
+	rm -rf $(DEPLOY_FOLDER)
 
 
 # OpenLayers
@@ -113,3 +115,11 @@ $(DOWNLOAD_FOLDER)/$(GEO_IP_FILE): $(DOWNLOAD_FOLDER)/$(GEO_IP_ARCHIVE)
 
 $(DOWNLOAD_FOLDER)/$(GEO_IP_ARCHIVE):
 	wget -N -P $(DOWNLOAD_FOLDER) $(GEO_IP_URL)
+
+
+# Deployment
+
+deploy: $(DEPLOY_FOLDER)/js/proSoar.js
+
+$(DEPLOY_FOLDER)/js/proSoar.js:
+	cd deploy && ./deploy.py
