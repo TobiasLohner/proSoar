@@ -8,6 +8,7 @@ web_dev/LC_MESSAGES/*
 web_dev/js/OpenLayers*
 web_dev/js/MooTools/mootools-*
 web_dev/images/OpenLayers
+.tmp
 
 !storage/map/
 !storage/map/airspace/
