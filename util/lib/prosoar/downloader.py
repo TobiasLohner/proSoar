@@ -6,7 +6,9 @@ import json
 
 from prosoar.util import slurp, spew
 
+
 class Downloader:
+
     def __init__(self, dir):
         self.__base_url = 'http://www.prosoar.de/'
         self.__cmd_7zip = '7zr'
@@ -15,7 +17,10 @@ class Downloader:
         self.__manifest = None
         if not os.path.exists(self.__dir):
             os.makedirs(self.__dir)
-        subprocess.check_call([self.__cmd_wget, '-q', '-N', '-P', self.__dir, self.__base_url + 'checksums'])
+        subprocess.check_call([
+            self.__cmd_wget, '-q', '-N', '-P',
+            self.__dir, self.__base_url + 'checksums'
+        ])
         self.__checksums = {}
         for line in slurp(os.path.join(self.__dir, 'checksums')).split("\n"):
             line = line.strip()
@@ -42,13 +47,18 @@ class Downloader:
             self.__download(file, dest_file)
             if not self.__is_valid(file, dest_file):
                 self.__remove(dest_file, dest_file + '.md5', dest_dir)
-                raise RuntimeError('File is not valid after download ' + dest_file)
+                raise RuntimeError(
+                    'File is not valid after download ' + dest_file)
             if file.endswith('.7z'):
                 print('Decompressing file {} ...'.format(dest_file))
-                subprocess.check_call([self.__cmd_7zip, 'x', '-y', '-o' + os.path.dirname(dest_file), dest_file])
+                subprocess.check_call([
+                    self.__cmd_7zip, 'x', '-y',
+                    '-o' + os.path.dirname(dest_file), dest_file
+                ])
                 os.unlink(dest_file)
             else:
-                raise RuntimeError('Could not extract file {}.'.format(dest_file))
+                raise RuntimeError(
+                    'Could not extract file {}.'.format(dest_file))
         return dest_dir
 
     def retrieve(self, file):
@@ -64,7 +74,8 @@ class Downloader:
         self.__download(file, dest)
         if not self.__is_valid(file, dest):
             self.__remove(dest, dest + '.md5')
-            raise RuntimeError('File {} is not valid after download.'.format(dest))
+            raise RuntimeError(
+                'File {} is not valid after download.'.format(dest))
         return dest
 
     def __is_valid(self, file, dest):
@@ -94,7 +105,8 @@ class Downloader:
     def __download(self, file, dest):
         if not os.path.exists(dest):
             if not file in self.__checksums:
-                raise RuntimeError('{} does not exist on the server.'.format(file))
+                raise RuntimeError(
+                    '{} does not exist on the server.'.format(file))
             url = self.__base_url + file
             if not os.path.exists(os.path.dirname(dest)):
                 os.makedirs(os.path.dirname(dest))

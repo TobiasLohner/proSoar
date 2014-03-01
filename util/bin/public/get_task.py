@@ -1,8 +1,10 @@
 #!/usr/bin/python
 
 import cgi
-import cgitb; cgitb.enable()
-import os, sys
+import cgitb
+cgitb.enable()
+import os
+import sys
 import re
 
 app_dir = os.path.abspath(__file__ + '/../../..')
@@ -14,34 +16,34 @@ from prosoar.userconfig import get_uid_from_cookie, read_user_config
 
 #from prosoar.userconfig import get_user_config_as_json
 
+
 def main():
-  uid = get_uid_from_cookie()
-  storage_dir = os.path.join(app_dir, 'storage')
-  uid_dir = os.path.join(storage_dir, 'users', uid['uid'])
-  userconfig = read_user_config(uid)
+    uid = get_uid_from_cookie()
+    storage_dir = os.path.join(app_dir, 'storage')
+    uid_dir = os.path.join(storage_dir, 'users', uid['uid'])
+    userconfig = read_user_config(uid)
 
-  form = cgi.FieldStorage()  
+    form = cgi.FieldStorage()
 
-  m = re.compile('([^&+/;]*)').match(form.getvalue('task_name'))
-  taskname = m.group(1)
+    m = re.compile('([^&+/;]*)').match(form.getvalue('task_name'))
+    taskname = m.group(1)
 
-  taskfile = ''
+    taskfile = ''
 
+    for d in userconfig['task_files']:
+        if d.get('name') == taskname:
+            taskfile = os.path.join(
+                uid_dir, 'task_' + str(d.get('id')) + '.tsk')
 
-  for d in userconfig['task_files']:
-    if d.get('name') == taskname:
-      taskfile = os.path.join(uid_dir, 'task_' + str(d.get('id')) + '.tsk')
+    if taskfile == '' or not os.path.exists(taskfile):
+        raise RuntimeError('Task File does not exist')
 
-  if taskfile == '' or not os.path.exists(taskfile):
-    raise RuntimeError('Task File does not exist')
+    task = parse_xcsoar_task(taskfile)
 
-  task = parse_xcsoar_task(taskfile)
-
-  print "Content-Type: text/html"
-  print
-  print write_json_task(task)
+    print "Content-Type: text/html"
+    print
+    print write_json_task(task)
 
 
 if __name__ == '__main__':
-  main()
-
+    main()

@@ -4,102 +4,106 @@ from prosoar.task.turnpoint import Turnpoint
 import json
 import urllib2
 
+
 def parse_json_task(json_string):
-  task = Task()
+    task = Task()
 
-  json_decoded = json.loads(json_string)
+    json_decoded = json.loads(json_string)
 
-  if not json_decoded.get('type'):
-    raise RuntimeError('No Task type defined')
+    if not json_decoded.get('type'):
+        raise RuntimeError('No Task type defined')
 
-  task_type(task, json_decoded['type'])
-  
-  if json_decoded['distance']:
-    task_distance(task, json_decoded['distance'])
+    task_type(task, json_decoded['type'])
 
-  i = 0
-  while str(i) in json_decoded:
-   parse_turnpoint(task, json_decoded[str(i)])
-   i = i + 1
+    if json_decoded['distance']:
+        task_distance(task, json_decoded['distance'])
 
-  return task
+    i = 0
+    while str(i) in json_decoded:
+        parse_turnpoint(task, json_decoded[str(i)])
+        i = i + 1
+
+    return task
 
 
 def task_type(task, task_type):
-  if task_type == 'racing':
-    task.type = 'racing'
-  elif task_type == 'aat':
-    task.type = 'aat'
-  elif task_type == 'fai':
-    task.type = 'fai'
+    if task_type == 'racing':
+        task.type = 'racing'
+    elif task_type == 'aat':
+        task.type = 'aat'
+    elif task_type == 'fai':
+        task.type = 'fai'
+
 
 def task_distance(task, distance):
-  task.distance = float(distance)
+    task.distance = float(distance)
 
 
 def parse_turnpoint(task, tp):
-  turnpoint = Turnpoint()
+    turnpoint = Turnpoint()
 
-  if not tp['name'] or not tp['lon'] or not tp['lat']:
-    raise RuntimeError('Turnpoint not complete')
+    if not tp['name'] or not tp['lon'] or not tp['lat']:
+        raise RuntimeError('Turnpoint not complete')
 
-  turnpoint.name = tp['name']
-  turnpoint.lon = float(tp['lon'])
-  turnpoint.lat = float(tp['lat'])
+    turnpoint.name = tp['name']
+    turnpoint.lon = float(tp['lon'])
+    turnpoint.lat = float(tp['lat'])
 
-  if turnpoint.name == 'Free turnpoint':
-    turnpoint.altitude = get_altitude(turnpoint.lon, turnpoint.lat)
-  else:
-    turnpoint.altitude = float(tp['altitude'])
+    if turnpoint.name == 'Free turnpoint':
+        turnpoint.altitude = get_altitude(turnpoint.lon, turnpoint.lat)
+    else:
+        turnpoint.altitude = float(tp['altitude'])
 
-  turnpoint.comment = tp['comment']
+    turnpoint.comment = tp['comment']
 
-  if tp['type']:
-    parse_sector(turnpoint.sector, tp)
+    if tp['type']:
+        parse_sector(turnpoint.sector, tp)
 
-  task.append(turnpoint)
+    task.append(turnpoint)
+
 
 def parse_sector(sector, tp):
-  if tp['type'] == 'startline':
-    sector.type = 'startline'
-  elif tp['type'] == 'finishline':
-    sector.type = 'finishline'
-  elif tp['type'] == 'circle':
-    sector.type = 'circle'
-  elif tp['type'] == 'fai' or tp['type'] == 'faistart' or tp['type'] == 'faifinish':
-    sector.type = 'fai'
-  elif tp['type'] == 'daec':
-    sector.type = 'daec'
-  elif tp['type'] == 'bgafixedcourse':
-    sector.type = 'bgafixedcourse'
-  elif tp['type'] == 'bgaenhancedoption':
-    sector.type = 'bgaenhancedoption'
-  elif tp['type'] == 'bgastartsector':
-    sector.type = 'bgastartsector'
-  elif tp['type'] == 'sector':
-    sector.type = 'sector'
+    if tp['type'] == 'startline':
+        sector.type = 'startline'
+    elif tp['type'] == 'finishline':
+        sector.type = 'finishline'
+    elif tp['type'] == 'circle':
+        sector.type = 'circle'
+    elif tp['type'].startswith('fai'):
+        sector.type = 'fai'
+    elif tp['type'] == 'daec':
+        sector.type = 'daec'
+    elif tp['type'] == 'bgafixedcourse':
+        sector.type = 'bgafixedcourse'
+    elif tp['type'] == 'bgaenhancedoption':
+        sector.type = 'bgaenhancedoption'
+    elif tp['type'] == 'bgastartsector':
+        sector.type = 'bgastartsector'
+    elif tp['type'] == 'sector':
+        sector.type = 'sector'
 
-  if 'radius' in tp:
-    sector.radius = float(tp.get('radius'))
+    if 'radius' in tp:
+        sector.radius = float(tp.get('radius'))
 
-  if 'inner_radius' in tp:
-    sector.inner_radius = float(tp.get('inner_radius'))
+    if 'inner_radius' in tp:
+        sector.inner_radius = float(tp.get('inner_radius'))
 
-  if 'start_radial' in tp:
-    sector.start_radial = float(tp.get('start_radial'))
+    if 'start_radial' in tp:
+        sector.start_radial = float(tp.get('start_radial'))
 
-  if 'end_radial' in tp:
-    sector.end_radial = float(tp.get('end_radial'))
+    if 'end_radial' in tp:
+        sector.end_radial = float(tp.get('end_radial'))
+
 
 def get_altitude(lon, lat):
-  url = 'http://www.prosoar.de/terrain/height/lon'+str(lon)+'/lat'+str(lat)
+    url = 'http://www.prosoar.de/terrain/height/lon' + \
+        str(lon) + '/lat' + str(lat)
 
-  try:
-    request = urllib2.urlopen(url)
-    reply = request.read()
-    height_reply = json.loads(reply)
-  except urllib2.URLError, e:
-    height_reply = '{}'
+    try:
+        request = urllib2.urlopen(url)
+        reply = request.read()
+        height_reply = json.loads(reply)
+    except urllib2.URLError:
+        height_reply = '{}'
 
-  return float(height_reply.get('height', 0))
-
+    return float(height_reply.get('height', 0))

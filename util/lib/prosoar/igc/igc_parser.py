@@ -1,13 +1,16 @@
 # IGC file parser from skylines
 
 from datetime import time as Time
-import os, sys
+import os
+import sys
 from prosoar.geopoint import GeoPoint
 
 app_dir = os.path.abspath(__file__ + '/../../..')
 sys.path.append(os.path.join(app_dir, 'lib'))
 
+
 class Fix:
+
     """
     Represents a single fix record of an IGC file
     """
@@ -26,6 +29,7 @@ class Fix:
 
 
 class BaseParser:
+
     """
     BaseParser is a base class for all IGC parser implementations.
 
@@ -188,6 +192,7 @@ class BaseParser:
 
 
 class SimpleParser(BaseParser):
+
     def parse(self, data):
         self.__fixes = []
         BaseParser.parse(self, data)
@@ -195,4 +200,3 @@ class SimpleParser(BaseParser):
 
     def handle_fix(self, fix):
         self.__fixes.append(fix)
-
