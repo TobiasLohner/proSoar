@@ -5,7 +5,7 @@ import cgitb
 cgitb.enable()
 import os
 import sys
-import GeoIP
+from geoip import geolite2
 
 app_dir = os.path.abspath(__file__ + '/../../..')
 sys.path.append(os.path.join(app_dir, 'lib'))
@@ -19,20 +19,16 @@ def main():
     form = cgi.FieldStorage()
 
     if form.getvalue('as') == 'js':
-        geoip = GeoIP.open(
-            os.path.join(app_dir, 'storage', 'GeoLiteCity.dat'),
-            GeoIP.GEOIP_STANDARD
-        )
-        location = geoip.record_by_addr(os.environ['REMOTE_ADDR'])
+        match = geolite2.lookup(os.environ['REMOTE_ADDR'])
 
         print "Content-type: text/html"
         print
         print 'var initialSettings = ' + get_user_config_as_json(uid) + ';'
 
-        if location:
+        if match and match.location:
             print 'var initialLocation = {lon: ' + \
-                str(location['longitude']) + ', lat: ' + \
-                str(location['latitude']) + '};'
+                str(match.location[1]) + ', lat: ' + \
+                str(match.location[0]) + '};'
         else:
             print 'var initialLocation = {lon: 10, lat: 50};'
 
