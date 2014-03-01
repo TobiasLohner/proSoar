@@ -48,7 +48,7 @@ This source directory is not complete. You need some more things to get started.
 
 3. Install required python modules
 
-   Please see the files in `util/bin/[public|private]` and `util/lib/` for the required Python modules.
+   Run `pip install -r requirements.txt`
 
 4. Create airports json files
 
