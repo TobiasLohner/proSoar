@@ -1,8 +1,5 @@
-#!/usr/bin/env python
+from flask import Blueprint, request, jsonify
 
-import cgi
-import cgitb
-cgitb.enable()
 import os
 import sys
 from datetime import datetime
@@ -15,19 +12,21 @@ from prosoar.userconfig import get_uid_from_cookie, get_user_config_as_json, \
 from prosoar.task.json_reader import parse_json_task
 from prosoar.task.xcsoar_writer import create_xcsoar_task
 
+bp = Blueprint('save_temp_task', __name__)
 
+
+@bp.route('/tasks/save_temp', methods=['POST'])
+@bp.route('/bin/save_temp_task.py', methods=['POST'])
 def main():
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])
 
-    form = cgi.FieldStorage()
-    if 'task' in form:
-        taskstring = form.getvalue('task')
+    if 'task' in request.values:
+        taskstring = request.values['task']
         task = parse_json_task(taskstring)
 
     else:
-        reply_failure("No task.")
-        sys.exit()
+        return jsonify({'success': False, 'reason': 'No task.'})
 
     userconfig = read_user_config(uid)
 
@@ -40,34 +39,23 @@ def main():
 
     with open(os.path.join(uid_dir, filename), 'w') as f:
         f.write(create_xcsoar_task(task))
-        reply_success(uid, taskname)
-        sys.exit()
 
-    reply_failure("Unknown failure.")
+        base_url = 'tasks/' + uid['uid'] + '/temp/' + taskname
+        return jsonify({
+            'success': True,
+            'settings': get_user_config_as_json(uid),
+            'download': {
+                'xcsoar': {
+                    'name': 'XCSoar (*.tsk)',
+                    'url': base_url + '/xcsoar',
+                    'qrcode': base_url + '/xcsoar/qr',
+                },
+                'seeyou':{
+                    'name': 'SeeYou (*.cup)',
+                    'url': base_url + '/seeyou',
+                    'qrcode': base_url + '/seeyou/qr',
+                },
+            }
+        })
 
-
-def reply_failure(reason):
-    print "Content-type: text/html"
-    print
-    print '{"success":false,'
-    print '"reason":"' + reason + '"}'
-
-
-def reply_success(uid, taskname):
-    print "Content-type: text/html"
-    print
-    print '{"success":true,"settings":'
-    print get_user_config_as_json(uid)
-    print ',"download":{'
-    url = 'tasks/' + uid['uid'] + '/temp/' + taskname + '/xcsoar'
-    print '"xcsoar":{"url":"' + url + '",'
-    print '"qrcode":"tasks/' + uid['uid'] + '/temp/' + taskname + '/xcsoar/qr",'
-    print '"name":"XCSoar (*.tsk)"},'
-    url = 'tasks/' + uid['uid'] + '/temp/' + taskname + '/seeyou'
-    print '"seeyou":{"url":"' + url + '",'
-    print '"qrcode":"tasks/' + uid['uid'] + '/temp/' + taskname + '/seeyou/qr",'
-    print '"name":"SeeYou (*.cup)"}'
-    print '}}'
-
-if __name__ == '__main__':
-    main()
+    return jsonify({'success': False, 'reason': 'Unknown failure.'})
