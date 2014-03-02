@@ -1,8 +1,5 @@
-#!/usr/bin/env python
+from flask import Blueprint, request, jsonify
 
-import cgi
-import cgitb
-cgitb.enable()
 import os
 import sys
 from datetime import datetime
@@ -16,26 +13,35 @@ from prosoar.userconfig import get_uid_from_cookie, get_user_config_as_json, \
 from prosoar.task.json_reader import parse_json_task
 from prosoar.task.xcsoar_writer import create_xcsoar_task
 
+bp = Blueprint('save_task', __name__)
 
-def main():
+
+@bp.route('/tasks/save/<name>', methods=['POST'])
+def tasks_save(name):
+    return main(name)
+
+
+@bp.route('/bin/save_task.py', methods=['POST'])
+def bin_save_task():
+    return main(request.values.get('task_name'))
+
+
+def main(task_name):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])
 
-    form = cgi.FieldStorage()
-    if 'task' in form:
-        taskstring = form.getvalue('task')
+    if 'task' in request.values:
+        taskstring = request.values['task']
         task = parse_json_task(taskstring)
 
     else:
-        reply_failure("No task.")
-        sys.exit()
+        return jsonify({'success': False, 'reason': 'No task.'})
 
-    m = re.compile('([^&+/;]*)').match(form.getvalue('task_name'))
+    m = re.compile('([^&+/;]*)').match(task_name)
     task_name = m.group(1)
 
     if task_name == '':
-        reply_failure("Invalid task name.")
-        sys.exit()
+        return jsonify({'success': False, 'reason': 'Invalid task name.'})
 
     userconfig = read_user_config(uid)
 
@@ -54,9 +60,10 @@ def main():
             break
 
     if taskid >= 20:
-        reply_failure("Too much tasks saved already (maximum of 20 reached).")
-        sys.exit()
-#    raise RuntimeError('Too much tasks saved')
+        return jsonify({
+            'success': False,
+            'reason': 'Too much tasks saved already (maximum of 20 reached).'
+        })
 
     filename = 'task_' + str(taskid + 1) + '.tsk'
     d = datetime.today()
@@ -84,25 +91,9 @@ def main():
             }
 
         write_user_config(uid, userconfig)
-        reply_success(uid)
-        exit()
+        return jsonify({
+            'success': True,
+            'settings': get_user_config_as_json(uid)
+        })
 
-    reply_failure("Unknown failure.")
-
-
-def reply_failure(reason):
-    print "Content-type: text/html"
-    print
-    print '{"success":false,'
-    print '"reason":"' + reason + '"}'
-
-
-def reply_success(uid):
-    print "Content-type: text/html"
-    print
-    print '{"success":true,"settings":'
-    print get_user_config_as_json(uid)
-    print '}'
-
-if __name__ == '__main__':
-    main()
+    return jsonify({'success': False, 'reason': 'Unknown failure.'})
