@@ -1,9 +1,10 @@
 import os
 import json
-import Cookie
 import re
 from datetime import datetime
 from random import randint
+
+from flask import request
 
 app_dir = os.path.abspath(__file__ + '/../../..')
 storage_dir = os.path.join(app_dir, 'storage')
@@ -144,9 +145,8 @@ def set_user_config_from_json(uid, settings):
 
 def get_uid_from_cookie():
     try:
-        cookie = Cookie.SimpleCookie(os.environ['HTTP_COOKIE'])
         p = re.compile('([0-9a-z]*)\.([0-9a-z]*)')
-        m = p.match(cookie["uid"].value.lower())
+        m = p.match(request.cookies['uid'].lower())
         uid = {'uid': m.group(1), 'key': m.group(2)}
 
         path = os.path.join(users_dir, uid['uid'], 'key_' + uid['key'])

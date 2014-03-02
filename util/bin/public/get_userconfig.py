@@ -1,8 +1,5 @@
-#!/usr/bin/env python
+from flask import Blueprint, request
 
-import cgi
-import cgitb
-cgitb.enable()
 import os
 import sys
 from geoip import geolite2
@@ -12,31 +9,38 @@ sys.path.append(os.path.join(app_dir, 'lib'))
 
 from prosoar.userconfig import get_uid_from_cookie, get_user_config_as_json
 
+bp = Blueprint('get_userconfig', __name__)
 
-def main():
+
+@bp.route('/settings/load')
+def settings_load():
+    return get_userconfig('json')
+
+
+@bp.route('/settings/initial.js')
+def settings_initial():
+    return get_userconfig('js')
+
+
+@bp.route('/bin/get_userconfig.py')
+def get_userconfig(type=None):
     uid = get_uid_from_cookie()
 
-    form = cgi.FieldStorage()
+    type = request.values.get('as', type)
 
-    if form.getvalue('as') == 'js':
-        match = geolite2.lookup(os.environ['REMOTE_ADDR'])
+    if type == 'js':
+        match = geolite2.lookup(request.remote_addr)
 
-        print "Content-type: text/html"
-        print
-        print 'var initialSettings = ' + get_user_config_as_json(uid) + ';'
+        settings = 'var initialSettings = ' + get_user_config_as_json(uid) + ';'
 
         if match and match.location:
-            print 'var initialLocation = {lon: ' + \
+            location = 'var initialLocation = {lon: ' + \
                 str(match.location[1]) + ', lat: ' + \
                 str(match.location[0]) + '};'
         else:
-            print 'var initialLocation = {lon: 10, lat: 50};'
+            location = 'var initialLocation = {lon: 10, lat: 50};'
 
-    elif form.getvalue('as') == 'json':
-        print "Content-type: text/html"
-        print
-        print get_user_config_as_json(uid)
+        return settings + location
 
-
-if __name__ == '__main__':
-    main()
+    elif type == 'json':
+        return get_user_config_as_json(uid)

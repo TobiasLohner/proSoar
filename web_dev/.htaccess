@@ -20,10 +20,6 @@ RewriteRule ^waypoints/(\d*)/lon([-]?\d*)/lat([-]?\d*)$ /bin/get_waypoints.py?id
 RewriteRule ^waypoints/(\d*)/remove$ /bin/remove_waypoint_file.py?fileId=$1
 RewriteRule ^waypoints/upload$ /bin/upload_waypoint_file.py
 
-# Config
-RewriteRule ^settings/load$ /bin/get_userconfig.py?as=json
-RewriteRule ^settings/initial.js$ /bin/get_userconfig.py?as=js
-
 # Search
 RewriteRule ^search/([-]?\d*\.?\d*?),([-]?\d*\.?\d*?),([-]?\d*\.?\d*?),([-]?\d*\.?\d*?)/(.*)$ /bin/search.py?bbox=$1,$2,$3,$4&q=$5
 
