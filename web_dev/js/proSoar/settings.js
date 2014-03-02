@@ -69,9 +69,8 @@ var Settings = new Class({
     this.uid = data.uid;
     Cookie.write('uid', this.uid,{
       duration: 180,
-      domain: '.prosoar.de'
    });
-    
+
     this.fireEvent('SettingsLoaded');
   },
 
