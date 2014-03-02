@@ -6,6 +6,7 @@ from babel.core import negotiate_locale
 
 sys.path.append(os.path.join('util', 'bin'))
 
+from public.download_task_qr import bp as download_task_qr
 from public.get_height import bp as get_height
 from public.get_uid import bp as get_uid
 from public.get_userconfig import bp as get_userconfig_bp
@@ -16,6 +17,7 @@ from public.upload_igc_file import bp as upload_igc_file_bp
 AVAILABLE_LOCALES = ['en', 'de', 'cs']
 
 app = Flask(__name__, static_folder='web', static_url_path='')
+app.register_blueprint(download_task_qr)
 app.register_blueprint(get_height)
 app.register_blueprint(get_uid)
 app.register_blueprint(get_userconfig_bp)

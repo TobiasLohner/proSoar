@@ -1,43 +1,43 @@
-#!/usr/bin/env python
+from flask import Blueprint, request, send_file
 
-import cgi
-import cgitb
-cgitb.enable()
-import subprocess
 import os
 import re
+import qrcode
+from StringIO import StringIO
+
+bp = Blueprint('download_task_qr', __name__)
 
 
-def main():
-    form = cgi.FieldStorage()
+@bp.route('/tasks/<uid>/<task>/<filetype>/qr')
+def tasks(uid, task, filetype):
+    return main(uid, task, filetype)
 
-    m = re.compile('([a-z0-9]*)').match(form.getvalue('uid'))
-    uid = m.group(1)
 
-    m = re.compile('([^&+/;]*)').match(form.getvalue('task'))
-    task = m.group(1)
+@bp.route('/tasks/<uid>/temp/<task>/<filetype>/qr')
+def tasks_temp(uid, task, filetype):
+    return main(uid, task, filetype, tempfile=True)
 
-    m = re.compile('([\w]*)').match(form.getvalue('filetype'))
-    filetype = m.group(1)
 
-    tempfile = form.getvalue('temp', 0)
+@bp.route('/bin/download_task_qr.py')
+def bin_download_task_qr():
+    return main(
+        request.values['uid'],
+        request.values['task'],
+        request.values['filetype'],
+        tempfile=('temp' in request.values)
+    )
 
+
+def main(uid, task, filetype, tempfile=False):
     if tempfile:
-        url = 'http://' + os.environ['HTTP_HOST'] + \
-            '/tasks/' + uid + '/temp/' + task + '/' + filetype
+        url = request.host_url + \
+            'tasks/' + uid + '/temp/' + task + '/' + filetype
     else:
-        url = 'http://' + os.environ['HTTP_HOST'] + \
-            '/tasks/' + uid + '/' + task + '/' + filetype
+        url = request.host_url + \
+            'tasks/' + uid + '/' + task + '/' + filetype
 
-#  stdout = subprocess.check_output(['qrencode', '-l', 'M', '-o', '-', url])
-    process = subprocess.Popen(
-        ['qrencode', '-l', 'M', '-o', '-', url], stdout=subprocess.PIPE)
-    stdout, stderr = process.communicate()
+    img = StringIO()
+    qrcode.make(url, box_size=3).save(img)
+    img.seek(0)
 
-    print "Content-type: image/png"
-    print
-    print stdout
-
-
-if __name__ == '__main__':
-    main()
+    return send_file(img, mimetype="image/png")
