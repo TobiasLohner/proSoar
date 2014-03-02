@@ -51,6 +51,8 @@ MOOTOOLS_MORE_COMPONENTS = \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Class/Class.Occlude.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Class/Class.Refactor.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Class/Events.Pseudos.js \
+	$(MOOTOOLS_MORE_FOLDER)/Source/Types/Object.Extras.js \
+	$(MOOTOOLS_MORE_FOLDER)/Source/Types/String.Extras.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Element/Element.Event.Pseudos.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Element/Element.Event.Pseudos.Keys.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Element/Element.Shortcuts.js \
@@ -62,12 +64,10 @@ MOOTOOLS_MORE_COMPONENTS = \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.Select.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.Sort.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.Zebra.js \
+	$(MOOTOOLS_MORE_FOLDER)/Source/Locale/Locale.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Locale/Locale.de-DE.Date.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Locale/Locale.en-US.Date.js \
-	$(MOOTOOLS_MORE_FOLDER)/Source/Locale/Locale.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Types/Date.js \
-	$(MOOTOOLS_MORE_FOLDER)/Source/Types/Object.Extras.js \
-	$(MOOTOOLS_MORE_FOLDER)/Source/Types/String.Extras.js \
 
 
 mootools: mootools-core mootools-more
