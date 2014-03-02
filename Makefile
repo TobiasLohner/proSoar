@@ -6,8 +6,12 @@ JS_FOLDER = web_dev/js
 IMG_FOLDER = web_dev/images
 DEPLOY_FOLDER = web
 
-clean:
+clean: clean-downloads clean-deploy
+
+clean-downloads:
 	rm -rf $(DOWNLOAD_FOLDER)
+
+clean-deploy:
 	rm -rf $(DEPLOY_FOLDER)
 
 
