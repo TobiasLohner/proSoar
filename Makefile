@@ -35,7 +35,7 @@ $(DOWNLOAD_FOLDER)/$(OPENLAYERS_ARCHIVE):
 # MooTools
 
 MOOTOOLS_CORE_VERSION = 1.4.5
-MOOTOOLS_CORE_FILE = mootools-core-$(MOOTOOLS_CORE_VERSION)-full-nocompat.js
+MOOTOOLS_CORE_FILE = mootools-core-$(MOOTOOLS_CORE_VERSION)-full-compat.js
 MOOTOOLS_CORE_URL = http://mootools.net/download/get/$(MOOTOOLS_CORE_FILE)
 
 MOOTOOLS_MORE_VERSION = 1.4.0.1
