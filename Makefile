@@ -52,12 +52,12 @@ MOOTOOLS_MORE_COMPONENTS = \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Element/Element.Shortcuts.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Fx/Fx.Elements.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Fx/Fx.Slide.js \
+	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/Keyboard.js \
+	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/Keyboard.Extras.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.Select.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.Sort.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.Zebra.js \
-	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/Keyboard.Extras.js \
-	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/Keyboard.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Locale/Locale.de-DE.Date.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Locale/Locale.en-US.Date.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Locale/Locale.js \
