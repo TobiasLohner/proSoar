@@ -54,22 +54,14 @@ This source directory is not complete. You need some more things to get started.
 
    Run `util/bin/private/gen_airports`
 
-5. Install mapserver, airspace maps and tilecache
-
-   Copy the MapServer (<http://www.mapserver.org>) cgi binary to `util/bin/public/`
-
-   Create the `airspace.gml` file in `storage/map/airspace/` (please have a look at <http://www.gdal.org/ogr/> for instrucions)
-
-   Tilecache can be found at <http://www.tilecache.org>. Install it to `util/bin/public/` and alter the config file in `config/tilecache.cfg` according your needs.
-
-6. Install qrencode
+5. Install qrencode
 
    See <http://megaui.net/fukuchi/works/qrencode/index.en.html>
 
-7. Configure apache
+6. Configure apache
 
    Alter your apache configuration to use the `web/` directory as webroot. Include the config file in `config/apache.conf` to your configuration.
 
-8. Deploy public web directory
+7. Deploy public web directory
 
    Run `deploy/deploy.py`
