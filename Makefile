@@ -1,4 +1,4 @@
-all: openlayers mootools airport-database geo-ip deploy
+all: openlayers mootools airport-database deploy
 
 DOWNLOAD_FOLDER = .tmp
 STORAGE_FOLDER = storage
@@ -35,7 +35,7 @@ $(DOWNLOAD_FOLDER)/$(OPENLAYERS_ARCHIVE):
 # MooTools
 
 MOOTOOLS_CORE_VERSION = 1.4.5
-MOOTOOLS_CORE_FILE = mootools-core-$(MOOTOOLS_CORE_VERSION)-full-nocompat.js
+MOOTOOLS_CORE_FILE = mootools-core-$(MOOTOOLS_CORE_VERSION)-full-compat.js
 MOOTOOLS_CORE_URL = http://mootools.net/download/get/$(MOOTOOLS_CORE_FILE)
 
 MOOTOOLS_MORE_VERSION = 1.4.0.1
@@ -52,12 +52,12 @@ MOOTOOLS_MORE_COMPONENTS = \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Element/Element.Shortcuts.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Fx/Fx.Elements.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Fx/Fx.Slide.js \
+	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/Keyboard.js \
+	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/Keyboard.Extras.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.Select.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.Sort.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/HtmlTable.Zebra.js \
-	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/Keyboard.Extras.js \
-	$(MOOTOOLS_MORE_FOLDER)/Source/Interface/Keyboard.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Locale/Locale.de-DE.Date.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Locale/Locale.en-US.Date.js \
 	$(MOOTOOLS_MORE_FOLDER)/Source/Locale/Locale.js \
@@ -97,24 +97,6 @@ airport-database: $(AIRPORT_DB_FOLDER)/lon0/lat45
 
 $(AIRPORT_DB_FOLDER)/lon0/lat45:
 	util/bin/private/gen_airports
-
-
-# MaxMind GeoIP Database
-
-GEO_IP_FILE = GeoLiteCity.dat
-GEO_IP_ARCHIVE = $(GEO_IP_FILE).gz
-GEO_IP_URL = http://geolite.maxmind.com/download/geoip/database/$(GEO_IP_ARCHIVE)
-
-geo-ip: $(STORAGE_FOLDER)/$(GEO_IP_FILE)
-
-$(STORAGE_FOLDER)/$(GEO_IP_FILE): $(DOWNLOAD_FOLDER)/$(GEO_IP_FILE)
-	cp $< $@
-
-$(DOWNLOAD_FOLDER)/$(GEO_IP_FILE): $(DOWNLOAD_FOLDER)/$(GEO_IP_ARCHIVE)
-	gunzip -c $(DOWNLOAD_FOLDER)/$(GEO_IP_ARCHIVE) > $(DOWNLOAD_FOLDER)/$(GEO_IP_FILE)
-
-$(DOWNLOAD_FOLDER)/$(GEO_IP_ARCHIVE):
-	wget -N -P $(DOWNLOAD_FOLDER) $(GEO_IP_URL)
 
 
 # Deployment

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import sys
 import os
@@ -6,6 +6,7 @@ import shutil
 import subprocess
 
 import mergejs
+import pojson
 
 
 def main():
@@ -108,13 +109,12 @@ def main():
     po_files = os.listdir(os.path.join('gettext', 'po'))
     for po in po_files:
         po = po[:-3]
-        process = subprocess.Popen(
-            ['./po2json', os.path.join('gettext', 'po', po + '.po')],
-            stdout=subprocess.PIPE,
-        )
-        stdout, stderr = process.communicate()
-        file(os.path.join(web_temp_dir, 'LC_MESSAGES', po + '.json'),
-             'w').write(stdout)
+
+        po_file = os.path.join('gettext', 'po', po + '.po')
+        result = u'{"%s":%s}' % (po, pojson.convert(po_file))
+
+        path = os.path.join(web_temp_dir, 'LC_MESSAGES', po + '.json')
+        file(path, 'w').write(result.encode('utf-8'))
 
     # move temp directory to web dir
     if os.path.exists(web_dir):
