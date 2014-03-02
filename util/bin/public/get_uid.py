@@ -1,8 +1,5 @@
-#!/usr/bin/env python
+from flask import Blueprint, jsonify
 
-import cgi
-import cgitb
-cgitb.enable()
 import os
 import sys
 
@@ -11,11 +8,9 @@ sys.path.append(os.path.join(app_dir, 'lib'))
 
 from prosoar.userconfig import get_uid_from_cookie
 
+bp = Blueprint('get_uid', __name__)
 
+
+@bp.route('/bin/get_uid.py')
 def main():
-    print "Content-type: text/html"
-    print
-    print get_uid_from_cookie()
-
-if __name__ == '__main__':
-    main()
+    return jsonify(get_uid_from_cookie())
