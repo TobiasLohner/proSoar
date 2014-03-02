@@ -144,17 +144,18 @@ def set_user_config_from_json(uid, settings):
 
 
 def get_uid_from_cookie():
-    try:
-        p = re.compile('([0-9a-z]*)\.([0-9a-z]*)')
-        m = p.match(request.cookies['uid'].lower())
-        uid = {'uid': m.group(1), 'key': m.group(2)}
+    if 'uid' not in request.cookies:
+        return create_uid()
 
-        path = os.path.join(users_dir, uid['uid'], 'key_' + uid['key'])
-        if not os.path.exists(path):
-            uid = create_uid()
+    p = re.compile('([0-9a-z]*)\.([0-9a-z]*)')
+    m = p.match(request.cookies['uid'].lower())
+    if not m:
+        return create_uid()
 
-    except KeyError:
-        uid = create_uid()
+    uid = {'uid': m.group(1), 'key': m.group(2)}
+    path = os.path.join(users_dir, uid['uid'], 'key_' + uid['key'])
+    if not os.path.exists(path):
+        return create_uid()
 
     return uid
 
