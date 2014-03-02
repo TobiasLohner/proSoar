@@ -30,5 +30,11 @@ def hello():
         'web', 'index.html.' + locale, mimetype='text/html')
 
 
+@app.route("/airports/<path:filename>")
+def airports(filename):
+    return send_from_directory(
+        'storage/airports', filename, mimetype='application/json')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
