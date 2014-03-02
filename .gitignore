@@ -11,10 +11,6 @@ web_dev/images/OpenLayers
 .tmp
 
 !storage/map/
-!storage/map/airspace/
-storage/map/airspace/*
-!storage/map/airspace/airspace.map
-
 !storage/terrain/
 
 *.swp

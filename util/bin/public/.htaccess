@@ -3,13 +3,3 @@ deny from all
 <Files *.py>
   allow from all
 </Files>
-
-<Files mapserv.cgi>
-  Order Deny,Allow
-  deny from all
-  allow from 178.77.100.84
-</Files>
-
-<Files tilecache.cgi>
-  allow from all
-</Files>
