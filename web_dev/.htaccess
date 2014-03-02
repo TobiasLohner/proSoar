@@ -23,8 +23,5 @@ RewriteRule ^waypoints/upload$ /bin/upload_waypoint_file.py
 # Search
 RewriteRule ^search/([-]?\d*\.?\d*?),([-]?\d*\.?\d*?),([-]?\d*\.?\d*?),([-]?\d*\.?\d*?)/(.*)$ /bin/search.py?bbox=$1,$2,$3,$4&q=$5
 
-# IGC
-RewriteRule ^igc/upload$ /bin/upload_igc_file.py
-
 </IfModule>
 
