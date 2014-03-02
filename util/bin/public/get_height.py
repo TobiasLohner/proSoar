@@ -1,25 +1,32 @@
-#!/usr/bin/env python
+from flask import Blueprint, request, jsonify
 
-import cgi
-import cgitb
-cgitb.enable()
 import subprocess
 import re
 import math
 import os
 
+bp = Blueprint('get_height', __name__)
 
-def main():
+
+
+# height/lon([-]?\d*\.?\d*?)/lat([-]?\d*\.?\d*?)$ /bin/get_height.py?lon=$1&lat=$2
+
+@bp.route('/height/lon<float:lon>/lat<float:lat>')
+def height(lon, lat):
+    return get_height(lon, lat)
+
+
+@bp.route('/bin/get_height.py')
+def bin_get_height():
+    return get_height(request.values.get('lon', type=float),
+                      request.values.get('lat', type=float))
+
+
+def get_height(lon, lat):
     srtm_dir = "/home/tobs/srtm_v4"
     gdallocationinfo = os.path.join(srtm_dir, 'gdallocationinfo')
 
-    form = cgi.FieldStorage()
-
-    m = re.compile('([-\d.]*)').match(form.getvalue('lon'))
-    lon = float(m.group(1))
-
-    m = re.compile('([-\d.]*)').match(form.getvalue('lat'))
-    lat = float(m.group(1))
+    height = -999
 
     if lon >= -180 and lon <= 180 \
        and lat >= -60 and lat <= 60:
@@ -40,23 +47,14 @@ def main():
 
         m = re.compile('([-\d.]*)').match(stdout)
 
-    if m is not None and m.group(1) != '':
-        height = int(m.group(1))
-    else:
-        height = -999
+        if m is not None and m.group(1) != '':
+            height = int(m.group(1))
 
-    if height == -32768:
-        height = 0
+        if height == -32768:
+            height = 0
 
-    print "Content-type: text/plain"
-    print
-    print (
-        '{"lon":' + str(lon) +
-        ',"lat":' + str(lat) +
-        ',"height":' + str(height) +
-        '}'
-    )
-
-
-if __name__ == '__main__':
-    main()
+    return jsonify({
+        'lon': lon,
+        'lat': lat,
+        'height': height,
+    })
