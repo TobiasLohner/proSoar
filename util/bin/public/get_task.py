@@ -1,9 +1,8 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from werkzeug.exceptions import NotFound
 
 import os
 import sys
-import re
 
 app_dir = os.path.abspath(__file__ + '/../../..')
 sys.path.append(os.path.join(app_dir, 'lib'))

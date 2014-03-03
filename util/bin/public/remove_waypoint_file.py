@@ -38,8 +38,10 @@ def main(fileId):
         userconfig['tp_files'].pop(fileId - 1)
 
     for f_id in range(fileId + 1, (len(userconfig['tp_files']) + 2)):
-        os.rename(os.path.join(uid_dir, 'turnpoints_' + str(f_id) + '.cup'),
-                  os.path.join(uid_dir, 'turnpoints_' + str(f_id - 1) + '.cup'))
+        os.rename(
+            os.path.join(uid_dir, 'turnpoints_' + str(f_id) + '.cup'),
+            os.path.join(uid_dir, 'turnpoints_' + str(f_id - 1) + '.cup')
+        )
 
     write_user_config(uid, userconfig)
 

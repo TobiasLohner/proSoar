@@ -31,7 +31,8 @@ def get_userconfig(type=None):
     if type == 'js':
         match = geolite2.lookup(request.remote_addr)
 
-        settings = 'var initialSettings = ' + get_user_config_as_json(uid) + ';'
+        settings = \
+            'var initialSettings = ' + get_user_config_as_json(uid) + ';'
 
         if match and match.location:
             location = 'var initialLocation = {lon: ' + \

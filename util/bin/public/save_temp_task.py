@@ -50,7 +50,7 @@ def main():
                     'url': base_url + '/xcsoar',
                     'qrcode': base_url + '/xcsoar/qr',
                 },
-                'seeyou':{
+                'seeyou': {
                     'name': 'SeeYou (*.cup)',
                     'url': base_url + '/seeyou',
                     'qrcode': base_url + '/seeyou/qr',

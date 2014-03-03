@@ -1,7 +1,5 @@
 from flask import Blueprint, request, send_file
 
-import os
-import re
 import qrcode
 from StringIO import StringIO
 

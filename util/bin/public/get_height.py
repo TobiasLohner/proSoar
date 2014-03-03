@@ -8,9 +8,6 @@ import os
 bp = Blueprint('get_height', __name__)
 
 
-
-# height/lon([-]?\d*\.?\d*?)/lat([-]?\d*\.?\d*?)$ /bin/get_height.py?lon=$1&lat=$2
-
 @bp.route('/height/lon<float:lon>/lat<float:lat>')
 def height(lon, lat):
     return get_height(lon, lat)

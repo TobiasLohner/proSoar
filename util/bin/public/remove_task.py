@@ -2,7 +2,6 @@ from flask import Blueprint, request, jsonify
 
 import os
 import sys
-import re
 
 app_dir = os.path.abspath(__file__ + '/../../..')
 sys.path.append(os.path.join(app_dir, 'lib'))
