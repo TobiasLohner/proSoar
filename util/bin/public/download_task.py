@@ -1,11 +1,9 @@
-#!/usr/bin/env python
+from flask import Blueprint, request, send_file
+from werkzeug.exceptions import NotFound
 
-import cgi
-import cgitb
-cgitb.enable()
 import os
 import sys
-import re
+from StringIO import StringIO
 
 app_dir = os.path.abspath(__file__ + '/../../..')
 sys.path.append(os.path.join(app_dir, 'lib'))
@@ -15,21 +13,36 @@ from prosoar.task.xcsoar_writer import create_xcsoar_task
 from prosoar.task.seeyou_writer import create_seeyou_task
 from prosoar.userconfig import read_user_config
 
+bp = Blueprint('download_task', __name__)
 
-def main():
-    form = cgi.FieldStorage()
 
-    m = re.compile('([0-9a-z]*)').match(form.getvalue('uid'))
-    uid = {'uid': m.group(1)}
+@bp.route('/tasks/<uid>/<task>/<filetype>')
+def tasks(uid, task, filetype):
+    return main(uid, task, filetype)
+
+
+@bp.route('/tasks/<uid>/temp/<task>/<filetype>')
+def tasks_temp(uid, task, filetype):
+    return main(uid, task, filetype, temptask=True)
+
+
+@bp.route('/bin/download_task.py')
+def bin_download_task_qr():
+    return main(
+        request.values['uid'],
+        request.values['task'],
+        request.values['filetype'],
+        temptask=('temp' in request.values)
+    )
+
+
+def main(uid, taskname, filetype, temptask=False):
+    uid = {'uid': uid}
 
     storage_dir = os.path.join(app_dir, 'storage')
     uid_dir = os.path.join(storage_dir, 'users', uid['uid'])
     userconfig = read_user_config(uid)
 
-    m = re.compile('([^&+/;]*)').match(form.getvalue('task'))
-    taskname = m.group(1)
-
-    temptask = form.getvalue('temp', 0)
     taskfile = ''
 
     if not temptask:
@@ -42,26 +55,23 @@ def main():
         taskfile = os.path.join(uid_dir, 'tasktemp_' + str(taskname) + '.tsk')
 
     if taskfile == '' or not os.path.exists(taskfile):
-        print "Status: 404 Not Found"
-        print "Content-type: text/html"
-        print
-        print "Task file not found: " + taskname
-        sys.exit()
+        raise NotFound('Task file not found: ' + taskname)
 
     task = parse_xcsoar_task(taskfile)
 
-    if (form.getvalue('filetype') == 'xcsoar'):
-        print "Content-Type: application/xcsoar"
-        print "Content-disposition: attachment; filename=" + taskname + ".tsk"
-        print
-        print create_xcsoar_task(task)
+    if filetype == 'xcsoar':
+        mimetype = 'application/xcsoar'
+        file_extension = 'tsk'
+        task = create_xcsoar_task(task)
 
-    elif (form.getvalue('filetype') == 'seeyou'):
-        print "Content-Type: application/seeyou"
-        print "Content-disposition: attachment; filename=" + taskname + ".cup"
-        print
-        print create_seeyou_task(task, taskname)
+    elif filetype == 'seeyou':
+        mimetype = 'application/seeyou'
+        file_extension = 'cup'
+        task = create_seeyou_task(task, taskname)
 
+    io = StringIO()
+    io.write(task.encode('utf-8'))
+    io.seek(0)
 
-if __name__ == '__main__':
-    main()
+    return send_file(io, mimetype=mimetype, as_attachment=True,
+                     attachment_filename=(taskname + '.' + file_extension))
