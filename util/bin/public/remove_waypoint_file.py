@@ -1,8 +1,5 @@
-#!/usr/bin/env python
+from flask import Blueprint, request, jsonify
 
-import cgi
-import cgitb
-cgitb.enable()
 import os
 import sys
 
@@ -13,16 +10,25 @@ from prosoar.userconfig import read_user_config, write_user_config, \
     get_user_config_as_json, set_user_config_from_json, \
     get_uid_from_cookie
 
+bp = Blueprint('remove_waypoint_file', __name__)
 
-def main():
+
+@bp.route('/waypoints/<int:id>/remove', methods=['POST'])
+def waypoints_remove(id):
+    return main(id)
+
+
+@bp.route('/bin/remove_waypoint_file.py', methods=['POST'])
+def bin_remove_waypoint_file():
+    return main(int(request.values['fileId']))
+
+
+def main(fileId):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])
 
-    form = cgi.FieldStorage()
-    fileId = int(form.getvalue('fileId'))
-
-    if 'settings' in form:
-        settings = form.getvalue('settings')
+    if 'settings' in request.values:
+        settings = request.values['settings']
         userconfig = set_user_config_from_json(uid, settings)
     else:
         userconfig = read_user_config(uid)
@@ -37,10 +43,4 @@ def main():
 
     write_user_config(uid, userconfig)
 
-    print "Content-type: text/html"
-    print
-    print get_user_config_as_json(uid, encoded=False)
-
-
-if __name__ == '__main__':
-    main()
+    return jsonify(get_user_config_as_json(uid, encoded=False))

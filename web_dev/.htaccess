@@ -1,9 +1,0 @@
-<IfModule mod_rewrite.c>
-
-RewriteEngine On
-
-# Waypoints
-RewriteRule ^waypoints/(\d*)/remove$ /bin/remove_waypoint_file.py?fileId=$1
-
-</IfModule>
-

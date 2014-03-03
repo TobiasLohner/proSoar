@@ -14,6 +14,7 @@ from public.get_uid import bp as get_uid
 from public.get_userconfig import bp as get_userconfig_bp
 from public.get_waypoints import bp as get_waypoints
 from public.remove_task import bp as remove_task
+from public.remove_waypoint_file import bp as remove_waypoint_file
 from public.save_task import bp as save_task_bp
 from public.save_temp_task import bp as save_temp_task_bp
 from public.search import bp as search
@@ -31,6 +32,7 @@ app.register_blueprint(get_uid)
 app.register_blueprint(get_userconfig_bp)
 app.register_blueprint(get_waypoints)
 app.register_blueprint(remove_task)
+app.register_blueprint(remove_waypoint_file)
 app.register_blueprint(save_task_bp)
 app.register_blueprint(save_temp_task_bp)
 app.register_blueprint(search)
