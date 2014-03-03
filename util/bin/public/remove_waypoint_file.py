@@ -39,8 +39,7 @@ def main():
 
     print "Content-type: text/html"
     print
-    # print '{"success":true}'
-    print get_user_config_as_json(uid)
+    print get_user_config_as_json(uid, encoded=False)
 
 
 if __name__ == '__main__':

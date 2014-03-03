@@ -53,5 +53,5 @@ def main(taskname):
 
     return jsonify({
         'success': success,
-        'settings': get_user_config_as_json(uid),
+        'settings': get_user_config_as_json(uid, encoded=False),
     })

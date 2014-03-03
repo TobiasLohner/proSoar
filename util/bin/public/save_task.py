@@ -93,7 +93,7 @@ def main(task_name):
         write_user_config(uid, userconfig)
         return jsonify({
             'success': True,
-            'settings': get_user_config_as_json(uid)
+            'settings': get_user_config_as_json(uid, encoded=False)
         })
 
     return jsonify({'success': False, 'reason': 'Unknown failure.'})

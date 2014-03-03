@@ -92,7 +92,8 @@ def write_user_config(uid, userconfig):
 
 
 def get_user_config_as_json(
-        uid, lastvisit=True, turnpointFiles=True, taskFiles=True):
+        uid, lastvisit=True, turnpointFiles=True, taskFiles=True,
+        encoded=True):
 
     userconfig = read_user_config(uid)
 
@@ -125,7 +126,10 @@ def get_user_config_as_json(
     if lastvisit:
         json_string['lastvisit'] = userconfig['lastvisit']
 
-    return json.dumps(json_string, indent=1)
+    if encoded:
+        return json.dumps(json_string, indent=1)
+
+    return json_string
 
 
 def set_user_config_from_json(uid, settings):

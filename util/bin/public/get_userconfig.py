@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 
 import os
 import sys
@@ -43,4 +43,4 @@ def get_userconfig(type=None):
         return settings + location
 
     elif type == 'json':
-        return get_user_config_as_json(uid)
+        return jsonify(get_user_config_as_json(uid), encoded=False)

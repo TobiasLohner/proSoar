@@ -43,7 +43,7 @@ def main():
         base_url = 'tasks/' + uid['uid'] + '/temp/' + taskname
         return jsonify({
             'success': True,
-            'settings': get_user_config_as_json(uid),
+            'settings': get_user_config_as_json(uid, encoded=False),
             'download': {
                 'xcsoar': {
                     'name': 'XCSoar (*.tsk)',
