@@ -2,9 +2,6 @@
 
 RewriteEngine On
 
-# Tasks
-RewriteRule ^tasks/delete/([^&+/;<>]*)$ /bin/remove_task.py?task_name=$1
-
 # Waypoints
 RewriteRule ^waypoints/(\d*)/lon([-]?\d*)/lat([-]?\d*)$ /bin/get_waypoints.py?id=$1&lon=$2&lat=$3
 RewriteRule ^waypoints/(\d*)/remove$ /bin/remove_waypoint_file.py?fileId=$1

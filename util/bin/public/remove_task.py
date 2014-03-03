@@ -1,8 +1,5 @@
-#!/usr/bin/env python
+from flask import Blueprint, request, jsonify
 
-import cgi
-import cgitb
-cgitb.enable()
 import os
 import sys
 import re
@@ -13,14 +10,22 @@ sys.path.append(os.path.join(app_dir, 'lib'))
 from prosoar.userconfig import read_user_config, write_user_config, \
     get_user_config_as_json, get_uid_from_cookie
 
+bp = Blueprint('remove_task', __name__)
 
-def main():
+
+@bp.route('/tasks/delete/<taskname>')
+def tasks_delete(taskname):
+    return main(taskname)
+
+
+@bp.route('/bin/remove_task.py')
+def bin_remove_task():
+    return main(request.values.get('task_name'))
+
+
+def main(taskname):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])
-
-    form = cgi.FieldStorage()
-    m = re.compile('([^&+/;]*)').match(form.getvalue('task_name'))
-    taskname = m.group(1)
 
     userconfig = read_user_config(uid)
 
@@ -46,17 +51,7 @@ def main():
 
     write_user_config(uid, userconfig)
 
-    print "Content-type: text/html"
-    print
-    print '{'
-
-    if success:
-        print '"success":true,'
-    else:
-        print '"success":false,'
-
-    print '"settings":' + get_user_config_as_json(uid)
-    print '}'
-
-if __name__ == '__main__':
-    main()
+    return jsonify({
+        'success': success,
+        'settings': get_user_config_as_json(uid),
+    })
