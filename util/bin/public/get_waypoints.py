@@ -1,8 +1,6 @@
-#!/usr/bin/env python
+from flask import Blueprint, request
+from werkzeug.exceptions import NotFound
 
-import cgi
-import cgitb
-cgitb.enable()
 import os
 import sys
 import json
@@ -13,28 +11,35 @@ sys.path.append(os.path.join(app_dir, 'lib'))
 from prosoar.userconfig import get_uid_from_cookie, read_user_config
 from prosoar.waypoints.seeyou_reader import parse_seeyou_waypoints
 
+bp = Blueprint('get_waypoints', __name__)
 
-def main():
+
+@bp.route('/waypoints/<int:id>/lon<int:lon>/lat<int:lat>')
+def waypoints(id, lon, lat):
+    return main(id, lon, lat)
+
+
+@bp.route('/bin/get_waypoints.py')
+def bin_get_waypoints():
+    return main(int(request.values['id']),
+                int(request.values['lon']), int(request.values['lat']))
+
+
+def main(tpfile_id, tpfile_lon, tpfile_lat):
     uid = get_uid_from_cookie()
     storage_dir = os.path.join(app_dir, 'storage')
-
-    form = cgi.FieldStorage()
-
-    tpfile_id = int(form.getvalue('id'))
-    tpfile_lon = int(form.getvalue('lon'))
-    tpfile_lat = int(form.getvalue('lat'))
 
     userconfig = read_user_config(uid)
 
     if len(userconfig['tp_files']) < tpfile_id or tpfile_id < 1:
-        raise RuntimeError('Waypoint File does not exist')
+        raise NotFound('Waypoint File does not exist')
 
     turnpoint_file = os.path.join(
         storage_dir, 'users', uid['uid'],
         'turnpoints_' + str(tpfile_id) + '.cup'
     )
     if not os.path.exists(turnpoint_file):
-        raise RuntimeError('Waypoint File does not exist')
+        raise NotFound('Waypoint File does not exist')
 
     f = open(turnpoint_file, 'r')
     waypoints = parse_seeyou_waypoints(f)
@@ -67,10 +72,4 @@ def main():
         },
     })
 
-    print "Content-type: text/html"
-    print
-    print json.dumps(sorted_database, indent=1)
-
-
-if __name__ == '__main__':
-    main()
+    return json.dumps(sorted_database, indent=1)
