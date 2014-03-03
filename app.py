@@ -17,6 +17,7 @@ from public.save_task import bp as save_task_bp
 from public.save_temp_task import bp as save_temp_task_bp
 from public.search import bp as search
 from public.upload_igc_file import bp as upload_igc_file_bp
+from public.upload_waypoint_file import bp as upload_waypoint_file
 
 AVAILABLE_LOCALES = ['en', 'de', 'cs']
 
@@ -32,6 +33,7 @@ app.register_blueprint(save_task_bp)
 app.register_blueprint(save_temp_task_bp)
 app.register_blueprint(search)
 app.register_blueprint(upload_igc_file_bp)
+app.register_blueprint(upload_waypoint_file)
 
 
 @app.route("/")
