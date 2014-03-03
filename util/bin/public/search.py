@@ -1,36 +1,27 @@
-#!/usr/bin/env python
+from flask import Blueprint, request, jsonify
 
-import cgi
-import cgitb
-cgitb.enable()
-import re
 import urllib2
 
+bp = Blueprint('search', __name__)
 
-def main():
-    form = cgi.FieldStorage()
 
-    m = re.compile(
-        '^(([-]?\d*\.?\d*?),([-]?\d*\.?\d*?),([-]?\d*\.?\d*?),([-]?\d*\.?\d*?))$').match(form.getvalue('bbox'))
-    bbox = m.group(1)
+@bp.route('/search/<bbox>/<query>')
+def search(bbox, query):
+    return main(bbox, query)
 
-    m = re.compile('^(.*)$').match(form.getvalue('q'))
-    q = urllib2.quote(m.group(1))
 
+@bp.route('/bin/search.py')
+def bin_search():
+    return main(request.values.get('bbox'), request.values.get('q'))
+
+
+def main(bbox, q):
     url = 'http://nominatim.openstreetmap.org/search/' + q + \
         '?format=json&limit=1&viewbox=' + bbox + '&email=info@prosoar.de'
 
     try:
         request = urllib2.urlopen(url)
-        reply = request.read()
+        return request.read()
 
     except:
-        reply = '[]'
-
-    print "Content-type: text/plain"
-    print
-    print reply
-
-
-if __name__ == '__main__':
-    main()
+        return '[]'

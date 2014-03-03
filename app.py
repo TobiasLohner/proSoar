@@ -15,6 +15,7 @@ from public.get_userconfig import bp as get_userconfig_bp
 from public.remove_task import bp as remove_task
 from public.save_task import bp as save_task_bp
 from public.save_temp_task import bp as save_temp_task_bp
+from public.search import bp as search
 from public.upload_igc_file import bp as upload_igc_file_bp
 
 AVAILABLE_LOCALES = ['en', 'de', 'cs']
@@ -29,6 +30,7 @@ app.register_blueprint(get_userconfig_bp)
 app.register_blueprint(remove_task)
 app.register_blueprint(save_task_bp)
 app.register_blueprint(save_temp_task_bp)
+app.register_blueprint(search)
 app.register_blueprint(upload_igc_file_bp)
 
 
