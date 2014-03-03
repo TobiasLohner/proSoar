@@ -3,7 +3,6 @@
 RewriteEngine On
 
 # Tasks
-RewriteRule ^tasks/load/([^&+/;<>]*)$ /bin/get_task.py?task_name=$1
 RewriteRule ^tasks/delete/([^&+/;<>]*)$ /bin/remove_task.py?task_name=$1
 
 # Waypoints
