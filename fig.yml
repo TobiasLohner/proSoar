@@ -1,0 +1,8 @@
+web:
+    build: .
+
+    ports:
+        - 5000:80
+
+    volumes:
+        - .:/home/tobs/prosoar.de
