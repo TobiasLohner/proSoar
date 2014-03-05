@@ -1,8 +1,8 @@
 /**
  * waypoints.js
- * 
- * This is part of proSoar. 
- * 
+ *
+ * This is part of proSoar.
+ *
  * (c) 2012, Tobias Lohner <tobias@lohner-net.de>
  *
  * Licenced under GPL v2
@@ -172,7 +172,7 @@ var WaypointContainer = new Class({
     if (this.chunks['lon' + data[0].chunk.lon_left + 'lat' + data[0].chunk.lat_lower][fileId]) return;
 
     this.chunks['lon' + data[0].chunk.lon_left + 'lat' + data[0].chunk.lat_lower][fileId] = true;
-    
+
     var display = true;
 
     if (fileId != 0) {
@@ -241,20 +241,20 @@ var WaypointContainer = new Class({
   checkChunk: function(lon_left, lat_lower, lon_right, lat_upper) {
     // check if we need to download a new chunk of waypoints...?
     var factor = 5;
-    
+
     // no need to check if lon_right is smaller than lon_left because openlayers
     // always keeps lon_right > lon_left.
     var chunk_lat_lower = Math.floor(lat_lower / factor);
     var chunk_lat_upper = Math.ceil(lat_upper / factor);
     var chunk_lon_left = Math.floor(lon_left / factor);
     var chunk_lon_right = Math.ceil(lon_right / factor);
-    
+
     for (var i = chunk_lon_left; i < chunk_lon_right; i++) {
       for (var j = chunk_lat_lower; j < chunk_lat_upper; j++) {
         if (!this.chunks['lon' + i*factor + 'lat' + j*factor] ||
             !this.chunks['lon' + i*factor + 'lat' + j*factor][0])
           this.getChunk(i*factor, j*factor, 'airports');
-        
+
         Array.each(this.settings.getTurnpointFiles(), function(item, key, object) {
           if (item.display &&
               (!this.chunks['lon' + i*factor + 'lat' + j*factor] ||
@@ -273,15 +273,9 @@ var WaypointContainer = new Class({
 
     if (type == 'airports')
       this.populateFromJSON(0, 'airports/lon'+lon_left+'/lat'+lat_lower);
-//      this.populateFromJSON(0, 'dynamic/waypoints.pl?type=airport&lon='+lon_left+'&lat='+lat_lower);
 
     else if (type == 'turnpoints')
       this.populateFromJSON(fileId, 'waypoints/'+fileId+'/lon'+lon_left+'/lat'+lat_lower);
-//      this.populateFromJSON(fileId, 'dynamic/bin/get_waypoints.py?' +
-//        'id=' + fileId + '&lon=' + lon_left + '&lat=' + lat_lower);
-/*      this.populateFromJSON(fileId, 'dynamic/waypoints.pl?uid=' +
-        this.settings.getUID() + '&type=turnpoint' + 
-        '&id=' + fileId + '&lon=' + lon_left + '&lat=' + lat_lower); */
   },
 
 });

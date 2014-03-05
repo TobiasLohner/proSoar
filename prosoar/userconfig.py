@@ -1,23 +1,19 @@
 import os
 import json
-import Cookie
 import re
 from datetime import datetime
 from random import randint
 
-app_dir = os.path.abspath(__file__ + '/../../..')
-storage_dir = os.path.join(app_dir, 'storage')
-users_dir = os.path.join(storage_dir, 'users')
+from flask import request, current_app
+
 
 # read user configuration
-
-
 def read_user_config(uid):
     tp_files = []
     task_files = []
     lastvisit = 0
 
-    uid_dir = os.path.join(users_dir, uid['uid'])
+    uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
     if not os.path.exists(uid_dir):
         return {
@@ -61,7 +57,7 @@ def read_user_config(uid):
 
 # write user configuration
 def write_user_config(uid, userconfig):
-    uid_dir = os.path.join(users_dir, uid['uid'])
+    uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
     if not os.path.exists(uid_dir):
         os.makedirs(uid_dir)
@@ -91,7 +87,8 @@ def write_user_config(uid, userconfig):
 
 
 def get_user_config_as_json(
-        uid, lastvisit=True, turnpointFiles=True, taskFiles=True):
+        uid, lastvisit=True, turnpointFiles=True, taskFiles=True,
+        encoded=True):
 
     userconfig = read_user_config(uid)
 
@@ -124,7 +121,10 @@ def get_user_config_as_json(
     if lastvisit:
         json_string['lastvisit'] = userconfig['lastvisit']
 
-    return json.dumps(json_string, indent=1)
+    if encoded:
+        return json.dumps(json_string, indent=1)
+
+    return json_string
 
 
 def set_user_config_from_json(uid, settings):
@@ -143,18 +143,19 @@ def set_user_config_from_json(uid, settings):
 
 
 def get_uid_from_cookie():
-    try:
-        cookie = Cookie.SimpleCookie(os.environ['HTTP_COOKIE'])
-        p = re.compile('([0-9a-z]*)\.([0-9a-z]*)')
-        m = p.match(cookie["uid"].value.lower())
-        uid = {'uid': m.group(1), 'key': m.group(2)}
+    if 'uid' not in request.cookies:
+        return create_uid()
 
-        path = os.path.join(users_dir, uid['uid'], 'key_' + uid['key'])
-        if not os.path.exists(path):
-            uid = create_uid()
+    p = re.compile('([0-9a-z]*)\.([0-9a-z]*)')
+    m = p.match(request.cookies['uid'].lower())
+    if not m:
+        return create_uid()
 
-    except KeyError:
-        uid = create_uid()
+    uid = {'uid': m.group(1), 'key': m.group(2)}
+    path = os.path.join(
+        current_app.config['USERS_FOLDER'], uid['uid'], 'key_' + uid['key'])
+    if not os.path.exists(path):
+        return create_uid()
 
     return uid
 

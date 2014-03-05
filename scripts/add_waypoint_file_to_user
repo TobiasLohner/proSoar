@@ -1,11 +1,11 @@
-#!/usr/bin/env python2.6
+#!/usr/bin/env python
 
 import argparse
 import os
 import sys
 
-app_dir = os.path.abspath(__file__ + '/../../..')
-sys.path.append(os.path.join(app_dir, 'lib'))
+app_dir = os.path.abspath(__file__ + '/../..')
+sys.path.append(app_dir)
 
 from prosoar.waypoints.seeyou_reader import parse_seeyou_waypoints
 from prosoar.waypoints.winpilot_reader import parse_winpilot_waypoints

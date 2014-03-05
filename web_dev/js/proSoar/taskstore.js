@@ -19,7 +19,7 @@ var TaskStore = new Class({
  *
  * Start is TP 0, finish is TP n.
  * TP_OBJ is a object with the following syntax:
- * 
+ *
  * {
  *  "lon": LON,
  *  "lat": LAT,
@@ -34,7 +34,6 @@ toTempJSON: function(task) {
   if (task.getLength() < 2) return;
 
   var jsonRequest = new Request.JSON({
-//    url: 'dynamic/bin/save_temp_task.py',
     url: 'tasks/save_temp',
     async: false,
     secure: true,
@@ -58,7 +57,6 @@ toJSON: function(task_name, task) {
   if (task.getLength() < 2) return;
 
   var jsonRequest = new Request.JSON({
-//    url: 'dynamic/bin/save_task.py?task_name='+task_name,
     url: 'tasks/save/'+encodeURIComponent(task_name),
     async: false,
     secure: true,
@@ -93,7 +91,7 @@ deleteTask: function(task_name) {
 encodeTask: function(task) {
   var taskObj = new Object();
   task.first();
- 
+
   var i = 0;
   do {
     taskObj[i++] = this.createTPObj(task.getCurrentTurnpoint());
@@ -148,7 +146,6 @@ fromJSON: function(task_name) {
 //  console.log("Loading task: " + task_name);
 
   var jsonRequest = new Request.JSON({
-//    url: 'dynamic/bin/get_task.py?task_name='+task_name,
     url: 'tasks/load/'+task_name,
     async: true,
     secure: true,
@@ -196,7 +193,7 @@ decodeTask: function(taskObj) {
       Math.min(50, taskObj[i].inner_radius):0;
     var start_radial =  isFinite(taskObj[i].start_radial)?taskObj[i].start_radial%360:0;
     var end_radial = isFinite(taskObj[i].end_radial)?taskObj[i].end_radial%360:0;
-    
+
     if (!lon || !lat || !type || !radius) continue;
 
     task.addAfterCurrent(
@@ -213,7 +210,7 @@ decodeTask: function(taskObj) {
     i++;
   }
 
-  
+
   this.fireEvent("loadTask", task);
 //  return task;
 },

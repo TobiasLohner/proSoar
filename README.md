@@ -19,7 +19,7 @@ command:
 Developing
 ----------
 
-Deploy proSoar as described below. Just change the webroot from `web/` to `web_dev/`.
+Deploy proSoar as described below. Just change the `static_folder` parameter in `app.py` from `web` to `web_dev`.
 
 
 Translating
@@ -27,49 +27,24 @@ Translating
 
 Run `deploy/gettext/prepare_pot.sh` to generate the pot file in that directory. Copy the translated `.po` files to `deploy/gettext/po/`. They are automatically copied to the webroot when depolying.
 
+
 Deploying
 ---------
 
 This source directory is not complete. You need some more things to get started.
 
-1. Get OpenLayers
-
-   Download OpenLayers from <http://www.openlayers.org> and copy the `OpenLayers/lib/` directory to `web_dev/js/OpenLayers/` and both `OpenLayers/theme/default/img` and `OpenLayers/img` to `web_dev/images/OpenLayers/`
-
-2. Get MooTools
-
-   Download full MooTools Core from <http://www.mootools.net> and copy it to `web_dev/js/mootools-core.js`
-
-   Download MooTools More with the following modules:
-
-   More, Class.Occlude, Object.Extras, Locale, Locale.en-US.Date, Date, Fx.Elements, Fx.Slide, HtmlTable, Element.Shortcuts, Class.Refactor, HtmlTable.Zebra, Events.Pseudos, Element.Event.Pseudos, String.Extras, HtmlTable.Sort, Element.Event.Pseudos.Keys, Keyboard, Keyboard.Extras, HtmlTable.Select, Locale.de-DE.Date
-
-   Copy the MooTools More file to `web_dev/js/mootools-more.js`
-
-3. Install required python modules
+1. Install required python modules
 
    Run `pip install -r requirements.txt`
 
-4. Create airports json files
+2. Download and compile necessary JS/CSS files
+
+   Run `make`
+
+3. Create airports json files
 
    Run `util/bin/private/gen_airports`
 
-5. Install mapserver, airspace maps and tilecache
+4. Deploy by running the debug server or use some other deployment method for flask apps:
 
-   Copy the MapServer (<http://www.mapserver.org>) cgi binary to `util/bin/public/`
-
-   Create the `airspace.gml` file in `storage/map/airspace/` (please have a look at <http://www.gdal.org/ogr/> for instrucions)
-
-   Tilecache can be found at <http://www.tilecache.org>. Install it to `util/bin/public/` and alter the config file in `config/tilecache.cfg` according your needs.
-
-6. Install qrencode
-
-   See <http://megaui.net/fukuchi/works/qrencode/index.en.html>
-
-7. Configure apache
-
-   Alter your apache configuration to use the `web/` directory as webroot. Include the config file in `config/apache.conf` to your configuration.
-
-8. Deploy public web directory
-
-   Run `deploy/deploy.py`
+   Run `python app.py`

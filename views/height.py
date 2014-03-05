@@ -1,25 +1,19 @@
-#!/usr/bin/env python
+from flask import Blueprint, request, jsonify
 
-import cgi
-import cgitb
-cgitb.enable()
 import subprocess
 import re
 import math
 import os
 
+bp = Blueprint('height', __name__)
 
-def main():
+
+@bp.route('/lon<int:lon>/lat<int:lat>')
+def get(lon, lat):
     srtm_dir = "/home/tobs/srtm_v4"
     gdallocationinfo = os.path.join(srtm_dir, 'gdallocationinfo')
 
-    form = cgi.FieldStorage()
-
-    m = re.compile('([-\d.]*)').match(form.getvalue('lon'))
-    lon = float(m.group(1))
-
-    m = re.compile('([-\d.]*)').match(form.getvalue('lat'))
-    lat = float(m.group(1))
+    height = -999
 
     if lon >= -180 and lon <= 180 \
        and lat >= -60 and lat <= 60:
@@ -40,23 +34,14 @@ def main():
 
         m = re.compile('([-\d.]*)').match(stdout)
 
-    if m is not None and m.group(1) != '':
-        height = int(m.group(1))
-    else:
-        height = -999
+        if m is not None and m.group(1) != '':
+            height = int(m.group(1))
 
-    if height == -32768:
-        height = 0
+        if height == -32768:
+            height = 0
 
-    print "Content-type: text/plain"
-    print
-    print (
-        '{"lon":' + str(lon) +
-        ',"lat":' + str(lat) +
-        ',"height":' + str(height) +
-        '}'
-    )
-
-
-if __name__ == '__main__':
-    main()
+    return jsonify({
+        'lon': lon,
+        'lat': lat,
+        'height': height,
+    })
