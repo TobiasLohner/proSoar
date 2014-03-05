@@ -4,7 +4,7 @@ import argparse
 import os
 import sys
 
-app_dir = os.path.abspath(__file__ + '/../../../..')
+app_dir = os.path.abspath(__file__ + '/../..')
 sys.path.append(app_dir)
 
 from prosoar.waypoints.seeyou_reader import parse_seeyou_waypoints

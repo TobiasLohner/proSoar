@@ -5,7 +5,7 @@ import sys
 import math
 import json
 
-app_dir = os.path.abspath(__file__ + '/../../../..')
+app_dir = os.path.abspath(__file__ + '/../..')
 sys.path.append(app_dir)
 
 from prosoar.waypoints import welt2000
