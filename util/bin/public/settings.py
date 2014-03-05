@@ -9,15 +9,15 @@ sys.path.append(os.path.join(app_dir, 'lib'))
 
 from prosoar.userconfig import get_uid_from_cookie, get_user_config_as_json
 
-bp = Blueprint('get_userconfig', __name__)
+bp = Blueprint('settings', __name__)
 
 
-@bp.route('/settings/initial.js')
+@bp.route('/initial.js')
 def initial_js():
     return load(type='js')
 
 
-@bp.route('/settings/load')
+@bp.route('/load')
 def load(type='json'):
     uid = get_uid_from_cookie()
 

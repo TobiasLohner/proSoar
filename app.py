@@ -11,13 +11,13 @@ from public.download_task import bp as download_task
 from public.download_task_qr import bp as download_task_qr
 from public.height import bp as height
 from public.get_task import bp as get_task
-from public.get_userconfig import bp as get_userconfig_bp
 from public.get_waypoints import bp as get_waypoints
 from public.remove_task import bp as remove_task
 from public.remove_waypoint_file import bp as remove_waypoint_file
 from public.save_task import bp as save_task_bp
 from public.save_temp_task import bp as save_temp_task_bp
 from public.search import bp as search
+from public.settings import bp as settings
 from public.upload_igc_file import bp as upload_igc_file_bp
 from public.upload_waypoint_file import bp as upload_waypoint_file
 
@@ -29,13 +29,13 @@ app.register_blueprint(download_task)
 app.register_blueprint(download_task_qr)
 app.register_blueprint(height, url_prefix='/height')
 app.register_blueprint(get_task)
-app.register_blueprint(get_userconfig_bp)
 app.register_blueprint(get_waypoints)
 app.register_blueprint(remove_task)
 app.register_blueprint(remove_waypoint_file)
 app.register_blueprint(save_task_bp)
 app.register_blueprint(save_temp_task_bp)
 app.register_blueprint(search)
+app.register_blueprint(settings, url_prefix='/settings')
 app.register_blueprint(upload_igc_file_bp)
 app.register_blueprint(upload_waypoint_file)
 
