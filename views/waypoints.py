@@ -7,8 +7,8 @@ import json
 import tempfile
 import subprocess
 
-app_dir = os.path.abspath(__file__ + '/../../..')
-sys.path.append(os.path.join(app_dir, 'lib'))
+app_dir = os.path.abspath(__file__ + '/../../')
+sys.path.append(os.path.join(app_dir, 'util', 'lib'))
 
 from prosoar.waypoints.seeyou_reader import parse_seeyou_waypoints
 from prosoar.userconfig import (

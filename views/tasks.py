@@ -9,8 +9,8 @@ from StringIO import StringIO
 
 import qrcode
 
-app_dir = os.path.abspath(__file__ + '/../../..')
-sys.path.append(os.path.join(app_dir, 'lib'))
+app_dir = os.path.abspath(__file__ + '/../../')
+sys.path.append(os.path.join(app_dir, 'util', 'lib'))
 
 from prosoar.task.json_reader import parse_json_task
 from prosoar.task.json_writer import write_json_task

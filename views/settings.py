@@ -4,8 +4,8 @@ import os
 import sys
 from geoip import geolite2
 
-app_dir = os.path.abspath(__file__ + '/../../..')
-sys.path.append(os.path.join(app_dir, 'lib'))
+app_dir = os.path.abspath(__file__ + '/../../')
+sys.path.append(os.path.join(app_dir, 'util', 'lib'))
 
 from prosoar.userconfig import get_uid_from_cookie, get_user_config_as_json
 

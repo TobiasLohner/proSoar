@@ -4,8 +4,8 @@ import os
 import sys
 import tempfile
 
-app_dir = os.path.abspath(__file__ + '/../../..')
-sys.path.append(os.path.join(app_dir, 'lib'))
+app_dir = os.path.abspath(__file__ + '/../../')
+sys.path.append(os.path.join(app_dir, 'util', 'lib'))
 
 from prosoar.igc.igc_parser import SimpleParser
 from prosoar.igc.analyse_flight import analyse_flight

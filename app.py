@@ -4,15 +4,13 @@ import os.path
 from flask import Flask, request, send_from_directory
 from babel.core import negotiate_locale
 
-sys.path.append(os.path.join('util', 'bin'))
-
-from public.airports import bp as airports
-from public.height import bp as height
-from public.igc import bp as igc
-from public.search import bp as search
-from public.settings import bp as settings
-from public.tasks import bp as tasks
-from public.waypoints import bp as waypoints
+from views.airports import bp as airports
+from views.height import bp as height
+from views.igc import bp as igc
+from views.search import bp as search
+from views.settings import bp as settings
+from views.tasks import bp as tasks
+from views.waypoints import bp as waypoints
 
 AVAILABLE_LOCALES = ['en', 'de', 'cs']
 
