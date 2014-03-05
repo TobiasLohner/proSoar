@@ -21,7 +21,7 @@ app.register_blueprint(airports, url_prefix='/airports')
 app.register_blueprint(height, url_prefix='/height')
 app.register_blueprint(igc, url_prefix='/igc')
 app.register_blueprint(tasks, url_prefix='/tasks')
-app.register_blueprint(search)
+app.register_blueprint(search, url_prefix='/search')
 app.register_blueprint(settings, url_prefix='/settings')
 app.register_blueprint(waypoints, url_prefix='/waypoints')
 
