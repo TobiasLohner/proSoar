@@ -12,12 +12,8 @@ from prosoar.userconfig import read_user_config, write_user_config, \
 bp = Blueprint('remove_task', __name__)
 
 
-@bp.route('/tasks/delete/<taskname>')
-def tasks_delete(taskname):
-    return main(taskname)
-
-
-def main(taskname):
+@bp.route('/tasks/delete/<taskname>', methods=['POST'])
+def delete(taskname):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])
 

@@ -6,17 +6,13 @@ from StringIO import StringIO
 bp = Blueprint('download_task_qr', __name__)
 
 
-@bp.route('/tasks/<uid>/<task>/<filetype>/qr')
-def tasks(uid, task, filetype):
-    return main(uid, task, filetype)
-
-
 @bp.route('/tasks/<uid>/temp/<task>/<filetype>/qr')
-def tasks_temp(uid, task, filetype):
-    return main(uid, task, filetype, tempfile=True)
+def qr_temp(uid, task, filetype):
+    return qr(uid, task, filetype, tempfile=True)
 
 
-def main(uid, task, filetype, tempfile=False):
+@bp.route('/tasks/<uid>/<task>/<filetype>/qr')
+def qr(uid, task, filetype, tempfile=False):
     if tempfile:
         url = request.host_url + \
             'tasks/' + uid + '/temp/' + task + '/' + filetype

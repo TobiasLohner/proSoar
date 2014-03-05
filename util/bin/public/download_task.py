@@ -16,17 +16,13 @@ from prosoar.userconfig import read_user_config
 bp = Blueprint('download_task', __name__)
 
 
-@bp.route('/tasks/<uid>/<task>/<filetype>')
-def tasks(uid, task, filetype):
-    return main(uid, task, filetype)
+@bp.route('/tasks/<uid>/temp/<taskname>/<filetype>')
+def download_temp(uid, taskname, filetype):
+    return download(uid, taskname, filetype, temptask=True)
 
 
-@bp.route('/tasks/<uid>/temp/<task>/<filetype>')
-def tasks_temp(uid, task, filetype):
-    return main(uid, task, filetype, temptask=True)
-
-
-def main(uid, taskname, filetype, temptask=False):
+@bp.route('/tasks/<uid>/<taskname>/<filetype>')
+def download(uid, taskname, filetype, temptask=False):
     uid = {'uid': uid}
 
     storage_dir = os.path.join(app_dir, 'storage')

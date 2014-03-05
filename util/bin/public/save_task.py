@@ -16,12 +16,8 @@ from prosoar.task.xcsoar_writer import create_xcsoar_task
 bp = Blueprint('save_task', __name__)
 
 
-@bp.route('/tasks/save/<name>', methods=['POST'])
-def tasks_save(name):
-    return main(name)
-
-
-def main(task_name):
+@bp.route('/tasks/save/<task_name>', methods=['POST'])
+def save(task_name):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])
 

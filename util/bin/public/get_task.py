@@ -15,11 +15,7 @@ bp = Blueprint('get_task', __name__)
 
 
 @bp.route("/tasks/load/<taskname>")
-def tasks_load(taskname):
-    return main(taskname)
-
-
-def main(taskname):
+def load(taskname):
     uid = get_uid_from_cookie()
     storage_dir = os.path.join(app_dir, 'storage')
     uid_dir = os.path.join(storage_dir, 'users', uid['uid'])

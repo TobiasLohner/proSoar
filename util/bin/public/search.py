@@ -5,11 +5,7 @@ import urllib2
 bp = Blueprint('search', __name__)
 
 
-@bp.route('/search/<bbox>/<query>')
-def search(bbox, query):
-    return main(bbox, query)
-
-
+@bp.route('/search/<bbox>/<q>')
 def main(bbox, q):
     url = 'http://nominatim.openstreetmap.org/search/' + q + \
         '?format=json&limit=1&viewbox=' + bbox + '&email=info@prosoar.de'

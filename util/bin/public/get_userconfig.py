@@ -12,17 +12,13 @@ from prosoar.userconfig import get_uid_from_cookie, get_user_config_as_json
 bp = Blueprint('get_userconfig', __name__)
 
 
-@bp.route('/settings/load')
-def settings_load():
-    return get_userconfig('json')
-
-
 @bp.route('/settings/initial.js')
-def settings_initial():
-    return get_userconfig('js')
+def initial_js():
+    return load(type='js')
 
 
-def get_userconfig(type=None):
+@bp.route('/settings/load')
+def load(type='json'):
     uid = get_uid_from_cookie()
 
     type = request.values.get('as', type)

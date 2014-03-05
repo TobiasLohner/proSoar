@@ -14,12 +14,8 @@ from prosoar.waypoints.seeyou_reader import parse_seeyou_waypoints
 bp = Blueprint('get_waypoints', __name__)
 
 
-@bp.route('/waypoints/<int:id>/lon<int:lon>/lat<int:lat>')
-def waypoints(id, lon, lat):
-    return main(id, lon, lat)
-
-
-def main(tpfile_id, tpfile_lon, tpfile_lat):
+@bp.route('/waypoints/<int:tpfile_id>/lon<int:tpfile_lon>/lat<int:tpfile_lat>')
+def get(tpfile_id, tpfile_lon, tpfile_lat):
     uid = get_uid_from_cookie()
     storage_dir = os.path.join(app_dir, 'storage')
 

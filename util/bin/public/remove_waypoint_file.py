@@ -13,12 +13,8 @@ from prosoar.userconfig import read_user_config, write_user_config, \
 bp = Blueprint('remove_waypoint_file', __name__)
 
 
-@bp.route('/waypoints/<int:id>/remove', methods=['POST'])
-def waypoints_remove(id):
-    return main(id)
-
-
-def main(fileId):
+@bp.route('/waypoints/<int:fileId>/remove', methods=['POST'])
+def remove(fileId):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])
 
