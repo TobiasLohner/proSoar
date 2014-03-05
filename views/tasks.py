@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, send_file
+from flask import Blueprint, request, jsonify, send_file, current_app
 from werkzeug.exceptions import NotFound
 
 import os
@@ -21,16 +21,13 @@ from prosoar.userconfig import (
     write_user_config,
 )
 
-APP_DIR = os.path.abspath(__file__ + '/../../')
-
 bp = Blueprint('tasks', __name__)
 
 
 @bp.route("/load/<taskname>")
 def load(taskname):
     uid = get_uid_from_cookie()
-    storage_dir = os.path.join(APP_DIR, 'storage')
-    uid_dir = os.path.join(storage_dir, 'users', uid['uid'])
+    uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
     userconfig = read_user_config(uid)
 
     taskfile = ''
@@ -57,8 +54,7 @@ def download_temp(uid, taskname, filetype):
 def download(uid, taskname, filetype, temptask=False):
     uid = {'uid': uid}
 
-    storage_dir = os.path.join(APP_DIR, 'storage')
-    uid_dir = os.path.join(storage_dir, 'users', uid['uid'])
+    uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
     userconfig = read_user_config(uid)
 
     taskfile = ''
@@ -119,7 +115,7 @@ def qr(uid, task, filetype, tempfile=False):
 @bp.route('/delete/<taskname>', methods=['POST'])
 def delete(taskname):
     uid = get_uid_from_cookie()
-    uid_dir = os.path.join(APP_DIR, 'storage', 'users', uid['uid'])
+    uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
     userconfig = read_user_config(uid)
 
@@ -154,7 +150,7 @@ def delete(taskname):
 @bp.route('/save/<task_name>', methods=['POST'])
 def save(task_name):
     uid = get_uid_from_cookie()
-    uid_dir = os.path.join(APP_DIR, 'storage', 'users', uid['uid'])
+    uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
     if 'task' in request.values:
         taskstring = request.values['task']
@@ -228,7 +224,7 @@ def save(task_name):
 @bp.route('/save_temp', methods=['POST'])
 def save_temp():
     uid = get_uid_from_cookie()
-    uid_dir = os.path.join(APP_DIR, 'storage', 'users', uid['uid'])
+    uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
     if 'task' in request.values:
         taskstring = request.values['task']

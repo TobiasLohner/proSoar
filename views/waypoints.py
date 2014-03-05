@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from werkzeug.exceptions import NotFound
 
 import os
@@ -15,16 +15,12 @@ from prosoar.userconfig import (
     write_user_config,
 )
 
-APP_DIR = os.path.abspath(__file__ + '/../../')
-UPLOAD_DIR = os.path.join(APP_DIR, 'storage', 'temp')
-
 bp = Blueprint('waypoints', __name__)
 
 
 @bp.route('/<int:tpfile_id>/lon<int:tpfile_lon>/lat<int:tpfile_lat>')
 def get(tpfile_id, tpfile_lon, tpfile_lat):
     uid = get_uid_from_cookie()
-    storage_dir = os.path.join(APP_DIR, 'storage')
 
     userconfig = read_user_config(uid)
 
@@ -32,7 +28,7 @@ def get(tpfile_id, tpfile_lon, tpfile_lat):
         raise NotFound('Waypoint File does not exist')
 
     turnpoint_file = os.path.join(
-        storage_dir, 'users', uid['uid'],
+        current_app.config['USERS_FOLDER'], uid['uid'],
         'turnpoints_' + str(tpfile_id) + '.cup'
     )
     if not os.path.exists(turnpoint_file):
@@ -85,10 +81,12 @@ def upload():
     if not uploaded_file:
         return jsonify({'success': False})
 
-    process = subprocess.Popen(
-        [os.path.join(APP_DIR, 'bin', 'private', 'add_waypoint_file_to_user'),
-         '-u', uid['uid'], '-k', uid['key'], '-f', uploaded_file["tempname"],
-         '-n', uploaded_file["filename"]], stdout=subprocess.PIPE)
+    process = subprocess.Popen([
+        os.path.join(current_app.config['APP_FOLDER'],
+        'bin', 'private', 'add_waypoint_file_to_user'),
+        '-u', uid['uid'], '-k', uid['key'], '-f', uploaded_file["tempname"],
+        '-n', uploaded_file["filename"]
+    ], stdout=subprocess.PIPE)
     stdout, stderr = process.communicate()
 
     os.remove(uploaded_file["tempname"])
@@ -108,11 +106,12 @@ def save_uploaded_file():
     if not file:
         return
 
-    if not os.path.exists(UPLOAD_DIR):
-        os.makedirs(UPLOAD_DIR)
+    folder = current_app.config['UPLOAD_FOLDER']
+    if not os.path.exists(folder):
+        os.makedirs(folder)
 
     fout = tempfile.NamedTemporaryFile(
-        mode='w+b', delete=False, dir=UPLOAD_DIR)
+        mode='w+b', delete=False, dir=folder)
 
     file.save(fout)
     fout.close()
@@ -131,7 +130,7 @@ def save_uploaded_file():
 @bp.route('/<int:fileId>/remove', methods=['POST'])
 def remove(fileId):
     uid = get_uid_from_cookie()
-    uid_dir = os.path.join(APP_DIR, 'storage', 'users', uid['uid'])
+    uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
     if 'settings' in request.values:
         settings = request.values['settings']

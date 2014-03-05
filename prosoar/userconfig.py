@@ -4,21 +4,16 @@ import re
 from datetime import datetime
 from random import randint
 
-from flask import request
+from flask import request, current_app
 
-app_dir = os.path.abspath(__file__ + '/../..')
-storage_dir = os.path.join(app_dir, 'storage')
-users_dir = os.path.join(storage_dir, 'users')
 
 # read user configuration
-
-
 def read_user_config(uid):
     tp_files = []
     task_files = []
     lastvisit = 0
 
-    uid_dir = os.path.join(users_dir, uid['uid'])
+    uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
     if not os.path.exists(uid_dir):
         return {
@@ -62,7 +57,7 @@ def read_user_config(uid):
 
 # write user configuration
 def write_user_config(uid, userconfig):
-    uid_dir = os.path.join(users_dir, uid['uid'])
+    uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
     if not os.path.exists(uid_dir):
         os.makedirs(uid_dir)
@@ -157,7 +152,8 @@ def get_uid_from_cookie():
         return create_uid()
 
     uid = {'uid': m.group(1), 'key': m.group(2)}
-    path = os.path.join(users_dir, uid['uid'], 'key_' + uid['key'])
+    path = os.path.join(
+        current_app.config['USERS_FOLDER'], uid['uid'], 'key_' + uid['key'])
     if not os.path.exists(path):
         return create_uid()
 

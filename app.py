@@ -23,6 +23,14 @@ app.register_blueprint(search, url_prefix='/search')
 app.register_blueprint(settings, url_prefix='/settings')
 app.register_blueprint(waypoints, url_prefix='/waypoints')
 
+app.config['APP_FOLDER'] = os.path.abspath(os.path.join(__file__, '..'))
+app.config['STORAGE_FOLDER'] = os.path.join(
+    app.config['APP_FOLDER'], 'storage')
+app.config['UPLOAD_FOLDER'] = os.path.join(
+    app.config['STORAGE_FOLDER'], 'temp')
+app.config['USERS_FOLDER'] = os.path.join(
+    app.config['STORAGE_FOLDER'], 'users')
+
 
 @app.route("/")
 def hello():

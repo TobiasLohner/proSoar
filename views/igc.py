@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 
 import os
 import tempfile
@@ -6,9 +6,6 @@ import tempfile
 from prosoar.igc.igc_parser import SimpleParser
 from prosoar.igc.analyse_flight import analyse_flight
 from prosoar.igc.trace import for_openlayers
-
-APP_DIR = os.path.abspath(__file__ + '/../../')
-UPLOAD_DIR = os.path.join(APP_DIR, 'storage', 'temp')
 
 bp = Blueprint('igc', __name__)
 
@@ -43,11 +40,12 @@ def save_uploaded_file():
     if not file:
         return
 
-    if not os.path.exists(UPLOAD_DIR):
-        os.makedirs(UPLOAD_DIR)
+    folder = current_app.config['UPLOAD_FOLDER']
+    if not os.path.exists(folder):
+        os.makedirs(folder)
 
     fout = tempfile.NamedTemporaryFile(
-        mode='w+b', delete=False, dir=UPLOAD_DIR,
+        mode='w+b', delete=False, dir=folder,
         suffix='.igc')
 
     file.save(fout)
