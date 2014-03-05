@@ -6,6 +6,7 @@ from babel.core import negotiate_locale
 
 sys.path.append(os.path.join('util', 'bin'))
 
+from public.airports import bp as airports
 from public.download_task import bp as download_task
 from public.download_task_qr import bp as download_task_qr
 from public.height import bp as height
@@ -23,6 +24,7 @@ from public.upload_waypoint_file import bp as upload_waypoint_file
 AVAILABLE_LOCALES = ['en', 'de', 'cs']
 
 app = Flask(__name__, static_folder='web', static_url_path='')
+app.register_blueprint(airports, url_prefix='/airports')
 app.register_blueprint(download_task)
 app.register_blueprint(download_task_qr)
 app.register_blueprint(height, url_prefix='/height')
@@ -46,12 +48,6 @@ def hello():
 
     return send_from_directory(
         'web', 'index.html.' + locale, mimetype='text/html')
-
-
-@app.route("/airports/<path:filename>")
-def airports(filename):
-    return send_from_directory(
-        'storage/airports', filename, mimetype='application/json')
 
 
 if __name__ == "__main__":
