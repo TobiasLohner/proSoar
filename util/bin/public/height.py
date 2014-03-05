@@ -5,10 +5,10 @@ import re
 import math
 import os
 
-bp = Blueprint('get_height', __name__)
+bp = Blueprint('height', __name__)
 
 
-@bp.route('/height/lon<float:lon>/lat<float:lat>')
+@bp.route('/lon<int:lon>/lat<int:lat>')
 def get(lon, lat):
     srtm_dir = "/home/tobs/srtm_v4"
     gdallocationinfo = os.path.join(srtm_dir, 'gdallocationinfo')

@@ -8,7 +8,7 @@ sys.path.append(os.path.join('util', 'bin'))
 
 from public.download_task import bp as download_task
 from public.download_task_qr import bp as download_task_qr
-from public.get_height import bp as get_height
+from public.height import bp as height
 from public.get_task import bp as get_task
 from public.get_userconfig import bp as get_userconfig_bp
 from public.get_waypoints import bp as get_waypoints
@@ -25,7 +25,7 @@ AVAILABLE_LOCALES = ['en', 'de', 'cs']
 app = Flask(__name__, static_folder='web', static_url_path='')
 app.register_blueprint(download_task)
 app.register_blueprint(download_task_qr)
-app.register_blueprint(get_height)
+app.register_blueprint(height, url_prefix='/height')
 app.register_blueprint(get_task)
 app.register_blueprint(get_userconfig_bp)
 app.register_blueprint(get_waypoints)
