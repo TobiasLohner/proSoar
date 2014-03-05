@@ -5,8 +5,8 @@ import sys
 from datetime import datetime
 import shutil
 
-app_dir = os.path.abspath(__file__ + '/../../..')
-sys.path.append(os.path.join(app_dir, 'lib'))
+app_dir = os.path.abspath(__file__ + '/../../../..')
+sys.path.append(app_dir)
 
 users_dir = os.path.join(app_dir, 'storage', 'users')
 

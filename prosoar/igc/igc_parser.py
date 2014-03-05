@@ -5,9 +5,6 @@ import os
 import sys
 from prosoar.geopoint import GeoPoint
 
-app_dir = os.path.abspath(__file__ + '/../../..')
-sys.path.append(os.path.join(app_dir, 'lib'))
-
 
 class Fix:
 

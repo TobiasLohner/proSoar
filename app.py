@@ -4,9 +4,6 @@ import os.path
 from flask import Flask, request, send_from_directory
 from babel.core import negotiate_locale
 
-APP_DIR = os.path.abspath(__file__ + '/..')
-sys.path.append(os.path.join(APP_DIR, 'util', 'lib'))
-
 from views.airports import bp as airports
 from views.height import bp as height
 from views.igc import bp as igc

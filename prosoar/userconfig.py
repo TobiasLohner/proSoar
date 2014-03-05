@@ -6,7 +6,7 @@ from random import randint
 
 from flask import request
 
-app_dir = os.path.abspath(__file__ + '/../../..')
+app_dir = os.path.abspath(__file__ + '/../..')
 storage_dir = os.path.join(app_dir, 'storage')
 users_dir = os.path.join(storage_dir, 'users')
 

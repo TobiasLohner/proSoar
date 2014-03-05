@@ -2,9 +2,6 @@ import os
 import sys
 from xcsoar.analysis import analyse_flight as _analyse_flight
 
-app_dir = os.path.abspath(__file__ + '/../../../..')
-sys.path.append(os.path.join(app_dir, 'lib'))
-
 
 def analyse_flight(filename):
     root = _analyse_flight(filename)
