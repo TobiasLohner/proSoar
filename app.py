@@ -7,30 +7,20 @@ from babel.core import negotiate_locale
 sys.path.append(os.path.join('util', 'bin'))
 
 from public.airports import bp as airports
-from public.download_task import bp as download_task
-from public.download_task_qr import bp as download_task_qr
-from public.get_task import bp as get_task
 from public.height import bp as height
 from public.igc import bp as igc
-from public.remove_task import bp as remove_task
-from public.save_task import bp as save_task_bp
-from public.save_temp_task import bp as save_temp_task_bp
 from public.search import bp as search
 from public.settings import bp as settings
+from public.tasks import bp as tasks
 from public.waypoints import bp as waypoints
 
 AVAILABLE_LOCALES = ['en', 'de', 'cs']
 
 app = Flask(__name__, static_folder='web', static_url_path='')
 app.register_blueprint(airports, url_prefix='/airports')
-app.register_blueprint(download_task)
-app.register_blueprint(download_task_qr)
-app.register_blueprint(get_task)
 app.register_blueprint(height, url_prefix='/height')
 app.register_blueprint(igc, url_prefix='/igc')
-app.register_blueprint(remove_task)
-app.register_blueprint(save_task_bp)
-app.register_blueprint(save_temp_task_bp)
+app.register_blueprint(tasks, url_prefix='/tasks')
 app.register_blueprint(search)
 app.register_blueprint(settings, url_prefix='/settings')
 app.register_blueprint(waypoints, url_prefix='/waypoints')
