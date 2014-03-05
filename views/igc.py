@@ -1,17 +1,14 @@
 from flask import Blueprint, request, jsonify
 
 import os
-import sys
 import tempfile
-
-app_dir = os.path.abspath(__file__ + '/../../')
-sys.path.append(os.path.join(app_dir, 'util', 'lib'))
 
 from prosoar.igc.igc_parser import SimpleParser
 from prosoar.igc.analyse_flight import analyse_flight
 from prosoar.igc.trace import for_openlayers
 
-UPLOAD_DIR = os.path.join(app_dir, 'storage', 'temp')
+APP_DIR = os.path.abspath(__file__ + '/../../')
+UPLOAD_DIR = os.path.join(APP_DIR, 'storage', 'temp')
 
 bp = Blueprint('igc', __name__)
 

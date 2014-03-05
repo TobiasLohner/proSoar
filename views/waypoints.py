@@ -2,13 +2,9 @@ from flask import Blueprint, request, jsonify
 from werkzeug.exceptions import NotFound
 
 import os
-import sys
 import json
 import tempfile
 import subprocess
-
-app_dir = os.path.abspath(__file__ + '/../../')
-sys.path.append(os.path.join(app_dir, 'util', 'lib'))
 
 from prosoar.waypoints.seeyou_reader import parse_seeyou_waypoints
 from prosoar.userconfig import (
@@ -19,7 +15,8 @@ from prosoar.userconfig import (
     write_user_config,
 )
 
-UPLOAD_DIR = os.path.join(app_dir, 'storage', 'temp')
+APP_DIR = os.path.abspath(__file__ + '/../../')
+UPLOAD_DIR = os.path.join(APP_DIR, 'storage', 'temp')
 
 bp = Blueprint('waypoints', __name__)
 
@@ -27,7 +24,7 @@ bp = Blueprint('waypoints', __name__)
 @bp.route('/<int:tpfile_id>/lon<int:tpfile_lon>/lat<int:tpfile_lat>')
 def get(tpfile_id, tpfile_lon, tpfile_lat):
     uid = get_uid_from_cookie()
-    storage_dir = os.path.join(app_dir, 'storage')
+    storage_dir = os.path.join(APP_DIR, 'storage')
 
     userconfig = read_user_config(uid)
 
@@ -89,7 +86,7 @@ def upload():
         return jsonify({'success': False})
 
     process = subprocess.Popen(
-        [os.path.join(app_dir, 'bin', 'private', 'add_waypoint_file_to_user'),
+        [os.path.join(APP_DIR, 'bin', 'private', 'add_waypoint_file_to_user'),
          '-u', uid['uid'], '-k', uid['key'], '-f', uploaded_file["tempname"],
          '-n', uploaded_file["filename"]], stdout=subprocess.PIPE)
     stdout, stderr = process.communicate()
@@ -134,7 +131,7 @@ def save_uploaded_file():
 @bp.route('/<int:fileId>/remove', methods=['POST'])
 def remove(fileId):
     uid = get_uid_from_cookie()
-    uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])
+    uid_dir = os.path.join(APP_DIR, 'storage', 'users', uid['uid'])
 
     if 'settings' in request.values:
         settings = request.values['settings']
