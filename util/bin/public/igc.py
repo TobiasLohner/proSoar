@@ -13,10 +13,10 @@ from prosoar.igc.trace import for_openlayers
 
 UPLOAD_DIR = os.path.join(app_dir, 'storage', 'temp')
 
-bp = Blueprint('upload_igc_file', __name__)
+bp = Blueprint('igc', __name__)
 
 
-@bp.route('/igc/upload', methods=['POST'])
+@bp.route('/upload', methods=['POST'])
 def upload():
 
     uploaded_file = save_uploaded_file()
