@@ -1,5 +1,0 @@
-deny from all
-
-<Files *.py>
-  allow from all
-</Files>
