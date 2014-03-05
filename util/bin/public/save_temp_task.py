@@ -16,7 +16,6 @@ bp = Blueprint('save_temp_task', __name__)
 
 
 @bp.route('/tasks/save_temp', methods=['POST'])
-@bp.route('/bin/save_temp_task.py', methods=['POST'])
 def main():
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])

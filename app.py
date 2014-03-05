@@ -10,7 +10,6 @@ from public.download_task import bp as download_task
 from public.download_task_qr import bp as download_task_qr
 from public.get_height import bp as get_height
 from public.get_task import bp as get_task
-from public.get_uid import bp as get_uid
 from public.get_userconfig import bp as get_userconfig_bp
 from public.get_waypoints import bp as get_waypoints
 from public.remove_task import bp as remove_task
@@ -28,7 +27,6 @@ app.register_blueprint(download_task)
 app.register_blueprint(download_task_qr)
 app.register_blueprint(get_height)
 app.register_blueprint(get_task)
-app.register_blueprint(get_uid)
 app.register_blueprint(get_userconfig_bp)
 app.register_blueprint(get_waypoints)
 app.register_blueprint(remove_task)

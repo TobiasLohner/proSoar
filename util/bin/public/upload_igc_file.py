@@ -17,7 +17,6 @@ bp = Blueprint('upload_igc_file', __name__)
 
 
 @bp.route('/igc/upload', methods=['POST'])
-@bp.route('/bin/upload_igc_file.py', methods=['POST'])
 def main():
 
     uploaded_file = save_uploaded_file()

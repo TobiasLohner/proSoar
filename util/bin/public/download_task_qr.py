@@ -16,16 +16,6 @@ def tasks_temp(uid, task, filetype):
     return main(uid, task, filetype, tempfile=True)
 
 
-@bp.route('/bin/download_task_qr.py')
-def bin_download_task_qr():
-    return main(
-        request.values['uid'],
-        request.values['task'],
-        request.values['filetype'],
-        tempfile=('temp' in request.values)
-    )
-
-
 def main(uid, task, filetype, tempfile=False):
     if tempfile:
         url = request.host_url + \

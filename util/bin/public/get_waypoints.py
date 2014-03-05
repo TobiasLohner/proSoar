@@ -19,12 +19,6 @@ def waypoints(id, lon, lat):
     return main(id, lon, lat)
 
 
-@bp.route('/bin/get_waypoints.py')
-def bin_get_waypoints():
-    return main(int(request.values['id']),
-                int(request.values['lon']), int(request.values['lat']))
-
-
 def main(tpfile_id, tpfile_lon, tpfile_lat):
     uid = get_uid_from_cookie()
     storage_dir = os.path.join(app_dir, 'storage')

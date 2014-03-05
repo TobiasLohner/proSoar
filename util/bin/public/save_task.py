@@ -21,11 +21,6 @@ def tasks_save(name):
     return main(name)
 
 
-@bp.route('/bin/save_task.py', methods=['POST'])
-def bin_save_task():
-    return main(request.values.get('task_name'))
-
-
 def main(task_name):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])

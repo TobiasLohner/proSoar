@@ -17,11 +17,6 @@ def tasks_delete(taskname):
     return main(taskname)
 
 
-@bp.route('/bin/remove_task.py')
-def bin_remove_task():
-    return main(request.values.get('task_name'))
-
-
 def main(taskname):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])

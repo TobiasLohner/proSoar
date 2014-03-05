@@ -656,7 +656,7 @@ var dlgNewTask = new Class({
 
   deleteTask: function(taskname) {
     var delTask = this.proSoar.taskStore.deleteTask(taskname);
-    
+
   if (delTask.status == 200) {
       if (delTask.response.json.success)
         return true;
@@ -758,7 +758,7 @@ var dlgSaveTask = new Class({
       var taskname = $('task-save-name').value;
 
       var reply = this.proSoar.taskStore.toJSON(taskname, this.proSoar.task);
-    
+
     if (reply.status == 200 && !reply.response.json.success) {
       alert(reply.response.json.reason);
 
@@ -955,7 +955,7 @@ var dlgSaveTask = new Class({
         case 'aat': task_type = _('AAT'); break;
         case 'fai': task_type = _('FAI'); break;
       }
-      
+
       var date = new Date().parse(item.date);
 
       taskTable.push([
@@ -1064,7 +1064,7 @@ var dlgAbout = new Class({
     var buttons = new Element('p', {
       'class': 'buttons'
     });
-    
+
     buttons.grab(new Element('button', {
       'class': 'button',
       html: _("Close"),
@@ -1123,7 +1123,6 @@ var dlgWaypointUpload = new Class({
     var form = new Element('form', {
       id: 'upload-waypoints-dialog-form',
       method: 'post',
-//      action: 'dynamic/bin/upload_waypoint_file.py',
       action: 'waypoints/upload',
       enctype: 'multipart/form-data'
     });

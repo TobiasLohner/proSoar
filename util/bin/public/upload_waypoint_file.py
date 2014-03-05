@@ -19,7 +19,6 @@ bp = Blueprint('upload_waypoint_file', __name__)
 
 
 @bp.route('/waypoints/upload', methods=['POST'])
-@bp.route('/bin/upload_waypoint_file.py', methods=['POST'])
 def main():
     uid = get_uid_from_cookie()
 

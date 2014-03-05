@@ -22,7 +22,6 @@ def settings_initial():
     return get_userconfig('js')
 
 
-@bp.route('/bin/get_userconfig.py')
 def get_userconfig(type=None):
     uid = get_uid_from_cookie()
 

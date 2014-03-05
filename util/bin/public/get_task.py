@@ -19,11 +19,6 @@ def tasks_load(taskname):
     return main(taskname)
 
 
-@bp.route("/bin/get_task.py")
-def bin_get_task():
-    return main(request.values.get('task_name'))
-
-
 def main(taskname):
     uid = get_uid_from_cookie()
     storage_dir = os.path.join(app_dir, 'storage')

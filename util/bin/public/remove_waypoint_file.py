@@ -18,11 +18,6 @@ def waypoints_remove(id):
     return main(id)
 
 
-@bp.route('/bin/remove_waypoint_file.py', methods=['POST'])
-def bin_remove_waypoint_file():
-    return main(int(request.values['fileId']))
-
-
 def main(fileId):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(app_dir, 'storage', 'users', uid['uid'])

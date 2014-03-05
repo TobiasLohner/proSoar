@@ -26,16 +26,6 @@ def tasks_temp(uid, task, filetype):
     return main(uid, task, filetype, temptask=True)
 
 
-@bp.route('/bin/download_task.py')
-def bin_download_task_qr():
-    return main(
-        request.values['uid'],
-        request.values['task'],
-        request.values['filetype'],
-        temptask=('temp' in request.values)
-    )
-
-
 def main(uid, taskname, filetype, temptask=False):
     uid = {'uid': uid}
 

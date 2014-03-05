@@ -31,7 +31,6 @@ var Settings = new Class({
 
   getSettingsFromJSON: function() {
     var jsonRequest = new Request.JSON({
-//      url: 'dynamic/bin/get_userconfig.py',
       url: 'settings/load',
       async: true,
       secure: true,
@@ -54,7 +53,7 @@ var Settings = new Class({
         display: item.display,
       }));
     }, this);
-    
+
     this.taskFiles.empty();
     Object.each(data.taskFiles, function(item, key, object) {
       this.taskFiles.push(new Object({
@@ -94,7 +93,6 @@ var Settings = new Class({
     if (fileId < 1) return;
 
     var jsonRequest = new Request.JSON({
-//      url: 'dynamic/bin/remove_waypoint_file.py?fileId='+fileId,
       url: 'waypoints/'+fileId+'/remove',
       async: true,
       secure: true,
@@ -103,7 +101,7 @@ var Settings = new Class({
       onSuccess: this.addSettingsFromJSON.bind(this),
     });
     jsonRequest.send('settings=' + JSON.encode(this.turnpointFiles));
-   
+
   },
 
   getInitialSettings: function() {

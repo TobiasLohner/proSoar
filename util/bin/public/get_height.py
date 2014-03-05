@@ -13,12 +13,6 @@ def height(lon, lat):
     return get_height(lon, lat)
 
 
-@bp.route('/bin/get_height.py')
-def bin_get_height():
-    return get_height(request.values.get('lon', type=float),
-                      request.values.get('lat', type=float))
-
-
 def get_height(lon, lat):
     srtm_dir = "/home/tobs/srtm_v4"
     gdallocationinfo = os.path.join(srtm_dir, 'gdallocationinfo')
