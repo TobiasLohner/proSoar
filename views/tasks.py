@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, send_file, current_app
+from flask import Blueprint, request, jsonify, send_file, current_app, url_for
 from werkzeug.exceptions import NotFound
 
 import os
@@ -98,12 +98,9 @@ def qr_temp(uid, task, filetype):
 
 @bp.route('/<uid>/<task>/<filetype>/qr')
 def qr(uid, task, filetype, tempfile=False):
-    if tempfile:
-        url = request.host_url + \
-            'tasks/' + uid + '/temp/' + task + '/' + filetype
-    else:
-        url = request.host_url + \
-            'tasks/' + uid + '/' + task + '/' + filetype
+    endpoint = '.download_temp' if tempfile else '.download'
+    url = url_for(
+        endpoint, uid=uid, taskname=task, filetype=filetype, _external=True)
 
     img = StringIO()
     qrcode.make(url, box_size=3).save(img)
