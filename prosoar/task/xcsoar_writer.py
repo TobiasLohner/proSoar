@@ -5,7 +5,12 @@ from aerofiles.xcsoar import Writer
 
 def create_xcsoar_task(task):
     io = BytesIO()
-    writer = Writer(io)
+    write_xcsoar_task(io, task)
+    return io.getvalue()
+
+
+def write_xcsoar_task(fp, task):
+    writer = Writer(fp)
 
     with writer.write_task(
         type=get_task_type(task),
@@ -33,8 +38,6 @@ def create_xcsoar_task(task):
                 point_type = 'Turn'
 
             create_point(writer, turnpoint, point_type)
-
-    return io.getvalue()
 
 
 def get_task_type(task):

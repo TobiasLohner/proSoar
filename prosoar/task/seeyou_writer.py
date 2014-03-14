@@ -5,9 +5,13 @@ from aerofiles.seeyou import Writer
 
 
 def create_seeyou_task(task, taskname=''):
-
     io = BytesIO()
-    writer = Writer(io)
+    write_seeyou_task(io, task, taskname)
+    return io.getvalue()
+
+
+def write_seeyou_task(fp, task, taskname=''):
+    writer = Writer(fp)
 
     turnpoints = []
 
@@ -50,8 +54,6 @@ def create_seeyou_task(task, taskname=''):
             point_type = 'turn'
 
         write_obsZone(writer, turnpoint, key, point_type)
-
-    return io.getvalue()
 
 
 def write_obsZone(writer, turnpoint, key, point_type):
