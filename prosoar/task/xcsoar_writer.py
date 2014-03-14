@@ -19,10 +19,10 @@ def write_xcsoar_task(fp, task):
         homogeneous_tps=task.homogeneous_tps,
         is_closed=task.is_closed,
     ):
-        for key, turnpoint in enumerate(task):
-            if key == 0:
+        for i, turnpoint in enumerate(task):
+            if i == 0:
                 point_type = 'Start'
-            elif key == len(task) - 1:
+            elif i == len(task) - 1:
                 point_type = 'Finish'
             elif task.type == 'aat':
                 point_type = 'Area'
