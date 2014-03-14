@@ -33,30 +33,19 @@ def write_seeyou_task(fp, task, taskname=''):
         max_points=task.max_points,
     )
 
+    num_turnpoints = len(task)
     for i, turnpoint in enumerate(task):
-        if i == 0:
-            point_type = 'start'
-
-        elif i == len(task) - 1:
-            point_type = 'finish'
-
-        elif task.type == 'aat':
-            point_type = 'area'
-
-        else:
-            point_type = 'turn'
-
-        write_obsZone(writer, turnpoint, i, point_type)
+        params = get_observation_zone_params(
+            turnpoint.sector, i, num_turnpoints)
+        writer.write_observation_zone(i, **params)
 
 
-def write_obsZone(writer, turnpoint, i, point_type):
+def get_observation_zone_params(sector, i, num_turnpoints):
     params = {}
 
-    sector = turnpoint.sector
-
-    if point_type == 'start':
+    if i == 0:
         params['style'] = 2
-    elif point_type == 'finish':
+    elif i == num_turnpoints - 1:
         params['style'] = 3
     elif sector.type == 'sector':
         params['style'] = 0
@@ -111,4 +100,4 @@ def write_obsZone(writer, turnpoint, i, point_type):
 # if sector.inner_radius:
     #observation_zone.set("inner_radius", str(sector.inner_radius * 1000))
 
-    writer.write_observation_zone(i, **params)
+    return params
