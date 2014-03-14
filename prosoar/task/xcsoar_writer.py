@@ -4,32 +4,44 @@ from aerofiles.xcsoar import Writer
 def write_xcsoar_task(fp, task):
     writer = Writer(fp)
 
-    with writer.write_task(
-        type=get_task_type(task),
-        task_scored=task.task_scored,
-        aat_min_time=task.aat_min_time,
-        start_max_speed=task.start_max_speed,
-        start_max_height=task.start_max_height,
-        start_max_height_ref=task.start_max_height_ref,
-        finish_min_height=task.finish_min_height,
-        finish_min_height_ref=task.finish_min_height_ref,
-        fai_finish=task.fai_finish,
-        min_points=task.min_points,
-        max_points=task.max_points,
-        homogeneous_tps=task.homogeneous_tps,
-        is_closed=task.is_closed,
-    ):
-        for i, turnpoint in enumerate(task):
-            if i == 0:
-                point_type = 'Start'
-            elif i == len(task) - 1:
-                point_type = 'Finish'
-            elif task.type == 'aat':
-                point_type = 'Area'
-            else:
-                point_type = 'Turn'
+    params = {
+        'type': get_task_type(task),
+        'task_scored': task.task_scored,
+        'aat_min_time': task.aat_min_time,
+        'start_max_speed': task.start_max_speed,
+        'start_max_height': task.start_max_height,
+        'start_max_height_ref': task.start_max_height_ref,
+        'finish_min_height': task.finish_min_height,
+        'finish_min_height_ref': task.finish_min_height_ref,
+        'fai_finish': task.fai_finish,
+        'min_points': task.min_points,
+        'max_points': task.max_points,
+        'homogeneous_tps': task.homogeneous_tps,
+        'is_closed': task.is_closed,
+    }
 
-            create_point(writer, turnpoint, point_type)
+    # Write <Task> tag
+    with writer.write_task(**params):
+
+        # Iterate over turnpoints
+        for i, turnpoint in enumerate(task):
+
+            # Write <Point> tag
+            with writer.write_point(type=get_point_type(task, i)):
+
+                # Write <Waypoint> tag
+                writer.write_waypoint(
+                    name=turnpoint.name,
+                    latitude=turnpoint.lat,
+                    longitude=turnpoint.lon,
+                    id=turnpoint.id,
+                    comment=turnpoint.comment,
+                    altitude=turnpoint.altitude,
+                )
+
+                # Write <ObservationZone> tag
+                params = get_observation_zone_params(turnpoint.sector)
+                writer.write_observation_zone(**params)
 
 
 def get_task_type(task):
@@ -51,24 +63,18 @@ def get_task_type(task):
         return 'Touring'
 
 
-def create_point(writer, turnpoint, point_type):
-    with writer.write_point(type=point_type):
-        create_waypoint(writer, turnpoint)
-        create_obsZone(writer, turnpoint.sector)
+def get_point_type(task, i):
+    if i == 0:
+        return 'Start'
+    elif i == len(task) - 1:
+        return 'Finish'
+    elif task.type == 'aat':
+        return 'Area'
+    else:
+        return 'Turn'
 
 
-def create_waypoint(writer, turnpoint):
-    writer.write_waypoint(
-        name=turnpoint.name,
-        latitude=turnpoint.lat,
-        longitude=turnpoint.lon,
-        id=turnpoint.id,
-        comment=turnpoint.comment,
-        altitude=turnpoint.altitude,
-    )
-
-
-def create_obsZone(writer, sector):
+def get_observation_zone_params(sector):
     params = {}
 
     if sector.type == 'startline' or sector.type == 'finishline':
@@ -103,4 +109,4 @@ def create_obsZone(writer, sector):
         if sector.inner_radius:
             params["inner_radius"] = sector.inner_radius * 1000
 
-    writer.write_observation_zone(**params)
+    return params
