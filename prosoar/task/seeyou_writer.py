@@ -1,13 +1,6 @@
 import datetime
-from io import BytesIO
 
 from aerofiles.seeyou import Writer
-
-
-def create_seeyou_task(task, taskname=''):
-    io = BytesIO()
-    write_seeyou_task(io, task, taskname)
-    return io.getvalue()
 
 
 def write_seeyou_task(fp, task, taskname=''):

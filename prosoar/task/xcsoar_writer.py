@@ -1,12 +1,4 @@
-from io import BytesIO
-
 from aerofiles.xcsoar import Writer
-
-
-def create_xcsoar_task(task):
-    io = BytesIO()
-    write_xcsoar_task(io, task)
-    return io.getvalue()
 
 
 def write_xcsoar_task(fp, task):
