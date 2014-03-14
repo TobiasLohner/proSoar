@@ -190,30 +190,30 @@ def save(task_name):
     with open(os.path.join(uid_dir, filename), 'w') as f:
         f.write(create_xcsoar_task(task))
 
-        if not replace:
-            userconfig['task_files'].append({
-                'id': taskid + 1,
-                'name': task_name,
-                'distance': task.distance,
-                'type': task.type,
-                'turnpoints': len(task),
-                'date': d.isoformat()
-            })
-        else:
-            userconfig['task_files'][taskid] = {
-                'id': taskid + 1,
-                'name': task_name,
-                'distance': task.distance,
-                'type': task.type,
-                'turnpoints': len(task),
-                'date': d.isoformat()
-            }
-
-        write_user_config(uid, userconfig)
-        return jsonify({
-            'success': True,
-            'settings': get_user_config_as_json(uid, encoded=False)
+    if not replace:
+        userconfig['task_files'].append({
+            'id': taskid + 1,
+            'name': task_name,
+            'distance': task.distance,
+            'type': task.type,
+            'turnpoints': len(task),
+            'date': d.isoformat()
         })
+    else:
+        userconfig['task_files'][taskid] = {
+            'id': taskid + 1,
+            'name': task_name,
+            'distance': task.distance,
+            'type': task.type,
+            'turnpoints': len(task),
+            'date': d.isoformat()
+        }
+
+    write_user_config(uid, userconfig)
+    return jsonify({
+        'success': True,
+        'settings': get_user_config_as_json(uid, encoded=False)
+    })
 
     return jsonify({'success': False, 'reason': 'Unknown failure.'})
 
