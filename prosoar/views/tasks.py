@@ -149,12 +149,11 @@ def save(task_name):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
-    if 'task' in request.values:
-        taskstring = request.values['task']
-        task = parse_json_task(taskstring)
-
-    else:
+    if 'task' not in request.values:
         return jsonify({'success': False, 'reason': 'No task.'})
+
+    taskstring = request.values['task']
+    task = parse_json_task(taskstring)
 
     m = re.compile('([^&+/;]*)').match(task_name)
     task_name = m.group(1)
@@ -216,12 +215,11 @@ def save_temp():
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
-    if 'task' in request.values:
-        taskstring = request.values['task']
-        task = parse_json_task(taskstring)
-
-    else:
+    if 'task' not in request.values:
         return jsonify({'success': False, 'reason': 'No task.'})
+
+    taskstring = request.values['task']
+    task = parse_json_task(taskstring)
 
     userconfig = read_user_config(uid)
 
