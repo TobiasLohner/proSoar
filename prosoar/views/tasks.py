@@ -190,24 +190,19 @@ def save(task_name):
     with open(os.path.join(uid_dir, filename), 'w') as f:
         f.write(create_xcsoar_task(task))
 
+    taskinfo = {
+        'id': taskid + 1,
+        'name': task_name,
+        'distance': task.distance,
+        'type': task.type,
+        'turnpoints': len(task),
+        'date': d.isoformat()
+    }
+
     if not replace:
-        userconfig['task_files'].append({
-            'id': taskid + 1,
-            'name': task_name,
-            'distance': task.distance,
-            'type': task.type,
-            'turnpoints': len(task),
-            'date': d.isoformat()
-        })
+        userconfig['task_files'].append(taskinfo)
     else:
-        userconfig['task_files'][taskid] = {
-            'id': taskid + 1,
-            'name': task_name,
-            'distance': task.distance,
-            'type': task.type,
-            'turnpoints': len(task),
-            'date': d.isoformat()
-        }
+        userconfig['task_files'][taskid] = taskinfo
 
     write_user_config(uid, userconfig)
     return jsonify({
