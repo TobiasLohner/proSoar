@@ -215,8 +215,6 @@ def save(task_name):
         'settings': get_user_config_as_json(uid, encoded=False)
     })
 
-    return jsonify({'success': False, 'reason': 'Unknown failure.'})
-
 
 @bp.route('/save_temp', methods=['POST'])
 def save_temp():
