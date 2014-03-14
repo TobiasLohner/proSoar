@@ -10,9 +10,9 @@ import qrcode
 
 from prosoar.task.json_reader import parse_json_task
 from prosoar.task.json_writer import write_json_task
-from prosoar.task.seeyou_writer import create_seeyou_task
+from prosoar.task.seeyou_writer import write_seeyou_task
 from prosoar.task.xcsoar_reader import parse_xcsoar_task
-from prosoar.task.xcsoar_writer import create_xcsoar_task
+from prosoar.task.xcsoar_writer import write_xcsoar_task
 
 from prosoar.userconfig import (
     get_uid_from_cookie,
@@ -73,18 +73,17 @@ def download(uid, taskname, filetype, temptask=False):
 
     task = parse_xcsoar_task(taskfile)
 
+    io = StringIO()
     if filetype == 'xcsoar':
         mimetype = 'application/xcsoar'
         file_extension = 'tsk'
-        task = create_xcsoar_task(task)
+        write_xcsoar_task(io, task)
 
     elif filetype == 'seeyou':
         mimetype = 'application/seeyou'
         file_extension = 'cup'
-        task = create_seeyou_task(task, taskname)
+        write_seeyou_task(io, task, taskname)
 
-    io = StringIO()
-    io.write(task.encode('utf-8'))
     io.seek(0)
 
     return send_file(io, mimetype=mimetype, as_attachment=True,
@@ -187,7 +186,7 @@ def save(task_name):
     d = datetime.today()
 
     with open(os.path.join(uid_dir, filename), 'w') as f:
-        f.write(create_xcsoar_task(task))
+        write_xcsoar_task(f, task)
 
     taskinfo = {
         'id': taskid + 1,
@@ -231,7 +230,7 @@ def save_temp():
     filename = 'tasktemp_' + taskname + '.tsk'
 
     with open(os.path.join(uid_dir, filename), 'w') as f:
-        f.write(create_xcsoar_task(task))
+        write_xcsoar_task(f, task)
 
     base_url = 'tasks/' + uid['uid'] + '/temp/' + taskname
     return jsonify({
