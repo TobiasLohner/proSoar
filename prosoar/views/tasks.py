@@ -235,22 +235,20 @@ def save_temp():
     with open(os.path.join(uid_dir, filename), 'w') as f:
         f.write(create_xcsoar_task(task))
 
-        base_url = 'tasks/' + uid['uid'] + '/temp/' + taskname
-        return jsonify({
-            'success': True,
-            'settings': get_user_config_as_json(uid, encoded=False),
-            'download': {
-                'xcsoar': {
-                    'name': 'XCSoar (*.tsk)',
-                    'url': base_url + '/xcsoar',
-                    'qrcode': base_url + '/xcsoar/qr',
-                },
-                'seeyou': {
-                    'name': 'SeeYou (*.cup)',
-                    'url': base_url + '/seeyou',
-                    'qrcode': base_url + '/seeyou/qr',
-                },
-            }
-        })
-
-    return jsonify({'success': False, 'reason': 'Unknown failure.'})
+    base_url = 'tasks/' + uid['uid'] + '/temp/' + taskname
+    return jsonify({
+        'success': True,
+        'settings': get_user_config_as_json(uid, encoded=False),
+        'download': {
+            'xcsoar': {
+                'name': 'XCSoar (*.tsk)',
+                'url': base_url + '/xcsoar',
+                'qrcode': base_url + '/xcsoar/qr',
+            },
+            'seeyou': {
+                'name': 'SeeYou (*.cup)',
+                'url': base_url + '/seeyou',
+                'qrcode': base_url + '/seeyou/qr',
+            },
+        }
+    })
