@@ -21,10 +21,6 @@ Other software or databases are needed to run proSoar:
 
 * Python (<http://www.python.org>)
 
-* MapServer (<http://www.mapserver.org>)
-
-* TileCache (<http://www.tilecache.org>)
-
 * WELT2000 (<http://www.segelflug.de/vereine/welt2000/>)
 
 * Airspace Data, e.g. from your national aeroclub.
