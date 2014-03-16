@@ -98,14 +98,15 @@ def main():
 
     # prepare translations
     print "Converting .po to .json and copying them to " + web_temp_dir
-    po_files = os.listdir(os.path.join('gettext', 'po'))
-    for po in po_files:
-        po = po[:-3]
+    translations_folder = os.path.join('..', 'prosoar', 'translations')
+    for translation in os.listdir(translations_folder):
+        if len(translation) != 2: continue
 
-        po_file = os.path.join('gettext', 'po', po + '.po')
-        result = u'{"%s":%s}' % (po, pojson.convert(po_file))
+        po_file = os.path.join(translations_folder, translation,
+                               'LC_MESSAGES', 'messages.po')
+        result = u'{"%s":%s}' % (translation, pojson.convert(po_file))
 
-        path = os.path.join(web_temp_dir, 'LC_MESSAGES', po + '.json')
+        path = os.path.join(web_temp_dir, 'LC_MESSAGES', translation + '.json')
         file(path, 'w').write(result.encode('utf-8'))
 
     # move temp directory to web dir

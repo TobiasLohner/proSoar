@@ -1,21 +1,21 @@
 # Translations template for PROJECT.
-# Copyright (C) 2012 ORGANIZATION
+# Copyright (C) 2014 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-05-23 14:53+0200\n"
+"POT-Creation-Date: 2014-03-16 04:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 0.9.6\n"
+"Generated-By: Babel 1.3\n"
 
 #: ../../web_dev/js/proSoar/dialogs.js:50
 msgid "General"
@@ -78,7 +78,7 @@ msgid "End Radial"
 msgstr ""
 
 #: ../../web_dev/js/proSoar/dialogs.js:338
-#: ../../web_dev/js/proSoar/dialogs.js:1225
+#: ../../web_dev/js/proSoar/dialogs.js:1224
 msgid "Accept"
 msgstr ""
 
@@ -86,7 +86,7 @@ msgstr ""
 #: ../../web_dev/js/proSoar/dialogs.js:550
 #: ../../web_dev/js/proSoar/dialogs.js:578
 #: ../../web_dev/js/proSoar/dialogs.js:842
-#: ../../web_dev/js/proSoar/dialogs.js:1234
+#: ../../web_dev/js/proSoar/dialogs.js:1233
 msgid "Cancel"
 msgstr ""
 
@@ -131,9 +131,9 @@ msgid "Distance"
 msgstr ""
 
 #: ../../web_dev/js/proSoar/dialogs.js:611
-#: ../../web_dev/js/proSoar/dialogs.js:937 ../../web_dev/js/proSoar/map.js:175
-#: ../../web_dev/js/proSoar/map.js:180 ../../web_dev/js/proSoar/map.js:196
-#: ../../web_dev/js/proSoar/map.js:204 ../../web_dev/js/proSoar/map.js:258
+#: ../../web_dev/js/proSoar/dialogs.js:937 ../../web_dev/js/proSoar/map.js:234
+#: ../../web_dev/js/proSoar/map.js:239 ../../web_dev/js/proSoar/map.js:255
+#: ../../web_dev/js/proSoar/map.js:263 ../../web_dev/js/proSoar/map.js:317
 msgid "Turnpoints"
 msgstr ""
 
@@ -162,8 +162,8 @@ msgstr ""
 
 #: ../../web_dev/js/proSoar/dialogs.js:635
 #: ../../web_dev/js/proSoar/dialogs.js:966
-#: ../../web_dev/js/proSoar/igcfile.js:145
-#: ../../web_dev/js/proSoar/igcfile.js:146
+#: ../../web_dev/js/proSoar/igcfile.js:152
+#: ../../web_dev/js/proSoar/igcfile.js:153
 #, python-format
 msgid "%x %X"
 msgstr ""
@@ -221,16 +221,16 @@ msgstr ""
 msgid "Add Waypoint File..."
 msgstr ""
 
-#: ../../web_dev/js/proSoar/dialogs.js:1151
+#: ../../web_dev/js/proSoar/dialogs.js:1150
 #: ../../web_dev/js/proSoar/igcfile.js:73
 msgid "Add"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/dialogs.js:1184
+#: ../../web_dev/js/proSoar/dialogs.js:1183
 msgid "Delete Waypoint File..."
 msgstr ""
 
-#: ../../web_dev/js/proSoar/dialogs.js:1215
+#: ../../web_dev/js/proSoar/dialogs.js:1214
 msgid "Are you sure you want to delete waypoint file"
 msgstr ""
 
@@ -238,41 +238,41 @@ msgstr ""
 msgid "Add IGC File..."
 msgstr ""
 
-#: ../../web_dev/js/proSoar/igcfile.js:104
+#: ../../web_dev/js/proSoar/igcfile.js:106
 msgid "Analyse IGC file"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/igcfile.js:128
+#: ../../web_dev/js/proSoar/igcfile.js:133
 msgid "File"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/igcfile.js:145
+#: ../../web_dev/js/proSoar/igcfile.js:152
 msgid "Takeoff"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/igcfile.js:146
+#: ../../web_dev/js/proSoar/igcfile.js:153
 msgid "Landing"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/igcfile.js:167
+#: ../../web_dev/js/proSoar/igcfile.js:174
 msgid "OLC"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/igcfile.js:173
+#: ../../web_dev/js/proSoar/igcfile.js:180
 msgid "Plus"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/igcfile.js:174
-#: ../../web_dev/js/proSoar/igcfile.js:180
+#: ../../web_dev/js/proSoar/igcfile.js:181
+#: ../../web_dev/js/proSoar/igcfile.js:187
 msgid "km"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/igcfile.js:175
-#: ../../web_dev/js/proSoar/igcfile.js:181
+#: ../../web_dev/js/proSoar/igcfile.js:182
+#: ../../web_dev/js/proSoar/igcfile.js:188
 msgid "km/h"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/igcfile.js:179
+#: ../../web_dev/js/proSoar/igcfile.js:186
 msgid "Triangle"
 msgstr ""
 
@@ -280,47 +280,49 @@ msgstr ""
 msgid "OSM Map"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/map.js:54
+#: ../../web_dev/js/proSoar/map.js:58
 msgid "Hill shading"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/map.js:79
+#: ../../web_dev/js/proSoar/map.js:93
 msgid "Airspace"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/map.js:103
+#: ../../web_dev/js/proSoar/map.js:135 ../../web_dev/js/proSoar/map.js:161
+#: ../../web_dev/js/proSoar/map.js:170 ../../web_dev/js/proSoar/map.js:175
 msgid "Google Physical"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/map.js:108
+#: ../../web_dev/js/proSoar/map.js:145 ../../web_dev/js/proSoar/map.js:166
+#: ../../web_dev/js/proSoar/map.js:171
 msgid "Google Satellite"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/map.js:174 ../../web_dev/js/proSoar/map.js:444
+#: ../../web_dev/js/proSoar/map.js:233 ../../web_dev/js/proSoar/map.js:503
 #: ../../web_dev/js/proSoar/map.js:573
 msgid "Task"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/map.js:175 ../../web_dev/js/proSoar/map.js:180
-#: ../../web_dev/js/proSoar/map.js:195 ../../web_dev/js/proSoar/map.js:203
-#: ../../web_dev/js/proSoar/map.js:220
+#: ../../web_dev/js/proSoar/map.js:234 ../../web_dev/js/proSoar/map.js:239
+#: ../../web_dev/js/proSoar/map.js:254 ../../web_dev/js/proSoar/map.js:262
+#: ../../web_dev/js/proSoar/map.js:279
 msgid "Airports"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/map.js:176 ../../web_dev/js/proSoar/map.js:197
-#: ../../web_dev/js/proSoar/map.js:205 ../../web_dev/js/proSoar/map.js:591
+#: ../../web_dev/js/proSoar/map.js:235 ../../web_dev/js/proSoar/map.js:256
+#: ../../web_dev/js/proSoar/map.js:264 ../../web_dev/js/proSoar/map.js:591
 msgid "Task Turnpoint Sectors"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/map.js:298
+#: ../../web_dev/js/proSoar/map.js:357
 msgid "Airport"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/map.js:332
+#: ../../web_dev/js/proSoar/map.js:391
 msgid "Turnpoint"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/map.js:468
+#: ../../web_dev/js/proSoar/map.js:527
 msgid "IGC"
 msgstr ""
 
@@ -400,7 +402,7 @@ msgstr ""
 msgid "FAI triangle"
 msgstr ""
 
-#: ../../web_dev/js/proSoar/taskstore.js:123
+#: ../../web_dev/js/proSoar/taskstore.js:121
 #: ../../web_dev/js/proSoar/turnpoint.js:17
 #: ../../web_dev/js/proSoar/waypoints.js:142
 msgid "Free turnpoint"
