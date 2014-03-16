@@ -8,3 +8,4 @@ lxml==3.3.2
 pojson==0.5
 qrcode==4.0.4
 Pillow==2.3.0
+mergejs==1.0.0
