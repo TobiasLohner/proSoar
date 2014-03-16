@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html xml:lang="cs" lang="cs" xmlns="http://www.w3.org/1999/xhtml">
+<html xml:lang="{{ get_locale() }}" lang="{{ get_locale() }}" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <link rel="icon" href="images/favicon.png" type="image/png">
 
-  <title>proSoar - online soaring tool</title> 
+  <title>proSoar - online soaring tool</title>
 
   <script type="text/javascript" src="js/MooTools/mootools-core.js"></script>
   <script type="text/javascript" src="js/MooTools/mootools-more.js"></script>
 
-  <link rel="gettext" href="LC_MESSAGES/cs.json" />
+  <link rel="gettext" href="LC_MESSAGES/{{ get_locale() }}.json" />
 
   <script type="text/javascript" src="settings/initial.js"></script>
 
   <script type="text/javascript">
   <!--
-    var initialLanguage = "cs";
+    var initialLanguage = "{{ get_locale() }}";
   //-->
   </script>
 
@@ -41,23 +41,23 @@
 
 <!-- task -->
       <li id="task">
-        <h3 id="task-header" class="collapse">Úloha</h3> 
+        <h3 id="task-header" class="collapse">{{ _('Task') }}</h3>
         <div id="task-container" class="collapse">
           <div id="task-options">
-            <button class="button" onclick="javascript:proSoar.newTask();">Nový & Nahraj</button>
-            <button class="button" onclick="javascript:proSoar.saveTask('open');">Uložit & Exportovat</button>
+            <button class="button" onclick="javascript:proSoar.newTask();">{{ _('New &amp; Load') }}</button>
+            <button class="button" onclick="javascript:proSoar.saveTask('open');">{{ _('Save &amp; Export') }}</button>
           </div>
           <div id="task-turnpoints-container">
             <div id="task-turnpoints"></div>
           </div>
           <div id="task-total">
-            Total task distance: <span id="task-total-distance">0 km</span>
+            {{ _('Total task distance') }}: <span id="task-total-distance">0 km</span>
             <br />
             <span id="task-is-fai"></span>
           </div>
 <!--
           <div id="task-options-link">
-            <a onclick="javascript:proSoar.taskGeneralOptions();">Obecné nastavení úlohy</a>
+            <a onclick="javascript:proSoar.taskGeneralOptions();">General task options</a>
           </div>
 -->
         </div>
@@ -65,26 +65,26 @@
 
 <!-- waypoints and airspace -->
       <li id="waypoints">
-        <h3 id="waypoints-header" class="collapse">Waypoints</h3>
+        <h3 id="waypoints-header" class="collapse">{{ _('Waypoints') }}</h3>
         <div id="waypoints-container" class="collapse">
           <div id="waypoint-files">
-            Current Waypoint Files:
+            {{ _('Current Waypoint Files') }}:
             <ul id="waypoint-files-list"></ul>
-            <button class="button" onclick="javascript:proSoar.addWaypointFile();">Add Waypoint File</button>
+            <button class="button" onclick="javascript:proSoar.addWaypointFile();">{{ _('Add Waypoint File') }}</button>
           </div>
         </div>
       </li>
 
 <!-- igc file upload -->
       <li id="igcfile">
-        <h3 id="igcfile-header" class="collapse">Analýza</h3>
+        <h3 id="igcfile-header" class="collapse">{{ _('Analyse') }}</h3>
         <div id="igcfile-container" class="collapse">
         </div>
       </li>
 
 <!-- about -->
       <li id="about">
-        <h3 id="about-header" onclick="javascript:proSoar.aboutDialog();">O aplikaci</h3>
+        <h3 id="about-header" onclick="javascript:proSoar.aboutDialog();">{{ _('About') }}</h3>
 <!--        <div id="about-container" class="collapse">
           proSoar is free software released under the GNU/GPL licence.
           <br>
@@ -109,25 +109,20 @@
   <div id="dialog-container" style="visibility: hidden;">
     <div id="about-dialog" style="text-align: center">
       <p>
-        <span style="font-weight: bold">proSoar</span> is free software released under the
-        <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt">GNU/GPL licence</a>.<br>
-        To contribute, get the source at <a href="https://github.com/TobiasLohner/proSoar">GitHub</a>
-        or report bugs to the <a href="https://github.com/TobiasLohner/proSoar/issues">bugtracker</a>.
+        {{ _('%(prosoar)s is free software released under the <a href="%(gpl_url)s">GNU/GPL licence</a>.<br>To contribute, get the source at %(github)s or report bugs to the <a href="%(bugtracker_url)s">bugtracker</a>.'|safe, prosoar='<span style="font-weight: bold">proSoar</span>'|safe, gpl_url='http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt', github='<a href="https://github.com/TobiasLohner/proSoar">GitHub</a>'|safe, bugtracker_url='https://github.com/TobiasLohner/proSoar/issues') }}
       </p>
       <p>
-        Map data CC-By-SA, <a href="http://openstreetmap.org/">OpenStreetMap</a><br>
-        Airport data by <a href="http://www.segelflug.de/vereine/welt2000/">WELT 2000</a> project,
+        {{ _('Map data') }} CC-By-SA, <a href="http://openstreetmap.org/">OpenStreetMap</a><br>
+        {{ _('Airport data by %(welt2000)s project', welt2000='<a href="http://www.segelflug.de/vereine/welt2000/">WELT 2000</a>'|safe) }},
         <a href="http://opendatacommons.org/licenses/odbl/1.0/">ODbL 1.0</a><br>
 <!--        Airspace data courtesy of <a href="http://www.soaringweb.org">Worldwide Soaring Turnpoint Exchange</a> -->
-        Search provided by <a href="http://nominatim.openstreetmap.org/">Nominatim</a>
+        {{ _('Search provided by %(nominatim)s', nominatim='<a href="http://nominatim.openstreetmap.org/">Nominatim</a>'|safe) }}
       </p>
       <p style="font-weight: bold">
-        All data and information provided without guarantee.<br>
-        Use for information only. Do not use for real navigation!
+        {{ _('All data and information provided without guarantee.<br>Use for information only. Do not use for real navigation!') }}
       </p>
       <p>
-        &copy; 2012 by Tobias Lohner &lt;info&#64;prosoar.de&gt; et al.<br \>
-        Translation to Czech by Nikola Zizkovsky
+        &copy; 2012 by Tobias Lohner &lt;info&#64;prosoar.de&gt; et al.<br>
       </p>
     </div>
   </div>

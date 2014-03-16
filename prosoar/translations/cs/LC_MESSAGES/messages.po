@@ -5,17 +5,88 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: prosoar\n"
+"Project-Id-Version:  prosoar\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-05-23 14:53+0200\n"
+"POT-Creation-Date: 2014-03-16 04:30+0100\n"
 "PO-Revision-Date: 2012-06-06 21:59+0000\n"
 "Last-Translator: Nikola Zizkovsky <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-06-07 17:08+0000\n"
-"X-Generator: Launchpad (build 15353)\n"
+"Generated-By: Babel 1.3\n"
+
+#: ../../prosoar/templates/index.html:44 ../../web_dev/js/proSoar/map.js:233
+#: ../../web_dev/js/proSoar/map.js:503 ../../web_dev/js/proSoar/map.js:573
+msgid "Task"
+msgstr "Úloha"
+
+#: ../../prosoar/templates/index.html:47
+msgid "New &amp; Load"
+msgstr "Nový &amp; Nahraj"
+
+#: ../../prosoar/templates/index.html:48
+msgid "Save &amp; Export"
+msgstr "Uložit &amp; Exportovat"
+
+#: ../../prosoar/templates/index.html:54
+msgid "Total task distance"
+msgstr ""
+
+#: ../../prosoar/templates/index.html:68
+#, fuzzy
+msgid "Waypoints"
+msgstr "Otočné body"
+
+#: ../../prosoar/templates/index.html:71
+#, fuzzy
+msgid "Current Waypoint Files"
+msgstr "Odstranit soubor otočných bodů"
+
+#: ../../prosoar/templates/index.html:73
+#, fuzzy
+msgid "Add Waypoint File"
+msgstr "Přidat soubor otočných bodů"
+
+#: ../../prosoar/templates/index.html:80
+msgid "Analyse"
+msgstr "Analýza"
+
+#: ../../prosoar/templates/index.html:87
+#: ../../web_dev/js/proSoar/dialogs.js:1044
+msgid "About"
+msgstr "O aplikaci"
+
+#: ../../prosoar/templates/index.html:112
+#, python-format
+msgid ""
+"%(prosoar)s is free software released under the <a "
+"href=\"%(gpl_url)s\">GNU/GPL licence</a>.<br>To contribute, get the "
+"source at %(github)s or report bugs to the <a "
+"href=\"%(bugtracker_url)s\">bugtracker</a>."
+msgstr ""
+
+#: ../../prosoar/templates/index.html:115
+msgid "Map data"
+msgstr ""
+
+#: ../../prosoar/templates/index.html:116
+#, python-format
+msgid "Airport data by %(welt2000)s project"
+msgstr ""
+
+#: ../../prosoar/templates/index.html:119
+#, python-format
+msgid "Search provided by %(nominatim)s"
+msgstr ""
+
+#: ../../prosoar/templates/index.html:122
+msgid ""
+"All data and information provided without guarantee.<br>Use for "
+"information only. Do not use for real navigation!"
+msgstr ""
 
 #: ../../web_dev/js/proSoar/dialogs.js:50
 msgid "General"
@@ -78,7 +149,7 @@ msgid "End Radial"
 msgstr "Koncový úhel"
 
 #: ../../web_dev/js/proSoar/dialogs.js:338
-#: ../../web_dev/js/proSoar/dialogs.js:1225
+#: ../../web_dev/js/proSoar/dialogs.js:1224
 msgid "Accept"
 msgstr "Potvrdit"
 
@@ -86,7 +157,7 @@ msgstr "Potvrdit"
 #: ../../web_dev/js/proSoar/dialogs.js:550
 #: ../../web_dev/js/proSoar/dialogs.js:578
 #: ../../web_dev/js/proSoar/dialogs.js:842
-#: ../../web_dev/js/proSoar/dialogs.js:1234
+#: ../../web_dev/js/proSoar/dialogs.js:1233
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -131,9 +202,9 @@ msgid "Distance"
 msgstr "Vzdálenost"
 
 #: ../../web_dev/js/proSoar/dialogs.js:611
-#: ../../web_dev/js/proSoar/dialogs.js:937 ../../web_dev/js/proSoar/map.js:175
-#: ../../web_dev/js/proSoar/map.js:180 ../../web_dev/js/proSoar/map.js:196
-#: ../../web_dev/js/proSoar/map.js:204 ../../web_dev/js/proSoar/map.js:258
+#: ../../web_dev/js/proSoar/dialogs.js:937 ../../web_dev/js/proSoar/map.js:234
+#: ../../web_dev/js/proSoar/map.js:239 ../../web_dev/js/proSoar/map.js:255
+#: ../../web_dev/js/proSoar/map.js:263 ../../web_dev/js/proSoar/map.js:317
 msgid "Turnpoints"
 msgstr "Otočné body"
 
@@ -162,8 +233,8 @@ msgstr "FAI"
 
 #: ../../web_dev/js/proSoar/dialogs.js:635
 #: ../../web_dev/js/proSoar/dialogs.js:966
-#: ../../web_dev/js/proSoar/igcfile.js:145
-#: ../../web_dev/js/proSoar/igcfile.js:146
+#: ../../web_dev/js/proSoar/igcfile.js:152
+#: ../../web_dev/js/proSoar/igcfile.js:153
 #, python-format
 msgid "%x %X"
 msgstr "%x %X"
@@ -213,24 +284,20 @@ msgstr "QR kód"
 msgid "Save as"
 msgstr "Uložit jako"
 
-#: ../../web_dev/js/proSoar/dialogs.js:1044
-msgid "About"
-msgstr "O aplikaci"
-
 #: ../../web_dev/js/proSoar/dialogs.js:1091
 msgid "Add Waypoint File..."
 msgstr "Přidat soubor otočných bodů"
 
-#: ../../web_dev/js/proSoar/dialogs.js:1151
+#: ../../web_dev/js/proSoar/dialogs.js:1150
 #: ../../web_dev/js/proSoar/igcfile.js:73
 msgid "Add"
 msgstr "Přidat"
 
-#: ../../web_dev/js/proSoar/dialogs.js:1184
+#: ../../web_dev/js/proSoar/dialogs.js:1183
 msgid "Delete Waypoint File..."
 msgstr "Odstranit soubor otočných bodů"
 
-#: ../../web_dev/js/proSoar/dialogs.js:1215
+#: ../../web_dev/js/proSoar/dialogs.js:1214
 msgid "Are you sure you want to delete waypoint file"
 msgstr "Opravdu chcete odstranit soubor otočných bodů"
 
@@ -238,41 +305,41 @@ msgstr "Opravdu chcete odstranit soubor otočných bodů"
 msgid "Add IGC File..."
 msgstr "Přidej IGC soubor"
 
-#: ../../web_dev/js/proSoar/igcfile.js:104
+#: ../../web_dev/js/proSoar/igcfile.js:106
 msgid "Analyse IGC file"
 msgstr "Analýza IGC souboru"
 
-#: ../../web_dev/js/proSoar/igcfile.js:128
+#: ../../web_dev/js/proSoar/igcfile.js:133
 msgid "File"
 msgstr "Soubor"
 
-#: ../../web_dev/js/proSoar/igcfile.js:145
+#: ../../web_dev/js/proSoar/igcfile.js:152
 msgid "Takeoff"
 msgstr "Vzlet"
 
-#: ../../web_dev/js/proSoar/igcfile.js:146
+#: ../../web_dev/js/proSoar/igcfile.js:153
 msgid "Landing"
 msgstr "Přistání"
 
-#: ../../web_dev/js/proSoar/igcfile.js:167
+#: ../../web_dev/js/proSoar/igcfile.js:174
 msgid "OLC"
 msgstr "OLC"
 
-#: ../../web_dev/js/proSoar/igcfile.js:173
+#: ../../web_dev/js/proSoar/igcfile.js:180
 msgid "Plus"
 msgstr "Plus"
 
-#: ../../web_dev/js/proSoar/igcfile.js:174
-#: ../../web_dev/js/proSoar/igcfile.js:180
+#: ../../web_dev/js/proSoar/igcfile.js:181
+#: ../../web_dev/js/proSoar/igcfile.js:187
 msgid "km"
 msgstr "km"
 
-#: ../../web_dev/js/proSoar/igcfile.js:175
-#: ../../web_dev/js/proSoar/igcfile.js:181
+#: ../../web_dev/js/proSoar/igcfile.js:182
+#: ../../web_dev/js/proSoar/igcfile.js:188
 msgid "km/h"
 msgstr "km/h"
 
-#: ../../web_dev/js/proSoar/igcfile.js:179
+#: ../../web_dev/js/proSoar/igcfile.js:186
 msgid "Triangle"
 msgstr "Trojúhelník"
 
@@ -280,47 +347,44 @@ msgstr "Trojúhelník"
 msgid "OSM Map"
 msgstr "OSM Mapa"
 
-#: ../../web_dev/js/proSoar/map.js:54
+#: ../../web_dev/js/proSoar/map.js:58
 msgid "Hill shading"
 msgstr "Stínování kopců"
 
-#: ../../web_dev/js/proSoar/map.js:79
+#: ../../web_dev/js/proSoar/map.js:93
 msgid "Airspace"
 msgstr "Vzdušný prostor"
 
-#: ../../web_dev/js/proSoar/map.js:103
+#: ../../web_dev/js/proSoar/map.js:135 ../../web_dev/js/proSoar/map.js:161
+#: ../../web_dev/js/proSoar/map.js:170 ../../web_dev/js/proSoar/map.js:175
 msgid "Google Physical"
 msgstr "Google Physical"
 
-#: ../../web_dev/js/proSoar/map.js:108
+#: ../../web_dev/js/proSoar/map.js:145 ../../web_dev/js/proSoar/map.js:166
+#: ../../web_dev/js/proSoar/map.js:171
 msgid "Google Satellite"
 msgstr "Google družice"
 
-#: ../../web_dev/js/proSoar/map.js:174 ../../web_dev/js/proSoar/map.js:444
-#: ../../web_dev/js/proSoar/map.js:573
-msgid "Task"
-msgstr "Úloha"
-
-#: ../../web_dev/js/proSoar/map.js:175 ../../web_dev/js/proSoar/map.js:180
-#: ../../web_dev/js/proSoar/map.js:195 ../../web_dev/js/proSoar/map.js:203
-#: ../../web_dev/js/proSoar/map.js:220
+#: ../../web_dev/js/proSoar/map.js:234 ../../web_dev/js/proSoar/map.js:239
+#: ../../web_dev/js/proSoar/map.js:254 ../../web_dev/js/proSoar/map.js:262
+#: ../../web_dev/js/proSoar/map.js:279
 msgid "Airports"
 msgstr "Letiště"
 
-#: ../../web_dev/js/proSoar/map.js:176 ../../web_dev/js/proSoar/map.js:197
-#: ../../web_dev/js/proSoar/map.js:205 ../../web_dev/js/proSoar/map.js:591
+#: ../../web_dev/js/proSoar/map.js:235 ../../web_dev/js/proSoar/map.js:256
+#: ../../web_dev/js/proSoar/map.js:264 ../../web_dev/js/proSoar/map.js:591
 msgid "Task Turnpoint Sectors"
 msgstr "Sektory v úloze"
 
-#: ../../web_dev/js/proSoar/map.js:298
+#: ../../web_dev/js/proSoar/map.js:357
 msgid "Airport"
 msgstr "Letiště"
 
-#: ../../web_dev/js/proSoar/map.js:332
+#: ../../web_dev/js/proSoar/map.js:391
 msgid "Turnpoint"
 msgstr "Otočný bod"
 
-#: ../../web_dev/js/proSoar/map.js:468
+#: ../../web_dev/js/proSoar/map.js:527
 msgid "IGC"
 msgstr "IGC"
 
@@ -400,8 +464,9 @@ msgstr "FAI odznaky/rekordy"
 msgid "FAI triangle"
 msgstr "FAI trojúhelník"
 
-#: ../../web_dev/js/proSoar/taskstore.js:123
+#: ../../web_dev/js/proSoar/taskstore.js:121
 #: ../../web_dev/js/proSoar/turnpoint.js:17
 #: ../../web_dev/js/proSoar/waypoints.js:142
 msgid "Free turnpoint"
 msgstr "Volný otočný bod"
+

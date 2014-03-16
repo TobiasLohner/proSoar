@@ -37,6 +37,11 @@ def get_locale():
                     request.accept_languages.values())
     return negotiate_locale(preferred, AVAILABLE_LOCALES)
 
+
+@app.context_processor
+def inject_get_locale():
+    return dict(get_locale=get_locale)
+
 app.register_blueprint(airports, url_prefix='/airports')
 app.register_blueprint(height, url_prefix='/height')
 app.register_blueprint(igc, url_prefix='/igc')
@@ -48,4 +53,4 @@ app.register_blueprint(waypoints, url_prefix='/waypoints')
 
 @app.route("/")
 def hello():
-    return render_template('index.html.' + get_locale())
+    return render_template('index.html')
