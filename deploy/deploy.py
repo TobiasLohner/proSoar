@@ -132,11 +132,10 @@ def minify(source):
         )
 
         stdout, stderr = process.communicate(input=source)
-
-        if stderr is None:
-            return stdout
-        else:
+        if stderr:
             raise stderr
+
+        return stdout
 
     except:
         return source
