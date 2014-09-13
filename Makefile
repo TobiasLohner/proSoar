@@ -102,7 +102,7 @@ AIRPORT_DB_FOLDER = $(STORAGE_FOLDER)/airports
 airport-database: $(AIRPORT_DB_FOLDER)/lon0/lat45
 
 $(AIRPORT_DB_FOLDER)/lon0/lat45:
-	util/bin/private/gen_airports
+	scripts/gen_airports
 
 
 # Deployment
