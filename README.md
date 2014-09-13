@@ -41,10 +41,6 @@ This source directory is not complete. You need some more things to get started.
 
    Run `make`
 
-3. Create airports json files
-
-   Run `util/bin/private/gen_airports`
-
-4. Deploy by running the debug server or use some other deployment method for flask apps:
+3. Deploy by running the debug server or use some other deployment method for flask apps:
 
    Run `python manage.py runserver` to start the debug server
