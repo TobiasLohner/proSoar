@@ -47,4 +47,4 @@ This source directory is not complete. You need some more things to get started.
 
 4. Deploy by running the debug server or use some other deployment method for flask apps:
 
-   Run `python app.py`
+   Run `python manage.py runserver` to start the debug server
