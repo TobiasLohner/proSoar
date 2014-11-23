@@ -10,9 +10,9 @@ import qrcode
 
 from prosoar.task.json_reader import parse_json_task
 from prosoar.task.json_writer import write_json_task
-from prosoar.task.seeyou_writer import create_seeyou_task
+from prosoar.task.seeyou_writer import write_seeyou_task
 from prosoar.task.xcsoar_reader import parse_xcsoar_task
-from prosoar.task.xcsoar_writer import create_xcsoar_task
+from prosoar.task.xcsoar_writer import write_xcsoar_task
 
 from prosoar.userconfig import (
     get_uid_from_cookie,
@@ -73,18 +73,17 @@ def download(uid, taskname, filetype, temptask=False):
 
     task = parse_xcsoar_task(taskfile)
 
+    io = StringIO()
     if filetype == 'xcsoar':
         mimetype = 'application/xcsoar'
         file_extension = 'tsk'
-        task = create_xcsoar_task(task)
+        write_xcsoar_task(io, task)
 
     elif filetype == 'seeyou':
         mimetype = 'application/seeyou'
         file_extension = 'cup'
-        task = create_seeyou_task(task, taskname)
+        write_seeyou_task(io, task, taskname)
 
-    io = StringIO()
-    io.write(task.encode('utf-8'))
     io.seek(0)
 
     return send_file(io, mimetype=mimetype, as_attachment=True,
@@ -149,12 +148,11 @@ def save(task_name):
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
-    if 'task' in request.values:
-        taskstring = request.values['task']
-        task = parse_json_task(taskstring)
-
-    else:
+    if 'task' not in request.values:
         return jsonify({'success': False, 'reason': 'No task.'})
+
+    taskstring = request.values['task']
+    task = parse_json_task(taskstring)
 
     m = re.compile('([^&+/;]*)').match(task_name)
     task_name = m.group(1)
@@ -188,34 +186,27 @@ def save(task_name):
     d = datetime.today()
 
     with open(os.path.join(uid_dir, filename), 'w') as f:
-        f.write(create_xcsoar_task(task))
+        write_xcsoar_task(f, task)
 
-        if not replace:
-            userconfig['task_files'].append({
-                'id': taskid + 1,
-                'name': task_name,
-                'distance': task.distance,
-                'type': task.type,
-                'turnpoints': len(task),
-                'date': d.isoformat()
-            })
-        else:
-            userconfig['task_files'][taskid] = {
-                'id': taskid + 1,
-                'name': task_name,
-                'distance': task.distance,
-                'type': task.type,
-                'turnpoints': len(task),
-                'date': d.isoformat()
-            }
+    taskinfo = {
+        'id': taskid + 1,
+        'name': task_name,
+        'distance': task.distance,
+        'type': task.type,
+        'turnpoints': len(task),
+        'date': d.isoformat()
+    }
 
-        write_user_config(uid, userconfig)
-        return jsonify({
-            'success': True,
-            'settings': get_user_config_as_json(uid, encoded=False)
-        })
+    if not replace:
+        userconfig['task_files'].append(taskinfo)
+    else:
+        userconfig['task_files'][taskid] = taskinfo
 
-    return jsonify({'success': False, 'reason': 'Unknown failure.'})
+    write_user_config(uid, userconfig)
+    return jsonify({
+        'success': True,
+        'settings': get_user_config_as_json(uid, encoded=False)
+    })
 
 
 @bp.route('/save_temp', methods=['POST'])
@@ -223,12 +214,11 @@ def save_temp():
     uid = get_uid_from_cookie()
     uid_dir = os.path.join(current_app.config['USERS_FOLDER'], uid['uid'])
 
-    if 'task' in request.values:
-        taskstring = request.values['task']
-        task = parse_json_task(taskstring)
-
-    else:
+    if 'task' not in request.values:
         return jsonify({'success': False, 'reason': 'No task.'})
+
+    taskstring = request.values['task']
+    task = parse_json_task(taskstring)
 
     userconfig = read_user_config(uid)
 
@@ -240,24 +230,22 @@ def save_temp():
     filename = 'tasktemp_' + taskname + '.tsk'
 
     with open(os.path.join(uid_dir, filename), 'w') as f:
-        f.write(create_xcsoar_task(task))
+        write_xcsoar_task(f, task)
 
-        base_url = 'tasks/' + uid['uid'] + '/temp/' + taskname
-        return jsonify({
-            'success': True,
-            'settings': get_user_config_as_json(uid, encoded=False),
-            'download': {
-                'xcsoar': {
-                    'name': 'XCSoar (*.tsk)',
-                    'url': base_url + '/xcsoar',
-                    'qrcode': base_url + '/xcsoar/qr',
-                },
-                'seeyou': {
-                    'name': 'SeeYou (*.cup)',
-                    'url': base_url + '/seeyou',
-                    'qrcode': base_url + '/seeyou/qr',
-                },
-            }
-        })
-
-    return jsonify({'success': False, 'reason': 'Unknown failure.'})
+    base_url = 'tasks/' + uid['uid'] + '/temp/' + taskname
+    return jsonify({
+        'success': True,
+        'settings': get_user_config_as_json(uid, encoded=False),
+        'download': {
+            'xcsoar': {
+                'name': 'XCSoar (*.tsk)',
+                'url': base_url + '/xcsoar',
+                'qrcode': base_url + '/xcsoar/qr',
+            },
+            'seeyou': {
+                'name': 'SeeYou (*.cup)',
+                'url': base_url + '/seeyou',
+                'qrcode': base_url + '/seeyou/qr',
+            },
+        }
+    })

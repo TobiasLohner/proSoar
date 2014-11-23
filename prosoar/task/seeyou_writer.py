@@ -1,136 +1,90 @@
-from prosoar.waypoints.waypoint import Waypoint
-from prosoar.waypoints.seeyou_writer import __compose_line
+import datetime
+
+from aerofiles.seeyou import Writer
 
 
-def create_seeyou_task(task, taskname=''):
+def write_seeyou_task(fp, task, taskname=''):
+    writer = Writer(fp)
 
-    taskline = []
     turnpoints = []
 
-    if taskname == '':
-        taskline.append('')
-    else:
-        taskline.append('"' + taskname + '"')
-
-    taskline.append(set_task_options(task))
-
-    for key, turnpoint in enumerate(task):
+    for i, turnpoint in enumerate(task):
         if turnpoint.name == 'Free turnpoint':
-            turnpoint.name = '{0:0=2d} '.format(key + 1) + turnpoint.name
-
-        if key == 0:
-            point_type = 'start'
-            taskline[0] += ',"' + turnpoint.name + '"'
-
-        elif key == len(task) - 1:
-            point_type = 'finish'
-            taskline[0] += ',"' + turnpoint.name + '"'
-
+            name = '{0:0=2d} '.format(i + 1) + turnpoint.name
         else:
-            if task.type == 'aat':
-                point_type = 'area'
-            else:
-                point_type = 'turn'
+            name = turnpoint.name
 
-        tp = Waypoint()
-        tp.lon = float(turnpoint.lon)
-        tp.lat = float(turnpoint.lat)
-        # turnpoint.comment
-        tp.altitude = float(turnpoint.altitude)
+        writer.write_waypoint(
+            name, '', '', float(turnpoint.lat), float(turnpoint.lon),
+            turnpoint.altitude,
+        )
 
-        tp.name = turnpoint.name
+        if i == 0 or i == len(task) - 1:
+            turnpoints.append(name)
 
-        taskline[0] += ',"' + turnpoint.name + '"'
+        turnpoints.append(name)
 
-        taskline.append(create_obsZone(turnpoint, key, point_type))
-        turnpoints.append(__compose_line(tp))
+    writer.write_task(taskname, turnpoints)
+    writer.write_task_options(
+        task_time=datetime.timedelta(seconds=task.aat_min_time),
+        waypoint_distance=(task.type != 'aat'),
+        min_distance=True,
+        random_order=False,
+        max_points=task.max_points,
+    )
 
-    return 'name,code,country,lat,lon,elev,style,rwdir,rwlen,freq,desc\n' + \
-           '\n'.join(turnpoints) + '\n' \
-           '-----Related Tasks-----\n' + '\n'.join(taskline)
+    num_turnpoints = len(task)
+    for i, turnpoint in enumerate(task):
+        params = get_observation_zone_params(
+            turnpoint.sector, i, num_turnpoints)
+        writer.write_observation_zone(i, **params)
 
 
-def set_task_options(task):
-    taskline = 'Options'
+def get_observation_zone_params(sector, i, num_turnpoints):
+    params = {}
 
-    #taskline += ',NoStart='
-    taskline += ',TaskTime=' + hms(task.aat_min_time)
-
-    if task.type == 'aat':
-        taskline += ',WpDis=False'
+    if i == 0:
+        params['style'] = 2
+    elif i == num_turnpoints - 1:
+        params['style'] = 3
+    elif sector.type == 'sector':
+        params['style'] = 0
     else:
-        taskline += ',WpDis=True'
-
-    taskline += ',MinDis=True'
-    taskline += ',RandomOrder=False'
-    taskline += ',MaxPts=' + str(task.max_points)
-    #taskline += ',NearDis='
-    #taskline += ',NearAlt='
-    #taskline += ',BeforePts='
-    #taskline += ',AfterPts='
-    #taskline += ',Bonus='
-
-    return taskline
-
-
-def hms(seconds):
-    h = int(seconds / 3600)
-    m = int((seconds - 3600 * h) / 60)
-    s = seconds - h * 3600 - m * 60
-
-    return '{0:02d}:{1:02d}:{2:02d}'.format(h, m, s)
-
-
-def create_obsZone(turnpoint, key, point_type):
-
-    obsZone = 'ObsZone=' + str(key)
-
-    sector = turnpoint.sector
-
-    if point_type == 'start':
-        obsZone += ',Style=2'
-    elif point_type == 'finish':
-        obsZone += ',Style=3'
-    else:
-        if sector.type == 'sector':
-            obsZone += ',Style=0'
-        else:
-            obsZone += ',Style=1'
+        params['style'] = 1
 
     if sector.type == 'startline' or sector.type == 'finishline':
-        obsZone += ',R1={0:0d}m'.format(int(sector.radius * 1000))
-#    obsZone += ',A1=180'
-        obsZone += ',Line=1'
+        params['radius'] = sector.radius * 1000
+        params['line'] = True
 
     elif sector.type == 'circle':
-        obsZone += ',R1={0:0d}m'.format(int(sector.radius * 1000))
-        obsZone += ',A1=180'
+        params['radius'] = sector.radius * 1000
+        params['angle'] = 180
 
     elif sector.type == 'fai':
-        obsZone += ',R1=10000m'
-        obsZone += ',A1=45'
+        params['radius'] = 10000
+        params['angle'] = 45
 
     elif sector.type == 'daec':
-        obsZone += ',R1=10000m'
-        obsZone += ',A1=45'
-        obsZone += ',R2=500m'
-        obsZone += ',A2=180'
+        params['radius'] = 10000
+        params['angle'] = 45
+        params['radius2'] = 500
+        params['angle2'] = 180
 
     elif sector.type == 'bgastartsector':
-        obsZone += ',R1=5000m'
-        obsZone += ',A1=90'
+        params['radius'] = 5000
+        params['angle'] = 90
 
     elif sector.type == 'bgafixedcourse':
-        obsZone += ',R1=20000m'
-        obsZone += ',A1=90'
-        obsZone += ',R2=500m'
-        obsZone += ',A2=180'
+        params['radius'] = 20000
+        params['angle'] = 90
+        params['radius2'] = 500
+        params['angle2'] = 180
 
     elif sector.type == 'bgaenhancedoption':
-        obsZone += ',R1=10000m'
-        obsZone += ',A1=90'
-        obsZone += ',R2=500m'
-        obsZone += ',A2=180'
+        params['radius'] = 10000
+        params['angle'] = 90
+        params['radius2'] = 500
+        params['angle2'] = 180
 
 # not supported by now...
 #  elif sector.type == 'sector':
@@ -146,4 +100,4 @@ def create_obsZone(turnpoint, key, point_type):
 # if sector.inner_radius:
     #observation_zone.set("inner_radius", str(sector.inner_radius * 1000))
 
-    return obsZone
+    return params

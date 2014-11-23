@@ -1,131 +1,112 @@
-from lxml import etree
+from aerofiles.xcsoar import Writer
 
 
-def create_xcsoar_task(task):
-    root = etree.Element("Task")
+def write_xcsoar_task(fp, task):
+    writer = Writer(fp)
 
-    set_task_type(root, task)
-    set_task_opts(root, task)
+    params = {
+        'type': get_task_type(task),
+        'task_scored': task.task_scored,
+        'aat_min_time': task.aat_min_time,
+        'start_max_speed': task.start_max_speed,
+        'start_max_height': task.start_max_height,
+        'start_max_height_ref': task.start_max_height_ref,
+        'finish_min_height': task.finish_min_height,
+        'finish_min_height_ref': task.finish_min_height_ref,
+        'fai_finish': task.fai_finish,
+        'min_points': task.min_points,
+        'max_points': task.max_points,
+        'homogeneous_tps': task.homogeneous_tps,
+        'is_closed': task.is_closed,
+    }
 
-    for key, turnpoint in enumerate(task):
-        if key == 0:
-            point_type = 'start'
-        elif key == len(task) - 1:
-            point_type = 'finish'
-        else:
-            if task.type == 'aat':
-                point_type = 'area'
-            else:
-                point_type = 'turn'
+    # Write <Task> tag
+    with writer.write_task(**params):
 
-        root.append(create_point(turnpoint, point_type))
+        # Iterate over turnpoints
+        for i, turnpoint in enumerate(task):
 
-    return etree.tostring(root, pretty_print=True, encoding='utf-8')
+            # Write <Point> tag
+            with writer.write_point(type=get_point_type(task, i)):
+
+                # Write <Waypoint> tag
+                writer.write_waypoint(
+                    name=turnpoint.name,
+                    latitude=turnpoint.lat,
+                    longitude=turnpoint.lon,
+                    id=turnpoint.id,
+                    comment=turnpoint.comment,
+                    altitude=turnpoint.altitude,
+                )
+
+                # Write <ObservationZone> tag
+                params = get_observation_zone_params(turnpoint.sector)
+                writer.write_observation_zone(**params)
 
 
-def set_task_type(el, task):
+def get_task_type(task):
     if task.type == 'fai':
-        el.set('type', 'FAIGeneral')
+        return 'FAIGeneral'
     elif task.type == 'triangle':
-        el.set('type', 'FAITriangle')
+        return 'FAITriangle'
     elif task.type == 'outreturn':
-        el.set('type', 'FAIOR')
+        return 'FAIOR'
     elif task.type == 'goal':
-        el.set('type', 'FAIGoal')
+        return 'FAIGoal'
     elif task.type == 'racing':
-        el.set('type', 'RT')
+        return 'RT'
     elif task.type == 'aat':
-        el.set('type', 'AAT')
+        return 'AAT'
     elif task.type == 'mixed':
-        el.set('type', 'Mixed')
+        return 'Mixed'
     elif task.type == 'touring':
-        el.set('type', 'Touring')
+        return 'Touring'
 
 
-def set_task_opts(el, task):
-    el.set('task_scored', str(task.task_scored))
-    el.set('aat_min_time', str(task.aat_min_time))
-    el.set('start_max_speed', str(task.start_max_speed))
-    el.set('start_max_height', str(task.start_max_height))
-    el.set('start_max_height_ref', task.start_max_height_ref)
-    el.set('finish_min_height', str(task.finish_min_height))
-    el.set('finish_min_height_ref', task.finish_min_height_ref)
-    el.set('fai_finish', str(task.fai_finish))
-    el.set('min_points', str(task.min_points))
-    el.set('max_points', str(task.max_points))
-    el.set('homogeneous_tps', str(task.homogeneous_tps))
-    el.set('is_closed', str(task.is_closed))
+def get_point_type(task, i):
+    if i == 0:
+        return 'Start'
+    elif i == len(task) - 1:
+        return 'Finish'
+    elif task.type == 'aat':
+        return 'Area'
+    else:
+        return 'Turn'
 
 
-def create_point(turnpoint, point_type):
-    point = etree.Element("Point")
-
-    if point_type == 'start':
-        point.set("type", "Start")
-    elif point_type == 'turn':
-        point.set("type", "Turn")
-    elif point_type == 'area':
-        point.set("type", "Area")
-    elif point_type == 'finish':
-        point.set("type", "Finish")
-
-    point.append(create_waypoint(turnpoint))
-    point.append(create_obsZone(turnpoint.sector))
-
-    return point
-
-
-def create_waypoint(turnpoint):
-    waypoint = etree.Element("Waypoint")
-
-    waypoint.set('name', turnpoint.name)
-    waypoint.set('id', str(turnpoint.id))
-    waypoint.set('comment', turnpoint.comment)
-    waypoint.set('altitude', str(turnpoint.altitude))
-
-    location = etree.Element("Location")
-    location.set("longitude", str(turnpoint.lon))
-    location.set("latitude", str(turnpoint.lat))
-
-    waypoint.append(location)
-
-    return waypoint
-
-
-def create_obsZone(sector):
-    observation_zone = etree.Element("ObservationZone")
+def get_observation_zone_params(sector):
+    params = {}
 
     if sector.type == 'startline' or sector.type == 'finishline':
-        observation_zone.set("type", "Line")
-        observation_zone.set("length", str(sector.radius * 2 * 1000))
+        params["type"] = "Line"
+        params["length"] = sector.radius * 2 * 1000
 
     elif sector.type == 'circle':
-        observation_zone.set("type", "Cylinder")
-        observation_zone.set("radius", str(sector.radius * 1000))
+        params["type"] = "Cylinder"
+        params["radius"] = sector.radius * 1000
 
     elif sector.type == 'fai':
-        observation_zone.set("type", "FAISector")
+        params["type"] = "FAISector"
 
     elif sector.type == 'daec':
-        observation_zone.set("type", "Keyhole")
+        params["type"] = "Keyhole"
 
     elif sector.type == 'bgastartsector':
-        observation_zone.set("type", "BGAStartSector")
+        params["type"] = "BGAStartSector"
 
     elif sector.type == 'bgafixedcourse':
-        observation_zone.set("type", "BGAFixedCourse")
+        params["type"] = "BGAFixedCourse"
 
     elif sector.type == 'bgaenhancedoption':
-        observation_zone.set("type", "BGAEnhancedOption")
+        params["type"] = "BGAEnhancedOption"
 
     elif sector.type == 'sector':
-        observation_zone.set("type", "Sector")
-        observation_zone.set("radius", str(sector.radius * 1000))
-        observation_zone.set("start_radial", str(sector.start_radial))
-        observation_zone.set("end_radial", str(sector.end_radial))
+        params["type"] = "Sector"
+        params["radius"] = sector.radius * 1000
+        params["start_radial"] = sector.start_radial
+        params["end_radial"] = sector.end_radial
 
         if sector.inner_radius:
-            observation_zone.set(
-                "inner_radius", str(sector.inner_radius * 1000))
+            params["inner_radius"] = sector.inner_radius * 1000
 
-    return observation_zone
+    return params
