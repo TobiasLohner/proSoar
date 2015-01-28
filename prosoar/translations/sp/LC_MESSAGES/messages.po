@@ -1,0 +1,476 @@
+# Translations template for PROJECT.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: proSoar\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-03-16 04:30+0100\n"
+"PO-Revision-Date: 2015-01-28 18:14-0300\n"
+"Last-Translator: Darío Hereñú <magallania@gmail.com>\n"
+"Language-Team: Darío Hereñú <magallania@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es\n"
+"X-Generator: Poedit 1.7.3\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: ../../prosoar/templates/index.html:44 ../../web_dev/js/proSoar/map.js:233
+#: ../../web_dev/js/proSoar/map.js:503 ../../web_dev/js/proSoar/map.js:573
+msgid "Task"
+msgstr "Tarea"
+
+#: ../../prosoar/templates/index.html:47
+msgid "New &amp; Load"
+msgstr "Nueva &amp; Carga"
+
+#: ../../prosoar/templates/index.html:48
+msgid "Save &amp; Export"
+msgstr "Guardar &amp; Exportar"
+
+#: ../../prosoar/templates/index.html:54
+msgid "Total task distance"
+msgstr "Distancia total de la tarea"
+
+#: ../../prosoar/templates/index.html:68
+msgid "Waypoints"
+msgstr "Puntos de paso"
+
+#: ../../prosoar/templates/index.html:71
+msgid "Current Waypoint Files"
+msgstr "Archivos actuales de puntos de paso"
+
+#: ../../prosoar/templates/index.html:73
+msgid "Add Waypoint File"
+msgstr "Agregar archivo de punto de paso"
+
+#: ../../prosoar/templates/index.html:80
+msgid "Analyse"
+msgstr "Analizar"
+
+#: ../../prosoar/templates/index.html:87
+#: ../../web_dev/js/proSoar/dialogs.js:1044
+msgid "About"
+msgstr "Acerca"
+
+#: ../../prosoar/templates/index.html:112
+#, python-format
+msgid ""
+"%(prosoar)s is free software released under the <a href=\"%(gpl_url)s\">GNU/"
+"GPL licence</a>.<br>To contribute, get the source at %(github)s or report "
+"bugs to the <a href=\"%(bugtracker_url)s\">bugtracker</a>."
+msgstr ""
+"%(prosoar)s es un software libre publicado bajo la<a href=\"%(gpl_url)s"
+"\">licencia GNU/GPL</a>.<br>Para contribuir, obtenga el código fuente en "
+"%(github)s o informe de errores en <a href=\"%(bugtracker_url)s"
+"\">bugtracker</a>."
+
+#: ../../prosoar/templates/index.html:115
+msgid "Map data"
+msgstr "Datos del mapa"
+
+#: ../../prosoar/templates/index.html:116
+#, python-format
+msgid "Airport data by %(welt2000)s project"
+msgstr "Datos del aeródromo provisto por %(welt2000)s project"
+
+#: ../../prosoar/templates/index.html:119
+#, python-format
+msgid "Search provided by %(nominatim)s"
+msgstr "Búsqueda provista por %(nominatim)s"
+
+#: ../../prosoar/templates/index.html:122
+msgid ""
+"All data and information provided without guarantee.<br>Use for information "
+"only. Do not use for real navigation!"
+msgstr ""
+"Todos los datos e informaciones son provistas sin garantía.<br>Usela solo a "
+"modo de información. No para su navegación en el mundo real!"
+
+#: ../../web_dev/js/proSoar/dialogs.js:50
+msgid "General"
+msgstr "General"
+
+#: ../../web_dev/js/proSoar/dialogs.js:56
+msgid "General Task Options"
+msgstr "Opciones generales de tareas"
+
+#: ../../web_dev/js/proSoar/dialogs.js:67
+#: ../../web_dev/js/proSoar/tasklist.js:88
+msgid "Start"
+msgstr "Inicio"
+
+#: ../../web_dev/js/proSoar/dialogs.js:69
+#: ../../web_dev/js/proSoar/tasklist.js:90
+msgid "Finish"
+msgstr "Final"
+
+#: ../../web_dev/js/proSoar/dialogs.js:71
+#: ../../web_dev/js/proSoar/tasklist.js:92
+msgid "TP"
+msgstr "TP"
+
+#: ../../web_dev/js/proSoar/dialogs.js:117
+#: ../../web_dev/js/proSoar/dialogs.js:679
+msgid "Task type"
+msgstr "Tipo de tarea"
+
+#: ../../web_dev/js/proSoar/dialogs.js:164
+msgid "Sector type"
+msgstr "Tipo de sector"
+
+#: ../../web_dev/js/proSoar/dialogs.js:225
+msgid "Radius"
+msgstr "Radio"
+
+#: ../../web_dev/js/proSoar/dialogs.js:238
+#: ../../web_dev/js/proSoar/dialogs.js:257
+#: ../../web_dev/js/proSoar/dialogs.js:633
+#: ../../web_dev/js/proSoar/dialogs.js:964
+msgid "&nbsp;km"
+msgstr "&nbsp;km"
+
+#: ../../web_dev/js/proSoar/dialogs.js:244
+msgid "Inner Radius"
+msgstr "Radio interior"
+
+#: ../../web_dev/js/proSoar/dialogs.js:263
+msgid "Start Radial"
+msgstr "Iniciar radial"
+
+#: ../../web_dev/js/proSoar/dialogs.js:276
+#: ../../web_dev/js/proSoar/dialogs.js:295
+msgid "&nbsp;&deg;"
+msgstr "&nbsp;&deg"
+
+#: ../../web_dev/js/proSoar/dialogs.js:282
+msgid "End Radial"
+msgstr "Finalizar radial"
+
+#: ../../web_dev/js/proSoar/dialogs.js:338
+#: ../../web_dev/js/proSoar/dialogs.js:1224
+msgid "Accept"
+msgstr "Aceptar"
+
+#: ../../web_dev/js/proSoar/dialogs.js:348
+#: ../../web_dev/js/proSoar/dialogs.js:550
+#: ../../web_dev/js/proSoar/dialogs.js:578
+#: ../../web_dev/js/proSoar/dialogs.js:842
+#: ../../web_dev/js/proSoar/dialogs.js:1233
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: ../../web_dev/js/proSoar/dialogs.js:470
+msgid "New & Load Task"
+msgstr "Nuevo & Cargar tarea"
+
+#: ../../web_dev/js/proSoar/dialogs.js:524
+msgid "New"
+msgstr "Nuevo"
+
+#: ../../web_dev/js/proSoar/dialogs.js:528
+msgid "Load"
+msgstr "Cargar"
+
+#: ../../web_dev/js/proSoar/dialogs.js:534
+#: ../../web_dev/js/proSoar/dialogs.js:541
+msgid "New Task"
+msgstr "Nueva tarea"
+
+#: ../../web_dev/js/proSoar/dialogs.js:569
+msgid "Load Task"
+msgstr "Cargar tarea"
+
+#: ../../web_dev/js/proSoar/dialogs.js:600
+msgid "Select task to load"
+msgstr "Seleccionar tarea a cargar"
+
+#: ../../web_dev/js/proSoar/dialogs.js:611
+#: ../../web_dev/js/proSoar/dialogs.js:937
+msgid "Task Name"
+msgstr "Nombre de la tarea"
+
+#: ../../web_dev/js/proSoar/dialogs.js:611
+#: ../../web_dev/js/proSoar/dialogs.js:937
+msgid "Type"
+msgstr "Tipo"
+
+#: ../../web_dev/js/proSoar/dialogs.js:611
+#: ../../web_dev/js/proSoar/dialogs.js:937
+msgid "Distance"
+msgstr "Distancia"
+
+#: ../../web_dev/js/proSoar/dialogs.js:611
+#: ../../web_dev/js/proSoar/dialogs.js:937
+#: ../../web_dev/js/proSoar/map.js:234 ../../web_dev/js/proSoar/map.js:239
+#: ../../web_dev/js/proSoar/map.js:255 ../../web_dev/js/proSoar/map.js:263
+#: ../../web_dev/js/proSoar/map.js:317
+msgid "Turnpoints"
+msgstr "Puntos de viraje"
+
+#: ../../web_dev/js/proSoar/dialogs.js:611
+#: ../../web_dev/js/proSoar/dialogs.js:937
+msgid "Last Modified"
+msgstr "Ultima modificación"
+
+#: ../../web_dev/js/proSoar/dialogs.js:623
+#: ../../web_dev/js/proSoar/dialogs.js:954
+#: ../../web_dev/js/proSoar/dialogs.js:982
+msgid "Racing"
+msgstr "Carrera"
+
+#: ../../web_dev/js/proSoar/dialogs.js:624
+#: ../../web_dev/js/proSoar/dialogs.js:955
+#: ../../web_dev/js/proSoar/dialogs.js:983
+msgid "AAT"
+msgstr "AAT"
+
+#: ../../web_dev/js/proSoar/dialogs.js:625
+#: ../../web_dev/js/proSoar/dialogs.js:956
+#: ../../web_dev/js/proSoar/dialogs.js:984
+msgid "FAI"
+msgstr "FAI"
+
+#: ../../web_dev/js/proSoar/dialogs.js:635
+#: ../../web_dev/js/proSoar/dialogs.js:966
+#: ../../web_dev/js/proSoar/igcfile.js:152
+#: ../../web_dev/js/proSoar/igcfile.js:153
+#, python-format
+msgid "%x %X"
+msgstr "%x %X"
+
+#: ../../web_dev/js/proSoar/dialogs.js:722
+msgid "Task must have at least start and finish"
+msgstr "La tarea debe tener al menos un inicio y final"
+
+#: ../../web_dev/js/proSoar/dialogs.js:729
+msgid "An unknown error occured. Please try again."
+msgstr "Un error desconocido ocurrió. Por favor inténtelo nuevamente."
+
+#: ../../web_dev/js/proSoar/dialogs.js:735
+msgid "Save & Export Task"
+msgstr "Guardar & Exportar tarea"
+
+#: ../../web_dev/js/proSoar/dialogs.js:754
+msgid "Invalid task name"
+msgstr "Nombre de tarea es incorrecta"
+
+#: ../../web_dev/js/proSoar/dialogs.js:789
+msgid "Export"
+msgstr "Exportar"
+
+#: ../../web_dev/js/proSoar/dialogs.js:793
+msgid "Save"
+msgstr "Guardar"
+
+#: ../../web_dev/js/proSoar/dialogs.js:814
+#: ../../web_dev/js/proSoar/dialogs.js:1070
+msgid "Close"
+msgstr "Cerrar"
+
+#: ../../web_dev/js/proSoar/dialogs.js:833
+msgid "Save Task"
+msgstr "Guardar tarea"
+
+#: ../../web_dev/js/proSoar/dialogs.js:863
+msgid "Select your file format"
+msgstr "Seleccione su formato de archivo"
+
+#: ../../web_dev/js/proSoar/dialogs.js:914
+msgid "QR Code"
+msgstr "Código QR"
+
+#: ../../web_dev/js/proSoar/dialogs.js:992
+msgid "Save as"
+msgstr "Guardar como"
+
+#: ../../web_dev/js/proSoar/dialogs.js:1091
+msgid "Add Waypoint File..."
+msgstr "Agregar archivo puntos de paso…"
+
+#: ../../web_dev/js/proSoar/dialogs.js:1150
+#: ../../web_dev/js/proSoar/igcfile.js:73
+msgid "Add"
+msgstr "Agregar"
+
+#: ../../web_dev/js/proSoar/dialogs.js:1183
+msgid "Delete Waypoint File..."
+msgstr "Borrar archivo puntos de paso..."
+
+#: ../../web_dev/js/proSoar/dialogs.js:1214
+msgid "Are you sure you want to delete waypoint file"
+msgstr "Está seguro que quiere borrar archivo de puntos de paso"
+
+#: ../../web_dev/js/proSoar/igcfile.js:18
+msgid "Add IGC File..."
+msgstr "Agregar archivo IGC..."
+
+#: ../../web_dev/js/proSoar/igcfile.js:106
+msgid "Analyse IGC file"
+msgstr "Analizar archivo IGC"
+
+#: ../../web_dev/js/proSoar/igcfile.js:133
+msgid "File"
+msgstr "Archivo"
+
+#: ../../web_dev/js/proSoar/igcfile.js:152
+msgid "Takeoff"
+msgstr "Despegue"
+
+#: ../../web_dev/js/proSoar/igcfile.js:153
+msgid "Landing"
+msgstr "Aterrizaje"
+
+#: ../../web_dev/js/proSoar/igcfile.js:174
+msgid "OLC"
+msgstr "OLC"
+
+#: ../../web_dev/js/proSoar/igcfile.js:180
+msgid "Plus"
+msgstr "Más"
+
+#: ../../web_dev/js/proSoar/igcfile.js:181
+#: ../../web_dev/js/proSoar/igcfile.js:187
+msgid "km"
+msgstr "km"
+
+#: ../../web_dev/js/proSoar/igcfile.js:182
+#: ../../web_dev/js/proSoar/igcfile.js:188
+msgid "km/h"
+msgstr "km/h"
+
+#: ../../web_dev/js/proSoar/igcfile.js:186
+msgid "Triangle"
+msgstr "Triángulo"
+
+#: ../../web_dev/js/proSoar/map.js:47
+msgid "OSM Map"
+msgstr "Mapa OSM"
+
+#: ../../web_dev/js/proSoar/map.js:58
+msgid "Hill shading"
+msgstr "Terreno sombreado"
+
+#: ../../web_dev/js/proSoar/map.js:93
+msgid "Airspace"
+msgstr "Espacio aéreo"
+
+#: ../../web_dev/js/proSoar/map.js:135 ../../web_dev/js/proSoar/map.js:161
+#: ../../web_dev/js/proSoar/map.js:170 ../../web_dev/js/proSoar/map.js:175
+msgid "Google Physical"
+msgstr "Google Relieve"
+
+#: ../../web_dev/js/proSoar/map.js:145 ../../web_dev/js/proSoar/map.js:166
+#: ../../web_dev/js/proSoar/map.js:171
+msgid "Google Satellite"
+msgstr "Google Satélite"
+
+#: ../../web_dev/js/proSoar/map.js:234 ../../web_dev/js/proSoar/map.js:239
+#: ../../web_dev/js/proSoar/map.js:254 ../../web_dev/js/proSoar/map.js:262
+#: ../../web_dev/js/proSoar/map.js:279
+msgid "Airports"
+msgstr "Aeródromos"
+
+#: ../../web_dev/js/proSoar/map.js:235 ../../web_dev/js/proSoar/map.js:256
+#: ../../web_dev/js/proSoar/map.js:264 ../../web_dev/js/proSoar/map.js:591
+msgid "Task Turnpoint Sectors"
+msgstr "Sectores de tareas de puntos de viraje"
+
+#: ../../web_dev/js/proSoar/map.js:357
+msgid "Airport"
+msgstr "Aeródromo"
+
+#: ../../web_dev/js/proSoar/map.js:391
+msgid "Turnpoint"
+msgstr "Punto de viraje"
+
+#: ../../web_dev/js/proSoar/map.js:527
+msgid "IGC"
+msgstr "IGC"
+
+#: ../../web_dev/js/proSoar/map.js:616
+msgid "Special Task Layer"
+msgstr "Capa especial de tarea"
+
+#: ../../web_dev/js/proSoar/search.js:48
+msgid "Press ENTER to search"
+msgstr "Presione INTRO para buscar"
+
+#: ../../web_dev/js/proSoar/search.js:92
+msgid "Searching"
+msgstr "Buscando"
+
+#: ../../web_dev/js/proSoar/search.js:120
+msgid "Nothing found"
+msgstr "No se encuentra nada"
+
+#: ../../web_dev/js/proSoar/sector.js:5
+msgid "DAeC keyhole"
+msgstr "Ojo de cerradura DAeC"
+
+#: ../../web_dev/js/proSoar/sector.js:10
+msgid "FAI quadrant"
+msgstr "Cuadrante FAI"
+
+#: ../../web_dev/js/proSoar/sector.js:15
+msgid "FAI start quadrant"
+msgstr "Cuadrante de inicio FAI"
+
+#: ../../web_dev/js/proSoar/sector.js:20
+msgid "FAI finish quadrant"
+msgstr "Cuadrante de meta FAI"
+
+#: ../../web_dev/js/proSoar/sector.js:25
+msgid "Circle"
+msgstr "Círculo"
+
+#: ../../web_dev/js/proSoar/sector.js:30
+msgid "Start line"
+msgstr "Línea de salida"
+
+#: ../../web_dev/js/proSoar/sector.js:35
+msgid "Finish line"
+msgstr "Línea de meta"
+
+#: ../../web_dev/js/proSoar/sector.js:40
+msgid "Sector"
+msgstr "Sector"
+
+#: ../../web_dev/js/proSoar/sector.js:52
+msgid "BGA Fixed Course"
+msgstr "Curso fijo BGA"
+
+#: ../../web_dev/js/proSoar/sector.js:57
+msgid "BGA Enh. Opt. Fixed Course"
+msgstr "Curso fijo BGA Enh. Opt."
+
+#: ../../web_dev/js/proSoar/sector.js:62
+msgid "BGA Start Sector"
+msgstr "Inicio de sector BGA"
+
+#: ../../web_dev/js/proSoar/task.js:15
+msgid "Racing Task"
+msgstr "Misión de la carrera"
+
+#: ../../web_dev/js/proSoar/task.js:24
+msgid "Assigned Area Task"
+msgstr "Area asignada de la tarea"
+
+#: ../../web_dev/js/proSoar/task.js:33
+msgid "FAI badge/records"
+msgstr "Insignia/récord FAI"
+
+#: ../../web_dev/js/proSoar/tasklist.js:207
+msgid "FAI triangle"
+msgstr "Triángulo FAI"
+
+#: ../../web_dev/js/proSoar/taskstore.js:121
+#: ../../web_dev/js/proSoar/turnpoint.js:17
+#: ../../web_dev/js/proSoar/waypoints.js:142
+msgid "Free turnpoint"
+msgstr "Liberar punto de viraje"
