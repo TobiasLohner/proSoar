@@ -33,14 +33,22 @@ Deploying
 
 This source directory is not complete. You need some more things to get started.
 
-1. Install required python modules
+1. Install required system modules
+
+   Run `sudo apt-get install libcurl4-gnutls-dev`
+   
+   Run `sudo apt-get install libxml2-dev`
+   
+   Run `sudo apt-get install libxslt1-dev`
+
+2. Install required python modules
 
    Run `pip install -r requirements.txt`
 
-2. Download and compile necessary JS/CSS files
+3. Download and compile necessary JS/CSS files
 
    Run `make`
 
-3. Deploy by running the debug server or use some other deployment method for flask apps:
+4. Deploy by running the debug server or use some other deployment method for flask apps:
 
    Run `python manage.py runserver` to start the debug server
