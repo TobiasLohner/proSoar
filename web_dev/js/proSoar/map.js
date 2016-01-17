@@ -91,7 +91,7 @@ var MapWindow = new Class({
     osm.events.register('visibilitychanged', this, function() { hillshading.setVisibility(osm.getVisibility()); });
 
     var airspace = new OpenLayers.Layer.XYZ(_("Airspace"),
-      "https://www.skylines-project.org/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png", {
+      "https://www.skylines.aero/mapproxy/tiles/1.0.0/airspace/${z}/${x}/${y}.png", {
       isBaseLayer: false,
       transparent: true,
       'visibility': true,
