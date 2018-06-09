@@ -18,9 +18,9 @@ clean-deploy:
 # OpenLayers
 
 OPENLAYERS_VERSION = 2.13.1
-OPENLAYERS_NAME = OpenLayers-$(OPENLAYERS_VERSION)
+OPENLAYERS_NAME = openlayers-$(OPENLAYERS_VERSION)
 OPENLAYERS_ARCHIVE = $(OPENLAYERS_NAME).tar.gz
-OPENLAYERS_URL = http://github.com/openlayers/openlayers/releases/download/release-$(OPENLAYERS_VERSION)/$(OPENLAYERS_ARCHIVE)
+OPENLAYERS_URL = https://github.com/openlayers/openlayers/archive/v$(OPENLAYERS_VERSION).tar.gz
 OPENLAYERS_JS_FOLDER = $(JS_FOLDER)/OpenLayers
 OPENLAYERS_IMG_FOLDER = $(IMG_FOLDER)/OpenLayers
 
