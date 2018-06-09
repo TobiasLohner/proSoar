@@ -38,12 +38,13 @@ $(DOWNLOAD_FOLDER)/$(OPENLAYERS_ARCHIVE):
 
 # MooTools
 
+# http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools.js
 MOOTOOLS_CORE_VERSION = 1.4.5
-MOOTOOLS_CORE_FILE = mootools-core-$(MOOTOOLS_CORE_VERSION)-full-compat.js
-MOOTOOLS_CORE_URL = http://mootools.net/download/get/$(MOOTOOLS_CORE_FILE)
+MOOTOOLS_CORE_FILE = mootools.js
+MOOTOOLS_CORE_URL = http://ajax.googleapis.com/ajax/libs/mootools/$(MOOTOOLS_CORE_VERSION)/$(MOOTOOLS_CORE_FILE)
 
 MOOTOOLS_MORE_VERSION = 1.4.0.1
-MOOTOOLS_MORE_ARCHIVE = $(MOOTOOLS_MORE_VERSION).tar.gz
+MOOTOOLS_MORE_ARCHIVE = mootools-more-$(MOOTOOLS_MORE_VERSION).tar.gz
 MOOTOOLS_MORE_URL = https://github.com/mootools/mootools-more/archive/$(MOOTOOLS_MORE_ARCHIVE)
 MOOTOOLS_MORE_FOLDER = $(DOWNLOAD_FOLDER)/mootools-more-$(MOOTOOLS_MORE_VERSION)
 MOOTOOLS_MORE_COMPONENTS = \
