@@ -10,6 +10,7 @@ import qrcode
 
 from prosoar.task.json_reader import parse_json_task
 from prosoar.task.json_writer import write_json_task
+from prosoar.task.flarm_writer import write_flarm_task
 from prosoar.task.seeyou_writer import write_seeyou_task
 from prosoar.task.xcsoar_reader import parse_xcsoar_task
 from prosoar.task.xcsoar_writer import write_xcsoar_task
@@ -83,6 +84,10 @@ def download(uid, taskname, filetype, temptask=False):
         mimetype = 'application/seeyou'
         file_extension = 'cup'
         write_seeyou_task(io, task, taskname)
+    elif filetype == 'flarm':
+        mimetype = 'text/plain'
+        file_extension = 'txt'
+        write_flarm_task(io, task, taskname)
 
     io.seek(0)
 
@@ -246,6 +251,11 @@ def save_temp():
                 'name': 'SeeYou (*.cup)',
                 'url': base_url + '/seeyou',
                 'qrcode': base_url + '/seeyou/qr',
+            },
+            'flarm': {
+                'name': 'Flarm (flarmcfg.txt)',
+                'url': base_url + '/flarm',
+                'qrcode': base_url + '/flarm/qr',
             },
         }
     })
