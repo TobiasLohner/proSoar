@@ -9,8 +9,10 @@
 
   <script type="text/javascript" src="js/MooTools/mootools-core.js"></script>
   <script type="text/javascript" src="js/MooTools/mootools-more.js"></script>
+  {% if get_locale() != 'en'%}
 
-  <link rel="gettext" href="LC_MESSAGES/{{ get_locale() }}.json" />
+    <link rel="gettext" href="LC_MESSAGES/{{ get_locale() }}.json" />
+  {% endif %}
 
   <script type="text/javascript" src="settings/initial.js"></script>
 
